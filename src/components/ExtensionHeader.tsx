@@ -43,12 +43,12 @@ export default function ExtensionHeader(props: ExtensionHeaderProps) {
           <span className="text-muted-foreground/50 text-xs">
             by{' '}
             <a
-              href="https://sleekaddons.com/"
+              href="https://rapidtoolset.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground/70 transition-colors hover:text-muted-foreground"
             >
-              sleekaddons.com
+              rapidtoolset.com
             </a>
           </span>
         </div>
