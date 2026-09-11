@@ -5,8 +5,8 @@
  *   - Small promo tile:   440x280
  *   - Marquee promo tile: 1400x560
  *
- * Design matches the icon generator: black background, rounded badge with
- * white initials, plus the extension name and a short tagline.
+ * Design is text-only: black background, the extension name, and a short
+ * tagline.
  *
  * Output: extensions/<slug>/public/promo-small.png
  *         extensions/<slug>/public/promo-marquee.png
@@ -34,12 +34,6 @@ const TILES: TileSpec[] = [
   { file: 'promo-marquee.png', width: 1400, height: 560 },
 ]
 
-/** Override auto-generated initials for specific extensions. */
-const INITIALS_OVERRIDE: Record<string, string> = {
-  'pihole-manager': 'PI',
-  'ollama-client': 'LM',
-}
-
 /** Override auto-derived display name for specific extensions. */
 const NAME_OVERRIDE: Record<string, string> = {
   'pihole-manager': 'Pi-hole Manager',
@@ -54,12 +48,6 @@ const TAGLINE_OVERRIDE: Record<string, string> = {
   'table-extractor': 'Export any web table to CSV or XLSX.',
   'rapidtoolset': 'Find and save the web tools you love.',
   'website-blocker': 'Block distractions. Reclaim your focus.',
-}
-
-function getInitials(name: string): string {
-  const words = name.split(/\s+/).filter(Boolean)
-  if (words.length >= 2) return (words[0][0] + words[1][0]).toUpperCase()
-  return name.slice(0, 2).toUpperCase()
 }
 
 function slugToName(slug: string): string {
@@ -137,20 +125,10 @@ function wrap(text: string, maxChars: number, maxLines: number): string[] {
 function buildTileSvg(opts: {
   width: number
   height: number
-  initials: string
   name: string
   tagline: string
 }): string {
-  const { width, height, initials, name, tagline } = opts
-
-  // Badge sizing.
-  const badgeSize = Math.round(height * 0.45)
-  const badgeRadius = Math.round(badgeSize * 0.18)
-  const badgeFontSize = Math.round(badgeSize * 0.42)
-  const badgeDy = Math.round(badgeFontSize * 0.35)
-
-  // Gap between badge and text block.
-  const badgeTextGap = Math.round(height * 0.08)
+  const { width, height, name, tagline } = opts
 
   // Approximate character widths (em units) for the system sans stack.
   // These are deliberately conservative — overestimating makes the auto-
@@ -163,18 +141,18 @@ function buildTileSvg(opts: {
   // Use modest side padding as a hard cap; the composition will still be
   // visually centered based on actual content width. Smaller tiles get a
   // proportionally larger padding ratio so the content doesn't feel cramped.
-  const sidePaddingRatio = width < 800 ? 0.09 : 0.05
+  const sidePaddingRatio = width < 800 ? 0.1 : 0.075
   const sidePadding = Math.round(width * sidePaddingRatio)
   const maxContentWidth = width - sidePadding * 2
-  const maxTextWidth = maxContentWidth - badgeSize - badgeTextGap
+  const maxTextWidth = maxContentWidth
 
-  let nameFontSize = Math.round(height * 0.13)
-  const nameMin = Math.round(height * 0.08)
+  let nameFontSize = Math.round(height * 0.16)
+  const nameMin = Math.round(height * 0.1)
   while (nameFontSize > nameMin && name.length * NAME_CHAR_EM * nameFontSize > maxTextWidth) {
     nameFontSize -= 1
   }
 
-  const taglineFontSize = Math.round(height * 0.07)
+  const taglineFontSize = Math.round(height * (width < 800 ? 0.062 : 0.075))
   const lineGap = Math.round(taglineFontSize * 0.4)
 
   const taglineChars = Math.max(12, Math.floor(maxTextWidth / (taglineFontSize * TAGLINE_CHAR_EM)))
@@ -187,13 +165,7 @@ function buildTileSvg(opts: {
     0,
   )
   const textBlockWidth = Math.min(maxTextWidth, Math.max(nameWidth, taglineWidth))
-  const totalContentWidth = badgeSize + badgeTextGap + textBlockWidth
-
-  // Center the badge + text composition horizontally.
-  const contentX = Math.round((width - totalContentWidth) / 2)
-  const badgeX = contentX
-  const badgeY = Math.round((height - badgeSize) / 2)
-  const textX = badgeX + badgeSize + badgeTextGap
+  const textX = Math.round(width / 2)
 
   // Vertically center the text block (name + gap + tagline lines).
   const taglineBlockHeight =
@@ -214,26 +186,17 @@ function buildTileSvg(opts: {
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <rect width="${width}" height="${height}" fill="#111111"/>
-  <rect x="${badgeX}" y="${badgeY}" width="${badgeSize}" height="${badgeSize}" rx="${badgeRadius}" ry="${badgeRadius}" fill="#ffffff"/>
   <text
-    x="${badgeX + badgeSize / 2}" y="${badgeY + badgeSize / 2}"
-    dy="${badgeDy}"
+    x="${width / 2}" y="${nameBaselineY}"
     text-anchor="middle"
-    font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
-    font-size="${badgeFontSize}"
-    font-weight="700"
-    fill="#111111"
-    letter-spacing="1"
-  >${escapeXml(initials)}</text>
-  <text
-    x="${textX}" y="${nameBaselineY}"
     font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
     font-size="${nameFontSize}"
     font-weight="700"
     fill="#ffffff"
   >${escapeXml(name)}</text>
   <text
-    x="${textX}" y="${taglineStartY}"
+    x="${width / 2}" y="${taglineStartY}"
+    text-anchor="middle"
     font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
     font-size="${taglineFontSize}"
     font-weight="400"
@@ -265,8 +228,6 @@ async function generateTilesFor(slug: string) {
     : undefined
   const tagline = TAGLINE_OVERRIDE[slug] ?? rawDesc ?? localeMeta.description ?? ''
 
-  const initials = INITIALS_OVERRIDE[slug] ?? getInitials(name)
-
   const outDir = path.join(EXTENSIONS_DIR, slug, 'public')
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true })
 
@@ -275,7 +236,6 @@ async function generateTilesFor(slug: string) {
       const svg = buildTileSvg({
         width: tile.width,
         height: tile.height,
-        initials,
         name,
         tagline,
       })
@@ -284,7 +244,7 @@ async function generateTilesFor(slug: string) {
     }),
   )
 
-  console.log(`  ✔ ${slug} (${initials}) → ${TILES.map((t) => `${t.width}x${t.height}`).join(', ')}`)
+  console.log(`  ✔ ${slug} → ${TILES.map((t) => `${t.width}x${t.height}`).join(', ')}`)
 }
 
 async function main() {
