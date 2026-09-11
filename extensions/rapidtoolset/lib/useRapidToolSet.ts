@@ -41,14 +41,14 @@ function getSearchLocale(): string {
  * Any alias the server doesn't confirm as saved is logged and dropped rather than kept
  * around indefinitely.
  *
- * Older locally-stored bookmarks keep the full tool URL rather than the bare alias
- * the server expects, so the alias is extracted from the URL before pushing.
+ * Older locally-stored bookmarks don't have an alias field, so it's extracted from the
+ * tool URL instead.
  */
 async function migrateLocalBookmarksToRemote(token: string): Promise<void> {
   const local = await loadBookmarks()
   if (local.length === 0) return
 
-  const localAliases = local.map((b) => extractAlias(b.url))
+  const localAliases = local.map((b) => b.alias || extractAlias(b.url))
   const savedAliases = await upsertRemoteBookmarks(token, localAliases)
   const unsynced = localAliases.filter((alias) => !savedAliases.includes(alias))
   if (unsynced.length > 0) {
