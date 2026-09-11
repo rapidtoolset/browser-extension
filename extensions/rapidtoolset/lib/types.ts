@@ -3,6 +3,7 @@ export type SearchTab = 'online' | 'bookmarks' | 'sync'
 
 /** A single tool returned from the search API */
 export interface Tool {
+  alias: string
   name: string
   description: string
   url: string

@@ -170,7 +170,7 @@ export function useRapidToolSet() {
 
   const toggleBookmark = useCallback(async (tool: Tool) => {
     if (authToken) {
-      const alias = extractAlias(tool.url)
+      const alias = tool.alias || extractAlias(tool.url)
       if (isBookmarked(tool.url)) {
         setBookmarks((prev) => prev.filter((b) => b.url !== tool.url))
         deleteRemoteBookmark(authToken, alias).catch((err) => {

@@ -98,6 +98,7 @@ export function extractAlias(urlOrAlias: string): string {
 /** Converts a remote bookmark entry (alias + localized name/description) into a local Tool. */
 export function toBookmarkTool(bookmark: RemoteBookmark, locale = 'en'): Tool {
   return {
+    alias: bookmark.alias,
     url: `${RAPIDTOOLSET_BASE_URL}/${locale}/tool/${bookmark.alias}`,
     name: bookmark.name || bookmark.alias,
     description: bookmark.description || t('syncedBookmarkDescription'),
