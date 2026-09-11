@@ -1,0 +1,198 @@
+{
+  "extName": {
+    "message": "Tool Hub",
+    "description": "Extension name shown in Chrome Web Store and extension management"
+  },
+  "extDescription": {
+    "message": "Находите и сохраняйте полезные веб инструменты в одном месте",
+    "description": "Extension description shown in Chrome Web Store"
+  },
+  "tabOnline": {
+    "message": "Онлайн",
+    "description": "Label for the online search tab"
+  },
+  "tabBookmarks": {
+    "message": "Закладки",
+    "description": "Label for the bookmarks tab"
+  },
+  "tabSync": {
+    "message": "Синхронизация",
+    "description": "Label for the sync tab"
+  },
+  "searchPlaceholderOnline": {
+    "message": "Поиск инструментов онлайн…",
+    "description": "Placeholder text in the search input when on the online tab"
+  },
+  "searchPlaceholderBookmarks": {
+    "message": "Фильтр закладок…",
+    "description": "Placeholder text in the search input when on the bookmarks tab"
+  },
+  "searchAriaLabel": {
+    "message": "Поиск инструментов",
+    "description": "Accessible label for the search input"
+  },
+  "statusSearching": {
+    "message": "Поиск…",
+    "description": "Status text shown while a search is in progress"
+  },
+  "statusSearchToDiscover": {
+    "message": "Введите запрос",
+    "description": "Status text shown before the user types a query"
+  },
+  "statusNoResults": {
+    "message": "Ничего не найдено",
+    "description": "Status text when a search returns zero results"
+  },
+  "statusResultsFound": {
+    "message": "Найдено результатов: $COUNT$",
+    "description": "Status text showing how many results were found (plural)",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "statusResultFound": {
+    "message": "Найден $COUNT$ результат",
+    "description": "Status text when exactly one result is found (singular)",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "statusLoading": {
+    "message": "Загрузка…",
+    "description": "Status text shown while bookmarks are loading"
+  },
+  "statusSavedBookmarks": {
+    "message": "сохранённых закладок",
+    "description": "Label shown after the bookmark count (plural)"
+  },
+  "statusSavedBookmark": {
+    "message": "сохранённая закладка",
+    "description": "Label shown after the bookmark count (singular)"
+  },
+  "emptyOnlinePrompt": {
+    "message": "Введите запрос для поиска инструментов онлайн.",
+    "description": "Placeholder message in the online tab before searching"
+  },
+  "emptyNoToolsFound": {
+    "message": "По вашему запросу ничего не найдено.",
+    "description": "Message shown when a search returns no matching tools"
+  },
+  "emptyBookmarksNone": {
+    "message": "Закладок пока нет.",
+    "description": "Message shown when the user has no bookmarks"
+  },
+  "emptyBookmarksNoMatch": {
+    "message": "Закладки не соответствуют фильтру.",
+    "description": "Message shown when the bookmark filter matches nothing"
+  },
+  "emptyBookmarksCta": {
+    "message": "Ищите онлайн и сохраняйте инструменты в закладки.",
+    "description": "Call-to-action shown below the empty bookmarks message"
+  },
+  "showMore": {
+    "message": "Показать больше",
+    "description": "Button to expand a tool description"
+  },
+  "showLess": {
+    "message": "Показать меньше",
+    "description": "Button to collapse a tool description"
+  },
+  "removeBookmark": {
+    "message": "Удалить закладку",
+    "description": "Accessible label for the remove-bookmark button"
+  },
+  "addBookmark": {
+    "message": "Добавить закладку",
+    "description": "Accessible label for the add-bookmark button"
+  },
+  "syncNeverSynced": {
+    "message": "Ещё не синхронизировано",
+    "description": "Status text shown when connected but a sync hasn't run yet"
+  },
+  "syncEmptyTitle": {
+    "message": "Синхронизируйте закладки между устройствами",
+    "description": "Title shown on the sync tab before connecting"
+  },
+  "syncEmptyDescription": {
+    "message": "Подключите аккаунт RapidToolSet, чтобы закладки были синхронизированы везде.",
+    "description": "Description shown on the sync tab before connecting"
+  },
+  "syncConnectCta": {
+    "message": "Подключить RapidToolSet",
+    "description": "Button label to start the RapidToolSet sync connection flow"
+  },
+  "syncConnecting": {
+    "message": "Подключение…",
+    "description": "Button label shown while the RapidToolSet auth flow is in progress"
+  },
+  "syncConnected": {
+    "message": "Подключено к RapidToolSet",
+    "description": "Status text shown when connected but not yet synced"
+  },
+  "syncSyncing": {
+    "message": "Синхронизация…",
+    "description": "Status text shown while a sync is in progress"
+  },
+  "syncedAgo": {
+    "message": "Синхронизировано $TIME$",
+    "description": "Status text showing how long ago bookmarks were last synced",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "5 минут назад"
+      }
+    }
+  },
+  "syncNow": {
+    "message": "Синхронизировать сейчас",
+    "description": "Accessible label for the manual sync button"
+  },
+  "syncDisconnect": {
+    "message": "Отключить",
+    "description": "Accessible label for the disconnect-from-RapidToolSet button"
+  },
+  "syncedBookmarkDescription": {
+    "message": "Синхронизировано с RapidToolSet",
+    "description": "Placeholder description for a bookmark pulled from RapidToolSet with no local metadata"
+  },
+  "syncErrorCancelled": {
+    "message": "Авторизация отменена.",
+    "description": "Error shown when the user closes the RapidToolSet auth window without completing it"
+  },
+  "syncErrorDenied": {
+    "message": "В авторизации отказано.",
+    "description": "Error shown when the user clicks Deny on the RapidToolSet consent screen"
+  },
+  "syncErrorNoToken": {
+    "message": "RapidToolSet не вернул токен.",
+    "description": "Error shown when the auth flow completes without a token"
+  },
+  "syncErrorExpired": {
+    "message": "Сессия RapidToolSet истекла. Подключитесь заново.",
+    "description": "Error shown when the stored token is rejected as invalid or revoked"
+  },
+  "syncErrorRequestFailed": {
+    "message": "Запрос к RapidToolSet не выполнен ($STATUS$).",
+    "description": "Error shown when a sync API request fails",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "500"
+      }
+    }
+  },
+  "syncAccountName": {
+    "message": "Имя",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's name"
+  },
+  "syncAccountEmail": {
+    "message": "Email",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's email"
+  }
+}

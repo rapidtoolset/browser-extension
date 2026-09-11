@@ -1,0 +1,198 @@
+{
+  "extName": {
+    "message": "Tool Hub",
+    "description": "Extension name shown in Chrome Web Store and extension management"
+  },
+  "extDescription": {
+    "message": "Find and save useful web tools in one place",
+    "description": "Extension description shown in Chrome Web Store"
+  },
+  "tabOnline": {
+    "message": "Online",
+    "description": "Label for the online search tab"
+  },
+  "tabBookmarks": {
+    "message": "Bookmarks",
+    "description": "Label for the bookmarks tab"
+  },
+  "tabSync": {
+    "message": "Sync",
+    "description": "Label for the sync tab"
+  },
+  "searchPlaceholderOnline": {
+    "message": "Search tools online…",
+    "description": "Placeholder text in the search input when on the online tab"
+  },
+  "searchPlaceholderBookmarks": {
+    "message": "Filter bookmarks…",
+    "description": "Placeholder text in the search input when on the bookmarks tab"
+  },
+  "searchAriaLabel": {
+    "message": "Search tools",
+    "description": "Accessible label for the search input"
+  },
+  "statusSearching": {
+    "message": "Searching…",
+    "description": "Status text shown while a search is in progress"
+  },
+  "statusSearchToDiscover": {
+    "message": "Search to discover",
+    "description": "Status text shown before the user types a query"
+  },
+  "statusNoResults": {
+    "message": "No results found",
+    "description": "Status text when a search returns zero results"
+  },
+  "statusResultsFound": {
+    "message": "$COUNT$ results found",
+    "description": "Status text showing how many results were found (plural)",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "statusResultFound": {
+    "message": "$COUNT$ result found",
+    "description": "Status text when exactly one result is found (singular)",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "statusLoading": {
+    "message": "Loading…",
+    "description": "Status text shown while bookmarks are loading"
+  },
+  "statusSavedBookmarks": {
+    "message": "saved bookmarks",
+    "description": "Label shown after the bookmark count (plural)"
+  },
+  "statusSavedBookmark": {
+    "message": "saved bookmark",
+    "description": "Label shown after the bookmark count (singular)"
+  },
+  "emptyOnlinePrompt": {
+    "message": "Type a query to search tools online.",
+    "description": "Placeholder message in the online tab before searching"
+  },
+  "emptyNoToolsFound": {
+    "message": "No tools found for your query.",
+    "description": "Message shown when a search returns no matching tools"
+  },
+  "emptyBookmarksNone": {
+    "message": "No bookmarks yet.",
+    "description": "Message shown when the user has no bookmarks"
+  },
+  "emptyBookmarksNoMatch": {
+    "message": "No bookmarks match your filter.",
+    "description": "Message shown when the bookmark filter matches nothing"
+  },
+  "emptyBookmarksCta": {
+    "message": "Search online and bookmark tools here.",
+    "description": "Call-to-action shown below the empty bookmarks message"
+  },
+  "showMore": {
+    "message": "Show more",
+    "description": "Button to expand a tool description"
+  },
+  "showLess": {
+    "message": "Show less",
+    "description": "Button to collapse a tool description"
+  },
+  "removeBookmark": {
+    "message": "Remove bookmark",
+    "description": "Accessible label for the remove-bookmark button"
+  },
+  "addBookmark": {
+    "message": "Add bookmark",
+    "description": "Accessible label for the add-bookmark button"
+  },
+  "syncConnectCta": {
+    "message": "Connect RapidToolSet",
+    "description": "Button label to start the RapidToolSet sync connection flow"
+  },
+  "syncConnecting": {
+    "message": "Connecting…",
+    "description": "Button label shown while the RapidToolSet auth flow is in progress"
+  },
+  "syncConnected": {
+    "message": "Connected to RapidToolSet",
+    "description": "Status text shown when connected but not yet synced"
+  },
+  "syncNeverSynced": {
+    "message": "Not synced yet",
+    "description": "Status text shown when connected but a sync hasn't run yet"
+  },
+  "syncEmptyTitle": {
+    "message": "Sync bookmarks across devices",
+    "description": "Title shown on the sync tab before connecting"
+  },
+  "syncEmptyDescription": {
+    "message": "Connect your RapidToolSet account to keep bookmarks in sync everywhere.",
+    "description": "Description shown on the sync tab before connecting"
+  },
+  "syncSyncing": {
+    "message": "Syncing…",
+    "description": "Status text shown while a sync is in progress"
+  },
+  "syncedAgo": {
+    "message": "Synced $TIME$",
+    "description": "Status text showing how long ago bookmarks were last synced",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "5 minutes ago"
+      }
+    }
+  },
+  "syncNow": {
+    "message": "Sync now",
+    "description": "Accessible label for the manual sync button"
+  },
+  "syncDisconnect": {
+    "message": "Disconnect",
+    "description": "Accessible label for the disconnect-from-RapidToolSet button"
+  },
+  "syncedBookmarkDescription": {
+    "message": "Synced from RapidToolSet",
+    "description": "Placeholder description for a bookmark pulled from RapidToolSet with no local metadata"
+  },
+  "syncErrorCancelled": {
+    "message": "Authorization was cancelled.",
+    "description": "Error shown when the user closes the RapidToolSet auth window without completing it"
+  },
+  "syncErrorDenied": {
+    "message": "Authorization was denied.",
+    "description": "Error shown when the user clicks Deny on the RapidToolSet consent screen"
+  },
+  "syncErrorNoToken": {
+    "message": "No token returned from RapidToolSet.",
+    "description": "Error shown when the auth flow completes without a token"
+  },
+  "syncErrorExpired": {
+    "message": "RapidToolSet session expired. Please reconnect.",
+    "description": "Error shown when the stored token is rejected as invalid or revoked"
+  },
+  "syncErrorRequestFailed": {
+    "message": "RapidToolSet request failed ($STATUS$).",
+    "description": "Error shown when a sync API request fails",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "500"
+      }
+    }
+  },
+  "syncAccountName": {
+    "message": "Name",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's name"
+  },
+  "syncAccountEmail": {
+    "message": "Email",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's email"
+  }
+}
