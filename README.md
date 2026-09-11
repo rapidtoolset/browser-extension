@@ -2,7 +2,7 @@
 
 Discover and launch web tools, with i18n support. Built with [WXT](https://wxt.dev/), React 19, TypeScript, and Tailwind CSS v4.
 
-[Chrome](https://chromewebstore.google.com/detail/tool-hub/njmnbhbdgnbkjknnmfhinhbbpjpcclld) · [Firefox](https://addons.mozilla.org/en-US/firefox/addon/rapidtoolset/)
+[Chrome](https://chromewebstore.google.com/detail/njmnbhbdgnbkjknnmfhinhbbpjpcclld) | [Firefox](https://addons.mozilla.org/en-US/firefox/addon/rapidtoolset/)
 
 ## Requirements
 
