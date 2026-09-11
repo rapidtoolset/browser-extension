@@ -27,14 +27,14 @@ npm run zip                  # zip output for store submission (in .output/)
 
 ## Icons
 
-Icons and promo tiles are auto-generated into `extensions/rapidtoolset/public/`:
+Icons and promo tiles are auto-generated into `extensions/rapidtoolset/public/` from `public/logo.png`:
 
 ```bash
 npm run generate-icons
 npm run generate-promo-tiles
 ```
 
-Override initials via `INITIALS_OVERRIDE` in [scripts/generate-icons.ts](scripts/generate-icons.ts).
+Override icon generation inputs by passing `--source`, `--output`, `--sizes`, `--background`, or `--radius` to [scripts/generate-icons.tsx](scripts/generate-icons.tsx).
 
 ## Key libraries
 
