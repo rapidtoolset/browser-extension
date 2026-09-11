@@ -5,6 +5,26 @@ import { defineConfig } from 'wxt'
 import manifest from './extensions/rapidtoolset/manifest.config'
 
 const root = import.meta.dirname
+const supportedLocales = new Set(['en', 'ru'])
+
+function getBrowserLocaleConfig() {
+  const locale = process.env.WXT_RAPIDTOOLSET_LOCALE?.toLowerCase()
+  if (!locale || !supportedLocales.has(locale)) return {}
+
+  return locale === 'ru'
+    ? {
+        chromiumArgs: ['--lang=ru'],
+        firefoxPref: {
+          'intl.locale.requested': 'ru',
+        },
+      }
+    : {
+        chromiumArgs: ['--lang=en'],
+        firefoxPref: {
+          'intl.locale.requested': 'en',
+        },
+      }
+}
 
 export default defineConfig({
   srcDir: 'src',
@@ -12,6 +32,7 @@ export default defineConfig({
   publicDir: 'extensions/rapidtoolset/public',
   outDir: '.output',
   imports: false,
+  webExt: getBrowserLocaleConfig(),
   manifest: (env) => {
     if (env.browser === 'firefox') {
       return {
