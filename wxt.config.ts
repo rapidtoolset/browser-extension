@@ -39,11 +39,18 @@ export default defineConfig({
         ...manifest,
         browser_specific_settings: {
           gecko: {
+            id: '{0e5c6f70-25d7-460c-8d36-5575129a8d8b}',
             data_collection_permissions: {
               required: ['none'],
             },
           },
         },
+      }
+    }
+    if (env.browser === 'chrome') {
+      return {
+        ...manifest,
+        key: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxMSAHMc7yOsHQXRknwr5ZVwF9KPBLJ5rSAR2+AQjjQAP+kISx+ydAtM05dfHWNh+bQNKYrfToAFYcwAlGi3gD/9hehSj7kKLjb5EV0LzV4dvkFPslbfear6O3fVSVo/wZrsxm3p8qv5TVWvbTWxGFSAe/r/02xnuPc5UhTKFixkQjBdXVxSNb9pjYnYzn04MxWQi2mToQKihL23sLnQZkgyXflbeIiy9B4x1q5VzgxUL0hImwAddIa09sZlZ4IN/+K5TVSh2geoijIn1548haYj7SWe9qhNH+mlj5LVqhLUN4tVGcsGuh7gWZZId1i9aDgDF3EmzEXyEwrB6zxlx2wIDAQAB',
       }
     }
     return manifest
