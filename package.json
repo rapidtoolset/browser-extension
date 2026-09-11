@@ -1,5 +1,5 @@
 {
-  "name": "tool-hub",
+  "name": "browser-extension",
   "type": "module",
   "version": "1.0.9",
   "private": true,
