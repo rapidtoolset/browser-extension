@@ -3,10 +3,10 @@ import { t } from './i18n'
 import type { RemoteBookmark, RemoteUser, Tool } from './types'
 
 /**
- * Base origin for the tool-hub API (search + account/sync), currently backed
- * by RapidToolSet. Configurable via the WXT_TOOLHUB_API_URL env var (see
- * .env / .env.development at the repo root) so dev builds can point at a
- * local/staging instance while prod builds use the public site.
+ * Base origin for the RapidToolSet API (search + account/sync). Configurable
+ * via the WXT_RAPIDTOOLSET_API_URL env var (see .env / .env.development at
+ * the repo root) so dev builds can point at a local/staging instance while
+ * prod builds use the public site.
  */
 export const RAPIDTOOLSET_BASE_URL = "https://rapidtoolset.com";
 

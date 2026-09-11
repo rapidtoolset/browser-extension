@@ -52,13 +52,13 @@ async function migrateLocalBookmarksToRemote(token: string): Promise<void> {
   const savedAliases = await upsertRemoteBookmarks(token, localAliases)
   const unsynced = localAliases.filter((alias) => !savedAliases.includes(alias))
   if (unsynced.length > 0) {
-    console.log('[tool-hub] Could not sync bookmark(s) to RapidToolSet, removing locally:', unsynced)
+    console.log('[rapidtoolset] Could not sync bookmark(s) to RapidToolSet, removing locally:', unsynced)
   }
 
   await clearBookmarks()
 }
 
-export function useToolHub() {
+export function useRapidToolSet() {
   const [bookmarks, setBookmarks] = useState<Tool[]>([])
   const [searchResults, setSearchResults] = useState<Tool[]>([])
   const [query, _setQuery] = useState('')

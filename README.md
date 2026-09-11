@@ -1,4 +1,4 @@
-# Tool Hub
+# RapidToolSet
 
 Discover and launch web tools, with i18n support. Built with [WXT](https://wxt.dev/), React 19, TypeScript, and Tailwind CSS v4.
 
@@ -44,7 +44,7 @@ UI primitives (buttons, dropdowns, etc.) come from [shadcn/ui](https://ui.shadcn
 
 ## Icons
 
-Extension icons (16, 32, 48, 128 px) and promo tiles are auto-generated. Output goes to `extensions/tool-hub/public/`.
+Extension icons (16, 32, 48, 128 px) and promo tiles are auto-generated. Output goes to `extensions/rapidtoolset/public/`.
 
 ```bash
 npm run generate-icons

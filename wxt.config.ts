@@ -2,14 +2,14 @@ import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'wxt'
-import manifest from './extensions/tool-hub/manifest.config'
+import manifest from './extensions/rapidtoolset/manifest.config'
 
 const root = import.meta.dirname
 
 export default defineConfig({
   srcDir: 'src',
-  entrypointsDir: path.resolve(root, 'extensions', 'tool-hub', 'entrypoints'),
-  publicDir: 'extensions/tool-hub/public',
+  entrypointsDir: path.resolve(root, 'extensions', 'rapidtoolset', 'entrypoints'),
+  publicDir: 'extensions/rapidtoolset/public',
   outDir: '.output',
   imports: false,
   manifest: (env) => {
@@ -28,8 +28,8 @@ export default defineConfig({
     return manifest
   },
   zip: {
-    name: 'tool-hub',
-    artifactTemplate: 'tool-hub-{{version}}-{{browser}}.zip',
+    name: 'rapidtoolset',
+    artifactTemplate: 'rapidtoolset-{{version}}-{{browser}}.zip',
   },
   vite: () => ({
     plugins: [

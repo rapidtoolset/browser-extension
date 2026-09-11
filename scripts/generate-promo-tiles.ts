@@ -43,7 +43,7 @@ const INITIALS_OVERRIDE: Record<string, string> = {
 /** Override auto-derived display name for specific extensions. */
 const NAME_OVERRIDE: Record<string, string> = {
   'pihole-manager': 'Pi-hole Manager',
-  'tool-hub': 'Tool Hub',
+  'rapidtoolset': 'RapidToolSet',
 }
 
 /** Short tagline shown under the name. Falls back to manifest description. */
@@ -52,7 +52,7 @@ const TAGLINE_OVERRIDE: Record<string, string> = {
   'ollama-client': 'Chat with local AI in your browser.',
   'pihole-manager': 'Control every Pi-hole from one place.',
   'table-extractor': 'Export any web table to CSV or XLSX.',
-  'tool-hub': 'Find and save the web tools you love.',
+  'rapidtoolset': 'Find and save the web tools you love.',
   'website-blocker': 'Block distractions. Reclaim your focus.',
 }
 
@@ -82,7 +82,7 @@ function readManifestMeta(slug: string): { name?: string; description?: string }
   }
 }
 
-/** Read locale messages for tool-hub style i18n manifests. */
+/** Read locale messages for rapidtoolset style i18n manifests. */
 function readLocaleMeta(slug: string): { name?: string; description?: string } {
   const file = path.join(EXTENSIONS_DIR, slug, 'public', '_locales', 'en', 'messages.json')
   if (!fs.existsSync(file)) return {}

@@ -6,11 +6,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useScrollable } from '@/lib/useScrollable'
 import ToolCard from './ToolCard'
 import SyncView from './SyncView'
-import { useToolHub } from '../lib/useToolHub'
+import { useRapidToolSet } from '../lib/useRapidToolSet'
 import { t } from '../lib/i18n'
 import type { SearchTab } from '../lib/types'
 
-export default function ToolHubView() {
+export default function RapidToolSetView() {
   const {
     bookmarks,
     searchResults,
@@ -34,7 +34,7 @@ export default function ToolHubView() {
     connect,
     disconnect,
     sync,
-  } = useToolHub()
+  } = useRapidToolSet()
   const { ref: onlineRef, needsPadding: onlinePadding } = useScrollable<HTMLDivElement>()
   const { ref: bookmarksRef, needsPadding: bookmarksPadding } = useScrollable<HTMLDivElement>()
 
