@@ -1,5 +1,5 @@
-import { browser } from 'wxt/browser'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { getLocale } from './i18n'
 import type { RemoteUser, SearchTab, Tool, ToolSearchResponse } from './types'
 import {
   addBookmark,
@@ -17,6 +17,7 @@ import {
   saveTab,
 } from './storage'
 import {
+  AuthRevokedError,
   authorizeRapidToolSet,
   deleteRemoteBookmark,
   extractAlias,
@@ -29,12 +30,6 @@ import {
 
 const API_BASE = `${RAPIDTOOLSET_BASE_URL}/api/public/search`
 const DEBOUNCE_MS = 400
-const SUPPORTED_LOCALES = ['en', 'ru'] as const
-
-function getSearchLocale(): string {
-  const uiLang = browser.i18n.getUILanguage().split('-')[0].toLowerCase()
-  return SUPPORTED_LOCALES.includes(uiLang as typeof SUPPORTED_LOCALES[number]) ? uiLang : 'en'
-}
 
 /**
  * Pushes any locally-stored bookmarks to the server, then clears them from local storage.
@@ -131,7 +126,7 @@ export function useRapidToolSet() {
       try {
         const params = new URLSearchParams()
         params.set('q', query.trim())
-        params.set('locale', getSearchLocale())
+        params.set('locale', getLocale())
 
         const url = `${API_BASE}?${params.toString()}`
         const res = await fetch(url, { signal: abortController.current.signal })
@@ -168,19 +163,24 @@ export function useRapidToolSet() {
     [bookmarks],
   )
 
+  /** Records a failed request's error, additionally resetting auth state if the token was revoked. */
+  const handleRequestError = useCallback((err: unknown) => {
+    setSyncError(err instanceof Error ? err.message : 'Sync failed')
+    if (err instanceof AuthRevokedError) {
+      setAuthToken(null)
+      setRemoteUser(null)
+    }
+  }, [])
+
   const toggleBookmark = useCallback(async (tool: Tool) => {
     if (authToken) {
       const alias = tool.alias || extractAlias(tool.url)
       if (isBookmarked(tool.url)) {
         setBookmarks((prev) => prev.filter((b) => b.url !== tool.url))
-        deleteRemoteBookmark(authToken, alias).catch((err) => {
-          setSyncError(err instanceof Error ? err.message : 'Sync failed')
-        })
+        deleteRemoteBookmark(authToken, alias).catch(handleRequestError)
       } else {
         setBookmarks((prev) => [...prev, tool])
-        upsertRemoteBookmarks(authToken, [alias]).catch((err) => {
-          setSyncError(err instanceof Error ? err.message : 'Sync failed')
-        })
+        upsertRemoteBookmarks(authToken, [alias]).catch(handleRequestError)
       }
       return
     }
@@ -205,17 +205,17 @@ export function useRapidToolSet() {
       await migrateLocalBookmarksToRemote(activeToken)
 
       const [remote, user] = await Promise.all([
-        fetchRemoteBookmarks(activeToken, getSearchLocale()),
+        fetchRemoteBookmarks(activeToken, getLocale()),
         fetchRemoteUser(activeToken),
       ])
-      setBookmarks(remote.map((b) => toBookmarkTool(b, getSearchLocale())))
+      setBookmarks(remote.map((b) => toBookmarkTool(b, getLocale())))
       setRemoteUser(user)
 
       const now = Date.now()
       await saveLastSyncedAt(now)
       setLastSyncedAt(now)
     } catch (err) {
-      setSyncError(err instanceof Error ? err.message : 'Sync failed')
+      handleRequestError(err)
       if (options?.fallbackOnError) {
         const local = await loadBookmarks()
         setBookmarks(local)
@@ -223,7 +223,7 @@ export function useRapidToolSet() {
     } finally {
       setSyncing(false)
     }
-  }, [authToken])
+  }, [authToken, handleRequestError])
 
   const connect = useCallback(async () => {
     setConnecting(true)

@@ -1,5 +1,6 @@
 import { browser } from 'wxt/browser'
-import { t } from './i18n'
+import { getLocale, t } from './i18n'
+import { clearAuthToken } from './storage'
 import type { RemoteBookmark, RemoteUser, Tool } from './types'
 
 /**
@@ -10,22 +11,40 @@ import type { RemoteBookmark, RemoteUser, Tool } from './types'
  */
 export const RAPIDTOOLSET_BASE_URL = "https://rapidtoolset.com";
 
-const AUTHORIZE_URL = `${RAPIDTOOLSET_BASE_URL}/en/authorize`
 const USER_ENDPOINT = `${RAPIDTOOLSET_BASE_URL}/api/public/user`
 const BOOKMARKS_ENDPOINT = `${RAPIDTOOLSET_BASE_URL}/api/public/bookmarks`
+
+/**
+ * Error thrown when a request is rejected with 401 because the stored token was
+ * revoked or is otherwise invalid. Callers should treat this as "disconnected"
+ * and prompt the user to reconnect rather than retrying with the same token.
+ */
+export class AuthRevokedError extends Error {}
+
+/**
+ * The `app_id` this build authenticates as, matching one of the values on
+ * RapidToolSet's server-side allow-list of registered redirect URIs (one per
+ * browser/extension-id pair). There's no per-install registration: each
+ * browser target ships with a fixed extension id, so a single app_id per
+ * browser covers every install.
+ */
+function getAppId(): string {
+  return import.meta.env.BROWSER === 'firefox' ? 'firefox-extension' : 'chrome-extension'
+}
 
 /**
  * Launches the RapidToolSet consent screen via the browser's identity flow and
  * resolves with the issued bearer token, or throws if denied/cancelled.
  */
 export async function authorizeRapidToolSet(): Promise<string> {
-  const redirectUri = browser.identity.getRedirectURL()
-  const authUrl = `${AUTHORIZE_URL}?redirect_uri=${encodeURIComponent(redirectUri)}`
+  const appId = getAppId()
+  const locale = getLocale()
+  const authUrl = `${RAPIDTOOLSET_BASE_URL}/${locale}/authorize?app_id=${encodeURIComponent(appId)}`
 
   const redirectUrl = await browser.identity.launchWebAuthFlow({ url: authUrl, interactive: true })
   if (!redirectUrl) throw new Error(t('syncErrorCancelled'))
 
-  const params = new URLSearchParams(new URL(redirectUrl).hash.slice(1))
+  const params = new URL(redirectUrl).searchParams
   const error = params.get('error')
   if (error) throw new Error(error === 'access_denied' ? t('syncErrorDenied') : error)
 
@@ -44,7 +63,13 @@ async function request<T>(url: string, token: string, init?: RequestInit): Promi
     },
   })
 
-  if (res.status === 401) throw new Error(t('syncErrorExpired'))
+  if (res.status === 401) {
+    // Token was revoked (e.g. the user removed the app from their account) or is
+    // otherwise invalid. Clear it so the UI falls back to a "connect" state
+    // instead of repeatedly failing with the same stale token.
+    await clearAuthToken()
+    throw new AuthRevokedError(t('syncErrorExpired'))
+  }
   if (!res.ok) throw new Error(t('syncErrorRequestFailed', String(res.status)))
 
   return res.json() as Promise<T>
