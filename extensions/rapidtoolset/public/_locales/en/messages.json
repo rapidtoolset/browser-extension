@@ -116,7 +116,7 @@
     "description": "Accessible label for the add-bookmark button"
   },
   "syncConnectCta": {
-    "message": "Connect RapidToolSet",
+    "message": "Link",
     "description": "Button label to start the RapidToolSet sync connection flow"
   },
   "syncConnecting": {
@@ -136,7 +136,7 @@
     "description": "Title shown on the sync tab before connecting"
   },
   "syncEmptyDescription": {
-    "message": "Connect your RapidToolSet account to keep bookmarks in sync everywhere.",
+    "message": "Link your RapidToolSet account to keep bookmarks in sync everywhere.",
     "description": "Description shown on the sync tab before connecting"
   },
   "syncSyncing": {

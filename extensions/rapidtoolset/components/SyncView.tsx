@@ -48,12 +48,12 @@ export default function SyncView(props: Props) {
       >
         <Button
           type="button"
-          variant="link"
           size="sm"
           className="mt-2 gap-1.5"
           onClick={() => onConnect()}
           disabled={connecting}
         >
+          <Cloud size={14} />
           {connecting ? t("syncConnecting") : t("syncConnectCta")}
         </Button>
         {error && (

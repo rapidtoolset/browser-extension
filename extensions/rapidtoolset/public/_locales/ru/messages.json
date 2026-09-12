@@ -124,11 +124,11 @@
     "description": "Title shown on the sync tab before connecting"
   },
   "syncEmptyDescription": {
-    "message": "Подключите аккаунт RapidToolSet, чтобы закладки были синхронизированы везде.",
+    "message": "Привяжите аккаунт RapidToolSet, чтобы закладки были синхронизированы везде.",
     "description": "Description shown on the sync tab before connecting"
   },
   "syncConnectCta": {
-    "message": "Подключить RapidToolSet",
+    "message": "Привязать",
     "description": "Button label to start the RapidToolSet sync connection flow"
   },
   "syncConnecting": {
