@@ -35,6 +35,11 @@ function getAppId(): string {
 /**
  * Launches the RapidToolSet consent screen via the browser's identity flow and
  * resolves with the issued bearer token, or throws if denied/cancelled.
+ *
+ * Must be called from the background script, not the popup: Firefox steals focus and
+ * unloads the popup document as soon as `launchWebAuthFlow` opens its auth window, which
+ * would abort any in-flight promise living in the popup's JS context. See
+ * `requestAuthorization()` below and `entrypoints/background.ts`.
  */
 export async function authorizeRapidToolSet(): Promise<string> {
   const appId = getAppId()
@@ -51,6 +56,27 @@ export async function authorizeRapidToolSet(): Promise<string> {
   const token = params.get('token')
   if (!token) throw new Error(t('syncErrorNoToken'))
   return token
+}
+
+/** Runtime message type the popup sends to ask the background script to run the OAuth flow. */
+export const AUTHORIZE_MESSAGE = 'rapidtoolset:authorize'
+
+type AuthorizeResponse = { token: string } | { error: string }
+
+/**
+ * Popup-side entry point for connecting a RapidToolSet account: asks the background script
+ * to run `authorizeRapidToolSet()` (see its docstring for why it can't run in the popup
+ * directly) and resolves with the issued bearer token, or throws if denied/cancelled.
+ *
+ * On Firefox, the popup may be unloaded mid-flow before this response ever arrives; the
+ * background script persists the token to storage itself, and the popup reloads it from
+ * storage on its next mount (see `useRapidToolSet.ts`).
+ */
+export async function requestAuthorization(): Promise<string> {
+  const response = await browser.runtime.sendMessage({ type: AUTHORIZE_MESSAGE }) as AuthorizeResponse | undefined
+  if (!response) throw new Error(t('syncErrorCancelled'))
+  if ('error' in response) throw new Error(response.error)
+  return response.token
 }
 
 async function request<T>(url: string, token: string, init?: RequestInit): Promise<T> {

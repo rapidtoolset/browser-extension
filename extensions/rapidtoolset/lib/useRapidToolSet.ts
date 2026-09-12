@@ -18,12 +18,12 @@ import {
 } from './storage'
 import {
   AuthRevokedError,
-  authorizeRapidToolSet,
   deleteRemoteBookmark,
   extractAlias,
   fetchRemoteBookmarks,
   fetchRemoteUser,
   RAPIDTOOLSET_BASE_URL,
+  requestAuthorization,
   toBookmarkTool,
   upsertRemoteBookmarks,
 } from './sync'
@@ -229,7 +229,7 @@ export function useRapidToolSet() {
     setConnecting(true)
     setSyncError(null)
     try {
-      const token = await authorizeRapidToolSet()
+      const token = await requestAuthorization()
       await saveAuthToken(token)
       setAuthToken(token)
       // Automatically sync (push local bookmarks + pull the account's remote list/profile)
