@@ -1,19 +1,19 @@
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils";
 
 interface PopupContainerProps {
-  children: React.ReactNode
+  children: React.ReactNode;
   /** Popup width in pixels (default: 400) */
-  width?: number
+  width?: number;
   /** Popup max-height in pixels (default: 600) */
-  height?: number
+  height?: number;
   /**
    * When true, applies a fixed `height` (instead of `max-height`) and hides
    * overflow so that flex children with `flex-1` can fill the exact popup
    * height. Useful for extensions with internal scrollable areas (e.g. chat).
    */
-  fixedHeight?: boolean
+  fixedHeight?: boolean;
   /** Additional Tailwind classes on the container */
-  className?: string
+  className?: string;
 }
 
 /**
@@ -32,13 +32,13 @@ export default function PopupContainer({
   return (
     <div
       className={cn(
-        'overflow-x-hidden pl-3 pr-3 py-3',
-        fixedHeight ? 'overflow-y-hidden' : 'overflow-y-auto',
+        "overflow-x-hidden pl-3 pr-3 py-3",
+        fixedHeight ? "overflow-y-hidden" : "overflow-y-auto",
         className,
       )}
       style={{ width, ...(fixedHeight ? { height } : { maxHeight: height }) }}
     >
       {children}
     </div>
-  )
+  );
 }

@@ -14,12 +14,10 @@ Discover and launch web tools, with i18n support. Built with [WXT](https://wxt.d
 ```bash
 npm install
 npm run dev                  # dev mode, launches the browser with hot-reload
-npm run dev -- --locale ru    # dev mode with the browser UI forced to Russian
-npm run dev -- --locale en    # dev mode with the browser UI forced to English
-npm run dev -- --locale ru -- -b firefox  # Russian locale in Firefox
-npm run dev -- -b firefox     # target a specific browser
 npm run build                # production build
 npm run zip                  # zip output for store submission (in .output/)
+npm run format               # write Prettier formatting changes
+npm run format:check         # verify formatting without modifying files
 ```
 
 ## Project layout

@@ -161,14 +161,14 @@
     padding-right: 0 !important;
     margin-right: 0 !important;
   }
-  input[type='color']::-webkit-color-swatch-wrapper {
+  input[type="color"]::-webkit-color-swatch-wrapper {
     padding: 2px;
   }
-  input[type='color']::-webkit-color-swatch {
+  input[type="color"]::-webkit-color-swatch {
     border: none;
     border-radius: var(--radius-sm);
   }
-  input[type='color']::-moz-color-swatch {
+  input[type="color"]::-moz-color-swatch {
     border: none;
     border-radius: var(--radius-sm);
   }

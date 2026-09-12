@@ -1,7 +1,7 @@
-import { browser } from 'wxt/browser'
-import { getLocale, t } from './i18n'
-import { clearAuthToken } from './storage'
-import type { RemoteBookmark, RemoteUser, Tool } from './types'
+import { browser } from "wxt/browser";
+import { getLocale, t } from "./i18n";
+import { clearAuthToken } from "./storage";
+import type { RemoteBookmark, RemoteUser, Tool } from "./types";
 
 /**
  * Base origin for the RapidToolSet API (search + account/sync). Configurable
@@ -11,8 +11,8 @@ import type { RemoteBookmark, RemoteUser, Tool } from './types'
  */
 export const RAPIDTOOLSET_BASE_URL = "https://rapidtoolset.com";
 
-const USER_ENDPOINT = `${RAPIDTOOLSET_BASE_URL}/api/public/user`
-const BOOKMARKS_ENDPOINT = `${RAPIDTOOLSET_BASE_URL}/api/public/bookmarks`
+const USER_ENDPOINT = `${RAPIDTOOLSET_BASE_URL}/api/public/user`;
+const BOOKMARKS_ENDPOINT = `${RAPIDTOOLSET_BASE_URL}/api/public/bookmarks`;
 
 /**
  * Error thrown when a request is rejected with 401 because the stored token was
@@ -29,7 +29,9 @@ export class AuthRevokedError extends Error {}
  * browser covers every install.
  */
 function getAppId(): string {
-  return import.meta.env.BROWSER === 'firefox' ? 'firefox-extension' : 'chrome-extension'
+  return import.meta.env.BROWSER === "firefox"
+    ? "firefox-extension"
+    : "chrome-extension";
 }
 
 /**
@@ -42,26 +44,30 @@ function getAppId(): string {
  * `requestAuthorization()` below and `entrypoints/background.ts`.
  */
 export async function authorizeRapidToolSet(): Promise<string> {
-  const appId = getAppId()
-  const locale = getLocale()
-  const authUrl = `${RAPIDTOOLSET_BASE_URL}/${locale}/authorize?app_id=${encodeURIComponent(appId)}`
+  const appId = getAppId();
+  const locale = getLocale();
+  const authUrl = `${RAPIDTOOLSET_BASE_URL}/${locale}/authorize?app_id=${encodeURIComponent(appId)}`;
 
-  const redirectUrl = await browser.identity.launchWebAuthFlow({ url: authUrl, interactive: true })
-  if (!redirectUrl) throw new Error(t('syncErrorCancelled'))
+  const redirectUrl = await browser.identity.launchWebAuthFlow({
+    url: authUrl,
+    interactive: true,
+  });
+  if (!redirectUrl) throw new Error(t("syncErrorCancelled"));
 
-  const params = new URL(redirectUrl).searchParams
-  const error = params.get('error')
-  if (error) throw new Error(error === 'access_denied' ? t('syncErrorDenied') : error)
+  const params = new URL(redirectUrl).searchParams;
+  const error = params.get("error");
+  if (error)
+    throw new Error(error === "access_denied" ? t("syncErrorDenied") : error);
 
-  const token = params.get('token')
-  if (!token) throw new Error(t('syncErrorNoToken'))
-  return token
+  const token = params.get("token");
+  if (!token) throw new Error(t("syncErrorNoToken"));
+  return token;
 }
 
 /** Runtime message type the popup sends to ask the background script to run the OAuth flow. */
-export const AUTHORIZE_MESSAGE = 'rapidtoolset:authorize'
+export const AUTHORIZE_MESSAGE = "rapidtoolset:authorize";
 
-type AuthorizeResponse = { token: string } | { error: string }
+type AuthorizeResponse = { token: string } | { error: string };
 
 /**
  * Popup-side entry point for connecting a RapidToolSet account: asks the background script
@@ -73,63 +79,91 @@ type AuthorizeResponse = { token: string } | { error: string }
  * storage on its next mount (see `useRapidToolSet.ts`).
  */
 export async function requestAuthorization(): Promise<string> {
-  const response = await browser.runtime.sendMessage({ type: AUTHORIZE_MESSAGE }) as AuthorizeResponse | undefined
-  if (!response) throw new Error(t('syncErrorCancelled'))
-  if ('error' in response) throw new Error(response.error)
-  return response.token
+  const response = (await browser.runtime.sendMessage({
+    type: AUTHORIZE_MESSAGE,
+  })) as AuthorizeResponse | undefined;
+  if (!response) throw new Error(t("syncErrorCancelled"));
+  if ("error" in response) throw new Error(response.error);
+  return response.token;
 }
 
-async function request<T>(url: string, token: string, init?: RequestInit): Promise<T> {
+async function request<T>(
+  url: string,
+  token: string,
+  init?: RequestInit,
+): Promise<T> {
   const res = await fetch(url, {
     ...init,
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...init?.headers,
     },
-  })
+  });
 
   if (res.status === 401) {
     // Token was revoked (e.g. the user removed the app from their account) or is
     // otherwise invalid. Clear it so the UI falls back to a "connect" state
     // instead of repeatedly failing with the same stale token.
-    await clearAuthToken()
-    throw new AuthRevokedError(t('syncErrorExpired'))
+    await clearAuthToken();
+    throw new AuthRevokedError(t("syncErrorExpired"));
   }
-  if (!res.ok) throw new Error(t('syncErrorRequestFailed', String(res.status)))
+  if (!res.ok) throw new Error(t("syncErrorRequestFailed", String(res.status)));
 
-  return res.json() as Promise<T>
+  return res.json() as Promise<T>;
 }
 
 /** Fetch the signed-in RapidToolSet account's basic profile info. */
 export async function fetchRemoteUser(token: string): Promise<RemoteUser> {
-  const body = await request<{ data: RemoteUser }>(USER_ENDPOINT, token)
-  return body.data
+  const body = await request<{ data: RemoteUser }>(USER_ENDPOINT, token);
+  return body.data;
 }
 
 /** Fetch the bookmarks stored for the account, with name/description in the given locale. */
-export async function fetchRemoteBookmarks(token: string, locale?: string): Promise<RemoteBookmark[]> {
-  const url = locale ? `${BOOKMARKS_ENDPOINT}?locale=${encodeURIComponent(locale)}` : BOOKMARKS_ENDPOINT
-  const body = await request<{ data: { bookmarks: RemoteBookmark[] } }>(url, token)
-  return body.data?.bookmarks ?? []
+export async function fetchRemoteBookmarks(
+  token: string,
+  locale?: string,
+): Promise<RemoteBookmark[]> {
+  const url = locale
+    ? `${BOOKMARKS_ENDPOINT}?locale=${encodeURIComponent(locale)}`
+    : BOOKMARKS_ENDPOINT;
+  const body = await request<{ data: { bookmarks: RemoteBookmark[] } }>(
+    url,
+    token,
+  );
+  return body.data?.bookmarks ?? [];
 }
 
 /** Upsert one or more aliases (bookmark urls). Returns the full merged list of aliases. */
-export async function upsertRemoteBookmarks(token: string, aliases: string[]): Promise<string[]> {
-  const body = await request<{ data: { bookmarks: string[] } }>(BOOKMARKS_ENDPOINT, token, {
-    method: 'POST',
-    body: JSON.stringify({ aliases }),
-  })
-  return body.data?.bookmarks ?? []
+export async function upsertRemoteBookmarks(
+  token: string,
+  aliases: string[],
+): Promise<string[]> {
+  const body = await request<{ data: { bookmarks: string[] } }>(
+    BOOKMARKS_ENDPOINT,
+    token,
+    {
+      method: "POST",
+      body: JSON.stringify({ aliases }),
+    },
+  );
+  return body.data?.bookmarks ?? [];
 }
 
 /** Remove a single alias (bookmark url). Returns the remaining list of aliases. */
-export async function deleteRemoteBookmark(token: string, alias: string): Promise<string[]> {
-  const body = await request<{ data: { bookmarks: string[] } }>(BOOKMARKS_ENDPOINT, token, {
-    method: 'DELETE',
-    body: JSON.stringify({ alias }),
-  })
-  return body.data?.bookmarks ?? []
+export async function deleteRemoteBookmark(
+  token: string,
+  alias: string,
+): Promise<string[]> {
+  const body = await request<{ data: { bookmarks: string[] } }>(
+    BOOKMARKS_ENDPOINT,
+    token,
+    {
+      method: "DELETE",
+      body: JSON.stringify({ alias }),
+    },
+  );
+  return body.data?.bookmarks ?? [];
 }
 
 /**
@@ -139,19 +173,19 @@ export async function deleteRemoteBookmark(token: string, alias: string): Promis
  */
 export function extractAlias(urlOrAlias: string): string {
   try {
-    const segments = new URL(urlOrAlias).pathname.split('/').filter(Boolean)
-    return segments[segments.length - 1] || urlOrAlias
+    const segments = new URL(urlOrAlias).pathname.split("/").filter(Boolean);
+    return segments[segments.length - 1] || urlOrAlias;
   } catch {
-    return urlOrAlias
+    return urlOrAlias;
   }
 }
 
 /** Converts a remote bookmark entry (alias + localized name/description) into a local Tool. */
-export function toBookmarkTool(bookmark: RemoteBookmark, locale = 'en'): Tool {
+export function toBookmarkTool(bookmark: RemoteBookmark, locale = "en"): Tool {
   return {
     alias: bookmark.alias,
     url: `${RAPIDTOOLSET_BASE_URL}/${locale}/tool/${bookmark.alias}`,
     name: bookmark.name || bookmark.alias,
-    description: bookmark.description || t('syncedBookmarkDescription'),
-  }
+    description: bookmark.description || t("syncedBookmarkDescription"),
+  };
 }

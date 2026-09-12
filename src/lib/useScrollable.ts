@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from "react";
 
-const isFirefox = typeof navigator !== 'undefined' && /Firefox/i.test(navigator.userAgent)
+const isFirefox =
+  typeof navigator !== "undefined" && /Firefox/i.test(navigator.userAgent);
 
 /**
  * Detects whether an element's content overflows vertically (is scrollable).
@@ -11,33 +12,33 @@ const isFirefox = typeof navigator !== 'undefined' && /Firefox/i.test(navigator.
  * so extra padding is not needed there.
  */
 export function useScrollable<T extends HTMLElement = HTMLDivElement>() {
-  const ref = useRef<T>(null)
-  const [isScrollable, setIsScrollable] = useState(false)
+  const ref = useRef<T>(null);
+  const [isScrollable, setIsScrollable] = useState(false);
 
   useEffect(() => {
-    const el = ref.current
-    if (!el) return
+    const el = ref.current;
+    if (!el) return;
 
     const check = () => {
-      setIsScrollable(el.scrollHeight > el.clientHeight)
-    }
+      setIsScrollable(el.scrollHeight > el.clientHeight);
+    };
 
-    check()
+    check();
 
-    const resizeObserver = new ResizeObserver(check)
-    resizeObserver.observe(el)
+    const resizeObserver = new ResizeObserver(check);
+    resizeObserver.observe(el);
 
     // Content additions/removals may change scrollHeight without resizing the container
-    const mutationObserver = new MutationObserver(check)
-    mutationObserver.observe(el, { childList: true, subtree: true })
+    const mutationObserver = new MutationObserver(check);
+    mutationObserver.observe(el, { childList: true, subtree: true });
 
     return () => {
-      resizeObserver.disconnect()
-      mutationObserver.disconnect()
-    }
-  }, [])
+      resizeObserver.disconnect();
+      mutationObserver.disconnect();
+    };
+  }, []);
 
-  const needsPadding = !isFirefox
+  const needsPadding = !isFirefox;
 
-  return { ref, isScrollable, needsPadding }
+  return { ref, isScrollable, needsPadding };
 }

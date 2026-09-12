@@ -1,6 +1,6 @@
-import ExtensionHeader from '@/components/ExtensionHeader'
-import PopupContainer from '@/components/PopupContainer'
-import RapidToolSetView from '../../components/RapidToolSetView'
+import ExtensionHeader from "@/components/ExtensionHeader";
+import PopupContainer from "@/components/PopupContainer";
+import RapidToolSetView from "../../components/RapidToolSetView";
 
 export default function App() {
   return (
@@ -8,5 +8,5 @@ export default function App() {
       <ExtensionHeader />
       <RapidToolSetView />
     </PopupContainer>
-  )
+  );
 }

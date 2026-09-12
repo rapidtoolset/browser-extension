@@ -1,14 +1,24 @@
-import { Bookmark, BookmarkPlus, Cloud, Globe, Loader2, Search, SearchX, Telescope, TriangleAlert } from 'lucide-react'
-import EmptyState from '@/components/EmptyState'
-import { Input } from '@/components/ui/input'
-import { Spinner } from '@/components/ui/spinner'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useScrollable } from '@/lib/useScrollable'
-import ToolCard from './ToolCard'
-import SyncView from './SyncView'
-import { useRapidToolSet } from '../lib/useRapidToolSet'
-import { t } from '../lib/i18n'
-import type { SearchTab } from '../lib/types'
+import {
+  Bookmark,
+  BookmarkPlus,
+  Cloud,
+  Globe,
+  Loader2,
+  Search,
+  SearchX,
+  Telescope,
+  TriangleAlert,
+} from "lucide-react";
+import EmptyState from "@/components/EmptyState";
+import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useScrollable } from "@/lib/useScrollable";
+import ToolCard from "./ToolCard";
+import SyncView from "./SyncView";
+import { useRapidToolSet } from "../lib/useRapidToolSet";
+import { t } from "../lib/i18n";
+import type { SearchTab } from "../lib/types";
 
 export default function RapidToolSetView() {
   const {
@@ -34,33 +44,44 @@ export default function RapidToolSetView() {
     connect,
     disconnect,
     sync,
-  } = useRapidToolSet()
-  const { ref: onlineRef, needsPadding: onlinePadding } = useScrollable<HTMLDivElement>()
-  const { ref: bookmarksRef, needsPadding: bookmarksPadding } = useScrollable<HTMLDivElement>()
+  } = useRapidToolSet();
+  const { ref: onlineRef, needsPadding: onlinePadding } =
+    useScrollable<HTMLDivElement>();
+  const { ref: bookmarksRef, needsPadding: bookmarksPadding } =
+    useScrollable<HTMLDivElement>();
 
-  const showSpinner = tab === 'online' ? isSearching : tab === 'bookmarks' ? loadingBookmarks : false
+  const showSpinner =
+    tab === "online"
+      ? isSearching
+      : tab === "bookmarks"
+        ? loadingBookmarks
+        : false;
 
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-3">
-      <Tabs value={tab} onValueChange={(v) => setTab(v as SearchTab)} className="flex min-h-0 flex-1 flex-col gap-3">
+      <Tabs
+        value={tab}
+        onValueChange={(v) => setTab(v as SearchTab)}
+        className="flex min-h-0 flex-1 flex-col gap-3"
+      >
         {/* Fixed header: tabs + search + status */}
         <div className="flex shrink-0 flex-col gap-3">
           <TabsList className="w-full">
             <TabsTrigger value="online" className="flex-1 gap-1.5 ">
               <Globe size={12} />
-              {t('tabOnline')}
+              {t("tabOnline")}
             </TabsTrigger>
             <TabsTrigger value="bookmarks" className="flex-1 gap-1.5 ">
               <Bookmark size={12} />
-              {t('tabBookmarks')}
+              {t("tabBookmarks")}
             </TabsTrigger>
             <TabsTrigger value="sync" className="flex-1 gap-1.5 ">
               <Cloud size={12} />
-              {t('tabSync')}
+              {t("tabSync")}
             </TabsTrigger>
           </TabsList>
 
-          {tab !== 'sync' && (
+          {tab !== "sync" && (
             <div className="relative">
               <Search
                 size={16}
@@ -70,10 +91,14 @@ export default function RapidToolSetView() {
                 autoFocus
                 spellCheck={false}
                 className="pl-9 pr-10 h-10"
-                placeholder={tab === 'online' ? t('searchPlaceholderOnline') : t('searchPlaceholderBookmarks')}
+                placeholder={
+                  tab === "online"
+                    ? t("searchPlaceholderOnline")
+                    : t("searchPlaceholderBookmarks")
+                }
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                aria-label={t('searchAriaLabel')}
+                aria-label={t("searchAriaLabel")}
               />
               {showSpinner && (
                 <Loader2
@@ -97,23 +122,27 @@ export default function RapidToolSetView() {
         <TabsContent
           value="online"
           ref={onlineRef}
-          className={`flex min-h-0 flex-1 flex-col gap-2 overflow-y-scroll ${onlinePadding ? 'pr-3' : ''}`}
+          className={`flex min-h-0 flex-1 flex-col gap-2 overflow-y-scroll ${onlinePadding ? "pr-3" : ""}`}
         >
           {!isSearchMode && !isSearching && (
             <EmptyState
               icon={<Telescope />}
-              title={t('emptyOnlinePrompt')}
+              title={t("emptyOnlinePrompt")}
               className="flex-1"
             />
           )}
 
-          {isSearchMode && !isSearching && !searchError && hasSearched && searchResults.length === 0 && (
-            <EmptyState
-              icon={<SearchX />}
-              title={t('emptyNoToolsFound')}
-              className="flex-1"
-            />
-          )}
+          {isSearchMode &&
+            !isSearching &&
+            !searchError &&
+            hasSearched &&
+            searchResults.length === 0 && (
+              <EmptyState
+                icon={<SearchX />}
+                title={t("emptyNoToolsFound")}
+                className="flex-1"
+              />
+            )}
 
           {searchResults.map((tool) => (
             <ToolCard
@@ -129,32 +158,37 @@ export default function RapidToolSetView() {
         <TabsContent
           value="bookmarks"
           ref={bookmarksRef}
-          className={`flex min-h-0 flex-1 flex-col gap-2 overflow-y-scroll ${bookmarksPadding ? 'pr-3' : ''}`}
+          className={`flex min-h-0 flex-1 flex-col gap-2 overflow-y-scroll ${bookmarksPadding ? "pr-3" : ""}`}
         >
           {loadingBookmarks && (
             <div className="flex items-center justify-center gap-2 py-6 text-muted-foreground">
               <Spinner className="size-3.5" />
-              {t('statusLoading')}
+              {t("statusLoading")}
             </div>
           )}
 
           {!loadingBookmarks && bookmarks.length === 0 && (
             <EmptyState
               icon={<BookmarkPlus />}
-              title={query.trim() ? t('emptyBookmarksNoMatch') : t('emptyBookmarksNone')}
-              description={!query.trim() ? t('emptyBookmarksCta') : undefined}
+              title={
+                query.trim()
+                  ? t("emptyBookmarksNoMatch")
+                  : t("emptyBookmarksNone")
+              }
+              description={!query.trim() ? t("emptyBookmarksCta") : undefined}
               className="flex-1"
             />
           )}
 
-          {!loadingBookmarks && bookmarks.map((tool) => (
-            <ToolCard
-              key={tool.url}
-              tool={tool}
-              bookmarked={isBookmarked(tool.url)}
-              onToggleBookmark={toggleBookmark}
-            />
-          ))}
+          {!loadingBookmarks &&
+            bookmarks.map((tool) => (
+              <ToolCard
+                key={tool.url}
+                tool={tool}
+                bookmarked={isBookmarked(tool.url)}
+                onToggleBookmark={toggleBookmark}
+              />
+            ))}
         </TabsContent>
 
         {/* Sync tab */}
@@ -173,5 +207,5 @@ export default function RapidToolSetView() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

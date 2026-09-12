@@ -1,29 +1,29 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { Bookmark, BookmarkCheck } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { t } from '../lib/i18n'
-import type { Tool } from '../lib/types'
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Bookmark, BookmarkCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { t } from "../lib/i18n";
+import type { Tool } from "../lib/types";
 
 interface Props {
-  tool: Tool
-  bookmarked: boolean
-  onToggleBookmark: (tool: Tool) => void
+  tool: Tool;
+  bookmarked: boolean;
+  onToggleBookmark: (tool: Tool) => void;
 }
 
 export default function ToolCard(props: Props) {
-  const { tool, bookmarked, onToggleBookmark } = props
-  const [expanded, setExpanded] = useState(false)
-  const [clamped, setClamped] = useState(false)
-  const descRef = useRef<HTMLParagraphElement>(null)
+  const { tool, bookmarked, onToggleBookmark } = props;
+  const [expanded, setExpanded] = useState(false);
+  const [clamped, setClamped] = useState(false);
+  const descRef = useRef<HTMLParagraphElement>(null);
 
   const checkClamp = useCallback(() => {
-    const el = descRef.current
-    if (el) setClamped(el.scrollHeight > el.clientHeight + 1)
-  }, [])
+    const el = descRef.current;
+    if (el) setClamped(el.scrollHeight > el.clientHeight + 1);
+  }, []);
 
   useEffect(() => {
-    checkClamp()
-  }, [tool.description, checkClamp])
+    checkClamp();
+  }, [tool.description, checkClamp]);
 
   return (
     <div className="flex items-start gap-2 rounded-lg border bg-card p-3 text-sm text-card-foreground shadow-xs transition-colors hover:bg-accent/30">
@@ -40,7 +40,7 @@ export default function ToolCard(props: Props) {
         </div>
         <p
           ref={descRef}
-          className={`mt-0.5 leading-snug text-muted-foreground transition-all duration-200 ${expanded ? '' : 'line-clamp-2'}`}
+          className={`mt-0.5 leading-snug text-muted-foreground transition-all duration-200 ${expanded ? "" : "line-clamp-2"}`}
         >
           {tool.description}
         </p>
@@ -50,7 +50,7 @@ export default function ToolCard(props: Props) {
             className="mt-0.5 font-medium text-primary hover:text-primary/80 transition-colors cursor-pointer"
             onClick={() => setExpanded((v) => !v)}
           >
-            {expanded ? t('showLess') : t('showMore')}
+            {expanded ? t("showLess") : t("showMore")}
           </button>
         )}
       </div>
@@ -58,7 +58,7 @@ export default function ToolCard(props: Props) {
         variant="ghost"
         size="icon"
         className="shrink-0"
-        aria-label={bookmarked ? t('removeBookmark') : t('addBookmark')}
+        aria-label={bookmarked ? t("removeBookmark") : t("addBookmark")}
         onClick={() => onToggleBookmark(tool)}
       >
         {bookmarked ? (
@@ -68,5 +68,5 @@ export default function ToolCard(props: Props) {
         )}
       </Button>
     </div>
-  )
+  );
 }

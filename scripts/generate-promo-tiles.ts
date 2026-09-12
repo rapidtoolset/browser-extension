@@ -16,173 +16,194 @@
  *   npx tsx scripts/generate-promo-tiles.ts table-extractor pihole-manager
  */
 
-import fs from 'node:fs'
-import path from 'node:path'
-import sharp from 'sharp'
+import fs from "node:fs";
+import path from "node:path";
+import sharp from "sharp";
 
-const ROOT = path.resolve(import.meta.dirname, '..')
-const EXTENSIONS_DIR = path.join(ROOT, 'extensions')
+const ROOT = path.resolve(import.meta.dirname, "..");
+const EXTENSIONS_DIR = path.join(ROOT, "extensions");
 
 type TileSpec = {
-  file: string
-  width: number
-  height: number
-}
+  file: string;
+  width: number;
+  height: number;
+};
 
 const TILES: TileSpec[] = [
-  { file: 'promo-small.png', width: 440, height: 280 },
-  { file: 'promo-marquee.png', width: 1400, height: 560 },
-]
+  { file: "promo-small.png", width: 440, height: 280 },
+  { file: "promo-marquee.png", width: 1400, height: 560 },
+];
 
 /** Override auto-derived display name for specific extensions. */
 const NAME_OVERRIDE: Record<string, string> = {
-  'pihole-manager': 'Pi-hole Manager',
-  'rapidtoolset': 'RapidToolSet',
-}
+  "pihole-manager": "Pi-hole Manager",
+  rapidtoolset: "RapidToolSet",
+};
 
 /** Short tagline shown under the name. Falls back to manifest description. */
 const TAGLINE_OVERRIDE: Record<string, string> = {
-  'breakpoint-viewer': 'See the active CSS breakpoint instantly.',
-  'ollama-client': 'Chat with local AI in your browser.',
-  'pihole-manager': 'Control every Pi-hole from one place.',
-  'table-extractor': 'Export any web table to CSV or XLSX.',
-  'rapidtoolset': 'Find and save the web tools you love.',
-  'website-blocker': 'Block distractions. Reclaim your focus.',
-}
+  "breakpoint-viewer": "See the active CSS breakpoint instantly.",
+  "ollama-client": "Chat with local AI in your browser.",
+  "pihole-manager": "Control every Pi-hole from one place.",
+  "table-extractor": "Export any web table to CSV or XLSX.",
+  rapidtoolset: "Find and save the web tools you love.",
+  "website-blocker": "Block distractions. Reclaim your focus.",
+};
 
 function slugToName(slug: string): string {
   return slug
-    .split('-')
+    .split("-")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ')
+    .join(" ");
 }
 
 /** Read name + description from an extension's manifest.config.ts (best-effort regex). */
-function readManifestMeta(slug: string): { name?: string; description?: string } {
-  const file = path.join(EXTENSIONS_DIR, slug, 'manifest.config.ts')
-  if (!fs.existsSync(file)) return {}
-  const src = fs.readFileSync(file, 'utf8')
-  const nameMatch = src.match(/name:\s*['"`]([^'"`]+)['"`]/)
-  const descMatch = src.match(/description:\s*['"`]([^'"`]+)['"`]/)
+function readManifestMeta(slug: string): {
+  name?: string;
+  description?: string;
+} {
+  const file = path.join(EXTENSIONS_DIR, slug, "manifest.config.ts");
+  if (!fs.existsSync(file)) return {};
+  const src = fs.readFileSync(file, "utf8");
+  const nameMatch = src.match(/name:\s*['"`]([^'"`]+)['"`]/);
+  const descMatch = src.match(/description:\s*['"`]([^'"`]+)['"`]/);
   return {
     name: nameMatch?.[1],
     description: descMatch?.[1],
-  }
+  };
 }
 
 /** Read locale messages for rapidtoolset style i18n manifests. */
 function readLocaleMeta(slug: string): { name?: string; description?: string } {
-  const file = path.join(EXTENSIONS_DIR, slug, 'public', '_locales', 'en', 'messages.json')
-  if (!fs.existsSync(file)) return {}
+  const file = path.join(
+    EXTENSIONS_DIR,
+    slug,
+    "public",
+    "_locales",
+    "en",
+    "messages.json",
+  );
+  if (!fs.existsSync(file)) return {};
   try {
-    const json = JSON.parse(fs.readFileSync(file, 'utf8'))
+    const json = JSON.parse(fs.readFileSync(file, "utf8"));
     return {
       name: json?.extName?.message,
       description: json?.extDescription?.message,
-    }
+    };
   } catch {
-    return {}
+    return {};
   }
 }
 
 /** XML-escape user supplied text for SVG. */
 function escapeXml(s: string): string {
   return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 }
 
 /** Naive word-wrap into N lines that fit a max chars-per-line budget.
  * If the text doesn't fit in maxLines, the remainder is forced into the last
  * line so we never silently drop trailing words. */
 function wrap(text: string, maxChars: number, maxLines: number): string[] {
-  const words = text.split(/\s+/).filter(Boolean)
-  const lines: string[] = []
-  let current = ''
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let current = "";
   for (let i = 0; i < words.length; i++) {
-    const w = words[i]
-    const candidate = current ? `${current} ${w}` : w
+    const w = words[i];
+    const candidate = current ? `${current} ${w}` : w;
     if (candidate.length <= maxChars) {
-      current = candidate
-      continue
+      current = candidate;
+      continue;
     }
     if (lines.length >= maxLines - 1) {
       // Last allowed line: append everything remaining so no words are lost.
-      const rest = words.slice(i).join(' ')
-      current = current ? `${current} ${rest}` : rest
-      continue
+      const rest = words.slice(i).join(" ");
+      current = current ? `${current} ${rest}` : rest;
+      continue;
     }
-    if (current) lines.push(current)
-    current = w
+    if (current) lines.push(current);
+    current = w;
   }
-  if (current && lines.length < maxLines) lines.push(current)
-  return lines
+  if (current && lines.length < maxLines) lines.push(current);
+  return lines;
 }
 
 function buildTileSvg(opts: {
-  width: number
-  height: number
-  name: string
-  tagline: string
+  width: number;
+  height: number;
+  name: string;
+  tagline: string;
 }): string {
-  const { width, height, name, tagline } = opts
+  const { width, height, name, tagline } = opts;
 
   // Approximate character widths (em units) for the system sans stack.
   // These are deliberately conservative — overestimating makes the auto-
   // centered composition drift left because textBlockWidth ends up larger
   // than the actually rendered text.
-  const NAME_CHAR_EM = 0.52 // bold
-  const TAGLINE_CHAR_EM = 0.46 // regular
+  const NAME_CHAR_EM = 0.52; // bold
+  const TAGLINE_CHAR_EM = 0.46; // regular
 
   // Auto-shrink the name font until it fits a sensible max width.
   // Use modest side padding as a hard cap; the composition will still be
   // visually centered based on actual content width. Smaller tiles get a
   // proportionally larger padding ratio so the content doesn't feel cramped.
-  const sidePaddingRatio = width < 800 ? 0.1 : 0.075
-  const sidePadding = Math.round(width * sidePaddingRatio)
-  const maxContentWidth = width - sidePadding * 2
-  const maxTextWidth = maxContentWidth
+  const sidePaddingRatio = width < 800 ? 0.1 : 0.075;
+  const sidePadding = Math.round(width * sidePaddingRatio);
+  const maxContentWidth = width - sidePadding * 2;
+  const maxTextWidth = maxContentWidth;
 
-  let nameFontSize = Math.round(height * 0.16)
-  const nameMin = Math.round(height * 0.1)
-  while (nameFontSize > nameMin && name.length * NAME_CHAR_EM * nameFontSize > maxTextWidth) {
-    nameFontSize -= 1
+  let nameFontSize = Math.round(height * 0.16);
+  const nameMin = Math.round(height * 0.1);
+  while (
+    nameFontSize > nameMin &&
+    name.length * NAME_CHAR_EM * nameFontSize > maxTextWidth
+  ) {
+    nameFontSize -= 1;
   }
 
-  const taglineFontSize = Math.round(height * (width < 800 ? 0.062 : 0.075))
-  const lineGap = Math.round(taglineFontSize * 0.4)
+  const taglineFontSize = Math.round(height * (width < 800 ? 0.062 : 0.075));
+  const lineGap = Math.round(taglineFontSize * 0.4);
 
-  const taglineChars = Math.max(12, Math.floor(maxTextWidth / (taglineFontSize * TAGLINE_CHAR_EM)))
-  const taglineLines = wrap(tagline, taglineChars, 2)
+  const taglineChars = Math.max(
+    12,
+    Math.floor(maxTextWidth / (taglineFontSize * TAGLINE_CHAR_EM)),
+  );
+  const taglineLines = wrap(tagline, taglineChars, 2);
 
   // Measure the actual text block width so we can center the whole composition.
-  const nameWidth = name.length * NAME_CHAR_EM * nameFontSize
+  const nameWidth = name.length * NAME_CHAR_EM * nameFontSize;
   const taglineWidth = taglineLines.reduce(
-    (max, line) => Math.max(max, line.length * TAGLINE_CHAR_EM * taglineFontSize),
+    (max, line) =>
+      Math.max(max, line.length * TAGLINE_CHAR_EM * taglineFontSize),
     0,
-  )
-  const textBlockWidth = Math.min(maxTextWidth, Math.max(nameWidth, taglineWidth))
-  const textX = Math.round(width / 2)
+  );
+  const textBlockWidth = Math.min(
+    maxTextWidth,
+    Math.max(nameWidth, taglineWidth),
+  );
+  const textX = Math.round(width / 2);
 
   // Vertically center the text block (name + gap + tagline lines).
   const taglineBlockHeight =
-    taglineLines.length * taglineFontSize + Math.max(0, taglineLines.length - 1) * lineGap
-  const nameToTaglineGap = Math.round(nameFontSize * 0.35)
-  const totalBlockHeight = nameFontSize + nameToTaglineGap + taglineBlockHeight
-  const textTop = Math.round((height - totalBlockHeight) / 2)
+    taglineLines.length * taglineFontSize +
+    Math.max(0, taglineLines.length - 1) * lineGap;
+  const nameToTaglineGap = Math.round(nameFontSize * 0.35);
+  const totalBlockHeight = nameFontSize + nameToTaglineGap + taglineBlockHeight;
+  const textTop = Math.round((height - totalBlockHeight) / 2);
 
-  const nameBaselineY = textTop + nameFontSize
-  const taglineStartY = nameBaselineY + nameToTaglineGap + taglineFontSize
+  const nameBaselineY = textTop + nameFontSize;
+  const taglineStartY = nameBaselineY + nameToTaglineGap + taglineFontSize;
 
   const taglineTspans = taglineLines
     .map((line, i) => {
-      const dy = i === 0 ? 0 : taglineFontSize + lineGap
-      return `<tspan x="${textX}" dy="${dy}">${escapeXml(line)}</tspan>`
+      const dy = i === 0 ? 0 : taglineFontSize + lineGap;
+      return `<tspan x="${textX}" dy="${dy}">${escapeXml(line)}</tspan>`;
     })
-    .join('')
+    .join("");
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <rect width="${width}" height="${height}" fill="#111111"/>
@@ -202,7 +223,7 @@ function buildTileSvg(opts: {
     font-weight="400"
     fill="#bbbbbb"
   >${taglineTspans}</text>
-</svg>`
+</svg>`;
 }
 
 function discoverExtensions(): string[] {
@@ -211,25 +232,31 @@ function discoverExtensions(): string[] {
     .filter(
       (d) =>
         d.isDirectory() &&
-        fs.existsSync(path.join(EXTENSIONS_DIR, d.name, 'manifest.config.ts')),
+        fs.existsSync(path.join(EXTENSIONS_DIR, d.name, "manifest.config.ts")),
     )
-    .map((d) => d.name)
+    .map((d) => d.name);
 }
 
 async function generateTilesFor(slug: string) {
-  const manifestMeta = readManifestMeta(slug)
-  const localeMeta = readLocaleMeta(slug)
+  const manifestMeta = readManifestMeta(slug);
+  const localeMeta = readLocaleMeta(slug);
 
-  const rawName = manifestMeta.name && !manifestMeta.name.startsWith('__MSG_') ? manifestMeta.name : undefined
-  const name = NAME_OVERRIDE[slug] ?? rawName ?? localeMeta.name ?? slugToName(slug)
+  const rawName =
+    manifestMeta.name && !manifestMeta.name.startsWith("__MSG_")
+      ? manifestMeta.name
+      : undefined;
+  const name =
+    NAME_OVERRIDE[slug] ?? rawName ?? localeMeta.name ?? slugToName(slug);
 
-  const rawDesc = manifestMeta.description && !manifestMeta.description.startsWith('__MSG_')
-    ? manifestMeta.description
-    : undefined
-  const tagline = TAGLINE_OVERRIDE[slug] ?? rawDesc ?? localeMeta.description ?? ''
+  const rawDesc =
+    manifestMeta.description && !manifestMeta.description.startsWith("__MSG_")
+      ? manifestMeta.description
+      : undefined;
+  const tagline =
+    TAGLINE_OVERRIDE[slug] ?? rawDesc ?? localeMeta.description ?? "";
 
-  const outDir = path.join(EXTENSIONS_DIR, slug, 'public')
-  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true })
+  const outDir = path.join(EXTENSIONS_DIR, slug, "public");
+  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
   await Promise.all(
     TILES.map(async (tile) => {
@@ -238,34 +265,36 @@ async function generateTilesFor(slug: string) {
         height: tile.height,
         name,
         tagline,
-      })
-      const outPath = path.join(outDir, tile.file)
-      await sharp(Buffer.from(svg)).png().toFile(outPath)
+      });
+      const outPath = path.join(outDir, tile.file);
+      await sharp(Buffer.from(svg)).png().toFile(outPath);
     }),
-  )
+  );
 
-  console.log(`  ✔ ${slug} → ${TILES.map((t) => `${t.width}x${t.height}`).join(', ')}`)
+  console.log(
+    `  ✔ ${slug} → ${TILES.map((t) => `${t.width}x${t.height}`).join(", ")}`,
+  );
 }
 
 async function main() {
-  const args = process.argv.slice(2)
-  const targets = args.length > 0 ? args : discoverExtensions()
+  const args = process.argv.slice(2);
+  const targets = args.length > 0 ? args : discoverExtensions();
 
-  console.log(`Generating promo tiles for ${targets.length} extension(s)...\n`)
+  console.log(`Generating promo tiles for ${targets.length} extension(s)...\n`);
 
   for (const slug of targets) {
-    const dir = path.join(EXTENSIONS_DIR, slug)
+    const dir = path.join(EXTENSIONS_DIR, slug);
     if (!fs.existsSync(dir)) {
-      console.error(`  ✘ "${slug}" - directory not found, skipping`)
-      continue
+      console.error(`  ✘ "${slug}" - directory not found, skipping`);
+      continue;
     }
-    await generateTilesFor(slug)
+    await generateTilesFor(slug);
   }
 
-  console.log('\nDone.')
+  console.log("\nDone.");
 }
 
 main().catch((err) => {
-  console.error(err)
-  process.exit(1)
-})
+  console.error(err);
+  process.exit(1);
+});

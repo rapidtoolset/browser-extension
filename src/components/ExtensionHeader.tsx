@@ -1,47 +1,52 @@
-import { browser } from 'wxt/browser'
-import { useTheme, type ThemePreference } from '@/lib/useTheme'
-import { Sun, Moon, Palette } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
+import { browser } from "wxt/browser";
+import { useTheme, type ThemePreference } from "@/lib/useTheme";
+import { Sun, Moon, Palette } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-
+} from "@/components/ui/dropdown-menu";
 
 interface ExtensionHeaderProps {
   /** Override the extension name (defaults to manifest name) */
-  name?: string
+  name?: string;
   /** Developer / company name shown in the header */
-  developer?: string
+  developer?: string;
 }
 
-const themeOptions: { value: ThemePreference; label: string; icon: React.ReactNode }[] = [
-  { value: 'light', label: 'Light', icon: <Sun size={14} /> },
-  { value: 'dark', label: 'Dark', icon: <Moon size={14} /> },
-  { value: 'system', label: 'System', icon: <Palette size={14} /> },
-]
+const themeOptions: {
+  value: ThemePreference;
+  label: string;
+  icon: React.ReactNode;
+}[] = [
+  { value: "light", label: "Light", icon: <Sun size={14} /> },
+  { value: "dark", label: "Dark", icon: <Moon size={14} /> },
+  { value: "system", label: "System", icon: <Palette size={14} /> },
+];
 
 function ThemeIcon({ theme }: { theme: ThemePreference }) {
-  if (theme === 'light') return <Sun size={14} />
-  if (theme === 'dark') return <Moon size={14} />
-  return <Palette size={14} />
+  if (theme === "light") return <Sun size={14} />;
+  if (theme === "dark") return <Moon size={14} />;
+  return <Palette size={14} />;
 }
 
 export default function ExtensionHeader(props: ExtensionHeaderProps) {
-  const manifest = browser.runtime.getManifest()
-  const name = props.name ?? manifest.name ?? 'Extension'
-  const { theme, setTheme } = useTheme()
+  const manifest = browser.runtime.getManifest();
+  const name = props.name ?? manifest.name ?? "Extension";
+  const { theme, setTheme } = useTheme();
 
   return (
     <div className="mb-3 space-y-2">
       <div className="flex items-center text-sm mb-3">
         <div className="flex flex-col gap-0.5">
-          <span className="font-semibold tracking-tight text-sm text-foreground/90">{name}</span>
+          <span className="font-semibold tracking-tight text-sm text-foreground/90">
+            {name}
+          </span>
           <span className="text-muted-foreground/50 text-xs">
-            by{' '}
+            by{" "}
             <a
               href="https://rapidtoolset.com/"
               target="_blank"
@@ -65,7 +70,7 @@ export default function ExtensionHeader(props: ExtensionHeaderProps) {
                 <DropdownMenuItem
                   key={value}
                   onClick={() => setTheme(value)}
-                  className={theme === value ? 'bg-accent' : ''}
+                  className={theme === value ? "bg-accent" : ""}
                 >
                   <span className="mr-2">{icon}</span>
                   {label}
@@ -78,5 +83,5 @@ export default function ExtensionHeader(props: ExtensionHeaderProps) {
 
       <Separator />
     </div>
-  )
+  );
 }
