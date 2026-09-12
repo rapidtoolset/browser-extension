@@ -31,6 +31,10 @@
     "message": "Search tools",
     "description": "Accessible label for the search input"
   },
+  "clearSearch": {
+    "message": "Clear search",
+    "description": "Accessible label for the button that clears the search input"
+  },
   "statusSearching": {
     "message": "Searching…",
     "description": "Status text shown while a search is in progress"

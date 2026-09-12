@@ -8,6 +8,7 @@ import {
   SearchX,
   Telescope,
   TriangleAlert,
+  X,
 } from "lucide-react";
 import EmptyState from "@/components/EmptyState";
 import { Input } from "@/components/ui/input";
@@ -100,11 +101,22 @@ export default function RapidToolSetView() {
                 onChange={(e) => setQuery(e.target.value)}
                 aria-label={t("searchAriaLabel")}
               />
-              {showSpinner && (
+              {showSpinner ? (
                 <Loader2
                   size={14}
                   className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 shrink-0 animate-spin text-primary"
                 />
+              ) : (
+                query && (
+                  <button
+                    type="button"
+                    onClick={() => setQuery("")}
+                    aria-label={t("clearSearch")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 shrink-0 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                  >
+                    <X size={14} />
+                  </button>
+                )
               )}
             </div>
           )}
