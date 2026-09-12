@@ -3,13 +3,13 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "wxt";
 import manifest from "./extensions/rapidtoolset/manifest.config";
+import { isSupportedLocale } from "./extensions/rapidtoolset/lib/locales";
 
 const root = import.meta.dirname;
-const supportedLocales = new Set(["en", "ru"]);
 
 function getBrowserLocaleConfig() {
   const locale = process.env.WXT_RAPIDTOOLSET_LOCALE?.toLowerCase();
-  if (!locale || !supportedLocales.has(locale)) return {};
+  if (!locale || !isSupportedLocale(locale)) return {};
 
   return locale === "ru"
     ? {

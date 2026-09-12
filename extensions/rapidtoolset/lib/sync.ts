@@ -1,18 +1,30 @@
 import { browser } from "wxt/browser";
 import { getLocale, t } from "./i18n";
 import { clearAuthToken } from "./storage";
-import type { RemoteBookmark, RemoteUser, Tool } from "./types";
+import type {
+  RemoteBookmark,
+  RemoteUser,
+  Tool,
+  ToolSearchResponse,
+} from "./types";
 
-/**
- * Base origin for the RapidToolSet API (search + account/sync). Configurable
- * via the WXT_RAPIDTOOLSET_API_URL env var (see .env / .env.development at
- * the repo root) so dev builds can point at a local/staging instance while
- * prod builds use the public site.
- */
+/** Base origin for the RapidToolSet API (search + account/sync). */
 export const RAPIDTOOLSET_BASE_URL = "https://rapidtoolset.com";
 
 const USER_ENDPOINT = `${RAPIDTOOLSET_BASE_URL}/api/public/user`;
 const BOOKMARKS_ENDPOINT = `${RAPIDTOOLSET_BASE_URL}/api/public/bookmarks`;
+const SEARCH_ENDPOINT = `${RAPIDTOOLSET_BASE_URL}/api/public/search`;
+
+const REQUEST_TIMEOUT_MS = 10_000;
+
+/**
+ * Combines an optional caller-provided abort signal with a timeout, so every
+ * request is aborted if it takes too long even if the caller doesn't pass one.
+ */
+function withTimeout(signal?: AbortSignal | null): AbortSignal {
+  const timeoutSignal = AbortSignal.timeout(REQUEST_TIMEOUT_MS);
+  return signal ? AbortSignal.any([signal, timeoutSignal]) : timeoutSignal;
+}
 
 /**
  * Error thrown when a request is rejected with 401 because the stored token was
@@ -94,6 +106,7 @@ async function request<T>(
 ): Promise<T> {
   const res = await fetch(url, {
     ...init,
+    signal: withTimeout(init?.signal),
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -111,6 +124,20 @@ async function request<T>(
   if (!res.ok) throw new Error(t("syncErrorRequestFailed", String(res.status)));
 
   return res.json() as Promise<T>;
+}
+
+/** Search RapidToolSet's public tool catalog. */
+export async function searchTools(
+  query: string,
+  locale: string,
+  signal?: AbortSignal,
+): Promise<ToolSearchResponse> {
+  const params = new URLSearchParams({ q: query, locale });
+  const res = await fetch(`${SEARCH_ENDPOINT}?${params.toString()}`, {
+    signal: withTimeout(signal),
+  });
+  if (!res.ok) throw new Error(t("syncErrorRequestFailed", String(res.status)));
+  return res.json() as Promise<ToolSearchResponse>;
 }
 
 /** Fetch the signed-in RapidToolSet account's basic profile info. */

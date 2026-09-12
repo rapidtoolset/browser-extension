@@ -35,49 +35,9 @@
     "message": "Clear search",
     "description": "Accessible label for the button that clears the search input"
   },
-  "statusSearching": {
-    "message": "Searching…",
-    "description": "Status text shown while a search is in progress"
-  },
-  "statusSearchToDiscover": {
-    "message": "Search to discover",
-    "description": "Status text shown before the user types a query"
-  },
-  "statusNoResults": {
-    "message": "No results found",
-    "description": "Status text when a search returns zero results"
-  },
-  "statusResultsFound": {
-    "message": "$COUNT$ results found",
-    "description": "Status text showing how many results were found (plural)",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "5"
-      }
-    }
-  },
-  "statusResultFound": {
-    "message": "$COUNT$ result found",
-    "description": "Status text when exactly one result is found (singular)",
-    "placeholders": {
-      "count": {
-        "content": "$1",
-        "example": "1"
-      }
-    }
-  },
   "statusLoading": {
     "message": "Loading…",
     "description": "Status text shown while bookmarks are loading"
-  },
-  "statusSavedBookmarks": {
-    "message": "saved bookmarks",
-    "description": "Label shown after the bookmark count (plural)"
-  },
-  "statusSavedBookmark": {
-    "message": "saved bookmark",
-    "description": "Label shown after the bookmark count (singular)"
   },
   "emptyOnlinePrompt": {
     "message": "Type a query to search tools online.",

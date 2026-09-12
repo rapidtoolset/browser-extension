@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getLocale } from "./i18n";
-import type { RemoteUser, SearchTab, Tool, ToolSearchResponse } from "./types";
+import type { RemoteUser, SearchTab, Tool } from "./types";
 import {
   addBookmark,
   clearAuthToken,
@@ -22,20 +22,16 @@ import {
   extractAlias,
   fetchRemoteBookmarks,
   fetchRemoteUser,
-  RAPIDTOOLSET_BASE_URL,
   requestAuthorization,
+  searchTools,
   toBookmarkTool,
   upsertRemoteBookmarks,
 } from "./sync";
 
-const API_BASE = `${RAPIDTOOLSET_BASE_URL}/api/public/search`;
 const DEBOUNCE_MS = 400;
 
 /**
  * Pushes any locally-stored bookmarks to the server, then clears them from local storage.
- * Any alias the server doesn't confirm as saved is logged and dropped rather than kept
- * around indefinitely.
- *
  * Older locally-stored bookmarks don't have an alias field, so it's extracted from the
  * tool URL instead.
  */
@@ -44,17 +40,7 @@ async function migrateLocalBookmarksToRemote(token: string): Promise<void> {
   if (local.length === 0) return;
 
   const localAliases = local.map((b) => b.alias || extractAlias(b.url));
-  const savedAliases = await upsertRemoteBookmarks(token, localAliases);
-  const unsynced = localAliases.filter(
-    (alias) => !savedAliases.includes(alias),
-  );
-  if (unsynced.length > 0) {
-    console.log(
-      "[rapidtoolset] Could not sync bookmark(s) to RapidToolSet, removing locally:",
-      unsynced,
-    );
-  }
-
+  await upsertRemoteBookmarks(token, localAliases);
   await clearBookmarks();
 }
 
@@ -88,7 +74,6 @@ export function useRapidToolSet() {
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const abortController = useRef<AbortController | null>(null);
 
-  // Load persisted tab + bookmarks on mount
   useEffect(() => {
     loadTab().then(_setTab);
     loadQuery().then(_setQuery);
@@ -107,7 +92,6 @@ export function useRapidToolSet() {
     });
   }, []);
 
-  // Debounced API search (only when online tab is active)
   useEffect(() => {
     if (debounceTimer.current) clearTimeout(debounceTimer.current);
 
@@ -129,18 +113,11 @@ export function useRapidToolSet() {
       setSearchError(null);
 
       try {
-        const params = new URLSearchParams();
-        params.set("q", query.trim());
-        params.set("locale", getLocale());
-
-        const url = `${API_BASE}?${params.toString()}`;
-        const res = await fetch(url, {
-          signal: abortController.current.signal,
-        });
-
-        if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-
-        const data: ToolSearchResponse = await res.json();
+        const data = await searchTools(
+          query.trim(),
+          getLocale(),
+          abortController.current.signal,
+        );
         setSearchResults(data.tools);
         setHasSearched(true);
       } catch (err) {
@@ -159,7 +136,6 @@ export function useRapidToolSet() {
     };
   }, [query, tab]);
 
-  // Filter bookmarks locally when on bookmarks tab
   const filteredBookmarks =
     tab === "bookmarks" && query.trim()
       ? bookmarks.filter((b) => {

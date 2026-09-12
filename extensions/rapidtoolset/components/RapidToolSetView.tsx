@@ -65,7 +65,6 @@ export default function RapidToolSetView() {
         onValueChange={(v) => setTab(v as SearchTab)}
         className="flex min-h-0 flex-1 flex-col gap-3"
       >
-        {/* Fixed header: tabs + search + status */}
         <div className="flex shrink-0 flex-col gap-3">
           <TabsList className="w-full">
             <TabsTrigger value="online" className="flex-1 gap-1.5 ">
@@ -121,7 +120,6 @@ export default function RapidToolSetView() {
             </div>
           )}
 
-          {/* Error banner */}
           {searchError && (
             <div className="flex items-start gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2.5 text-destructive">
               <TriangleAlert size={14} className="mt-0.5 shrink-0" />
@@ -130,7 +128,6 @@ export default function RapidToolSetView() {
           )}
         </div>
 
-        {/* Online tab - scrollable */}
         <TabsContent
           value="online"
           ref={onlineRef}
@@ -166,7 +163,6 @@ export default function RapidToolSetView() {
           ))}
         </TabsContent>
 
-        {/* Bookmarks tab - scrollable */}
         <TabsContent
           value="bookmarks"
           ref={bookmarksRef}
@@ -203,7 +199,6 @@ export default function RapidToolSetView() {
             ))}
         </TabsContent>
 
-        {/* Sync tab */}
         <TabsContent value="sync" className="flex min-h-0 flex-1 flex-col">
           <SyncView
             connected={connected}
