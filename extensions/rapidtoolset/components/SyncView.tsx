@@ -43,7 +43,6 @@ export default function SyncView(props: Props) {
       <EmptyState
         icon={<Cloud />}
         title={t("syncEmptyTitle")}
-        description={t("syncEmptyDescription")}
         className="flex-1"
       >
         <Button

@@ -80,12 +80,8 @@
     "description": "Status text shown when connected but a sync hasn't run yet"
   },
   "syncEmptyTitle": {
-    "message": "Синхронизируйте закладки между устройствами",
+    "message": "Привяжите аккаунт RapidToolSet, чтобы синхронизировать закладки между устройствами",
     "description": "Title shown on the sync tab before connecting"
-  },
-  "syncEmptyDescription": {
-    "message": "Привяжите аккаунт RapidToolSet, чтобы закладки были синхронизированы везде.",
-    "description": "Description shown on the sync tab before connecting"
   },
   "syncConnectCta": {
     "message": "Привязать",

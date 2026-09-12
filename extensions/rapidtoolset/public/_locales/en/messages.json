@@ -92,12 +92,8 @@
     "description": "Status text shown when connected but a sync hasn't run yet"
   },
   "syncEmptyTitle": {
-    "message": "Sync bookmarks across devices",
+    "message": "Link your RapidToolSet account to sync bookmarks across devices",
     "description": "Title shown on the sync tab before connecting"
-  },
-  "syncEmptyDescription": {
-    "message": "Link your RapidToolSet account to keep bookmarks in sync everywhere.",
-    "description": "Description shown on the sync tab before connecting"
   },
   "syncSyncing": {
     "message": "Syncing…",
