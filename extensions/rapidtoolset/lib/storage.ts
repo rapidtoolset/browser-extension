@@ -1,11 +1,16 @@
 import { browser } from "wxt/browser";
 import type { SearchTab, Tool } from "./types";
 
-const BOOKMARKS_KEY = "rapidtoolset_bookmarks";
-const TAB_KEY = "rapidtoolset_tab";
-const QUERY_KEY = "rapidtoolset_query";
-const AUTH_TOKEN_KEY = "rapidtoolset_auth_token";
-const LAST_SYNCED_KEY = "rapidtoolset_last_synced";
+// NOTE: these key names intentionally keep the original "tool_hub_*" prefix
+// from before the extension was renamed to "RapidToolSet". Changing them
+// would orphan existing users' bookmarks/settings, since browser.storage.local
+// persists across extension updates but nothing migrates data between key
+// names automatically.
+const BOOKMARKS_KEY = "tool_hub_bookmarks";
+const TAB_KEY = "tool_hub_tab";
+const QUERY_KEY = "tool_hub_query";
+const AUTH_TOKEN_KEY = "tool_hub_auth_token";
+const LAST_SYNCED_KEY = "tool_hub_last_synced";
 
 /** Load the last selected tab from storage. */
 export async function loadTab(): Promise<SearchTab> {
