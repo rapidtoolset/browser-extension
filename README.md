@@ -26,6 +26,16 @@ npm run format:check         # verify formatting without modifying files
 - [src/index.css](src/index.css) — global styles on top of Bootstrap, mostly shared with the website
 - [extensions/rapidtoolset/](extensions/rapidtoolset/) — extension-specific code
 
+## Languages
+
+The popup follows the browser's language, in any of the website's 16 languages (English otherwise; Arabic switches it to a right-to-left layout). Its strings are in [extensions/rapidtoolset/public/\_locales/](extensions/rapidtoolset/public/_locales/), with English as the source, and the supported locales are listed in [extensions/rapidtoolset/lib/locales.ts](extensions/rapidtoolset/lib/locales.ts).
+
+To run the dev browser in another language, pass its locale code:
+
+```bash
+WXT_RAPIDTOOLSET_LOCALE=fr npm run dev
+```
+
 ## Icons
 
 Icons and promo tiles are auto-generated into `extensions/rapidtoolset/public/` from `public/logo.png`:
