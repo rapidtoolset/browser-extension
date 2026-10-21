@@ -26,7 +26,12 @@ export default function ExtensionHeader(props: ExtensionHeaderProps) {
           <BrandIcon size={24} />
         </span>
         <div className="d-flex flex-column gap-1 min-w-0">
-          <span className="extension-header-name h5 mb-0 text-dark-emphasis text-truncate">
+          {/* The English brand name stays "RAPIDTOOLSET" when uppercased,
+              where Turkish rules would make it "RAPİDTOOLSET" */}
+          <span
+            lang="en"
+            className="extension-header-name h5 mb-0 text-dark-emphasis text-truncate"
+          >
             {name}
           </span>
           <span className="small lh-1 text-body-tertiary text-truncate">
