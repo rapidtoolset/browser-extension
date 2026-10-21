@@ -1,5 +1,4 @@
 import path from "node:path";
-import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "wxt";
 import manifest from "./extensions/rapidtoolset/manifest.config";
@@ -65,6 +64,6 @@ export default defineConfig({
     artifactTemplate: "rapidtoolset-{{version}}-{{browser}}.zip",
   },
   vite: () => ({
-    plugins: [tailwindcss(), react()],
+    plugins: [react()],
   }),
 });

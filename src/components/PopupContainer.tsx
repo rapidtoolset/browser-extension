@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import classNames from "classnames";
 
 interface PopupContainerProps {
   children: React.ReactNode;
@@ -8,11 +8,11 @@ interface PopupContainerProps {
   height?: number;
   /**
    * When true, applies a fixed `height` (instead of `max-height`) and hides
-   * overflow so that flex children with `flex-1` can fill the exact popup
+   * overflow so that flex children with `flex-grow-1` can fill the exact popup
    * height. Useful for extensions with internal scrollable areas (e.g. chat).
    */
   fixedHeight?: boolean;
-  /** Additional Tailwind classes on the container */
+  /** Additional class names on the container */
   className?: string;
 }
 
@@ -20,6 +20,8 @@ interface PopupContainerProps {
  * Wrapper that controls the popup dimensions.
  * By default sets a fixed `width` and a `max-height` with vertical scrolling.
  * Pass `fixedHeight` for layouts where children manage their own scrolling.
+ * It adds no padding, so a full-width header (ExtensionHeader) can sit at the
+ * top; children pad their own content.
  * Sidepanels should **not** use this component — they fill the viewport.
  */
 export default function PopupContainer({
@@ -31,8 +33,8 @@ export default function PopupContainer({
 }: PopupContainerProps) {
   return (
     <div
-      className={cn(
-        "overflow-x-hidden pl-3 pr-3 py-3",
+      className={classNames(
+        "overflow-x-hidden",
         fixedHeight ? "overflow-y-hidden" : "overflow-y-auto",
         className,
       )}

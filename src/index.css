@@ -1,175 +1,286 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-
-@custom-variant dark (&:is(.dark *));
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
-}
+/* Visual style shared with the RapidToolSet website: most rules below are
+   copied from rapid-tool-set's src/app/index.css. Bootstrap itself is imported
+   by each entrypoint (see main.tsx) so this file can override it. */
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Theme colors */
+  --color-bookmark: #6ea8fe;
+  --color-highlight-light: rgba(33, 37, 41, 0.1);
+  --color-highlight-dark: rgba(33, 37, 41, 0.6);
+
+  /* Animation */
+  --transition-duration: 0.15s;
+  --transition-timing: ease-in-out;
+
+  /* Layout */
+  --header-height: 60px;
+  --header-button-size: 44px;
+
+  --disabled-color-light: #fafafa;
+  --disabled-color-dark: #24282d;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+:root[data-bs-theme="light"] {
+  color-scheme: light;
+  --disabled-color: var(--disabled-color-light);
 }
 
-@layer base {
-  * {
-    @apply border-border;
-    @apply border-border outline-ring/50;
+:root[data-bs-theme="dark"] {
+  --disabled-color: var(--disabled-color-dark);
+}
+
+/* Bootstrap's .link-secondary keeps the light-theme --bs-secondary-rgb value in dark mode, making it too dark to read */
+[data-bs-theme="dark"] .link-secondary {
+  color: color-mix(
+    in srgb,
+    rgba(var(--bs-secondary-color-rgb), 0.75) 85%,
+    black 15%
+  ) !important;
+  text-decoration-color: color-mix(
+    in srgb,
+    rgba(var(--bs-secondary-color-rgb), 0.75) 85%,
+    black 15%
+  ) !important;
+}
+
+[data-bs-theme="dark"] .link-secondary:hover,
+[data-bs-theme="dark"] .link-secondary:focus {
+  color: color-mix(
+    in srgb,
+    var(--bs-secondary-text-emphasis) 85%,
+    black 15%
+  ) !important;
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--bs-secondary-text-emphasis) 85%,
+    black 15%
+  ) !important;
+}
+
+/* Base styles */
+body {
+  overflow: hidden;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(var(--bs-emphasis-color-rgb), 0.05);
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(var(--bs-emphasis-color-rgb), 0.25);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--bs-emphasis-color-rgb), 0.4);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* Popup header, the extension's counterpart of the website's .navbar.app-header */
+.extension-header {
+  /* Keeps the header's shadow above the content scrolling below it */
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  height: var(--header-height);
+}
+
+.extension-header-name {
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.header-button {
+  height: var(--header-button-size);
+  line-height: 1;
+}
+
+/* Form styles */
+.form-floating > label {
+  color: rgba(var(--bs-body-color-rgb), 0.65);
+}
+
+.input-readonly .form-control,
+.input-readonly .form-control:disabled {
+  background-color: var(--disabled-color) !important;
+}
+
+.input-readonly label::after {
+  background-color: var(--disabled-color) !important;
+}
+
+/* Utility classes */
+.btn-reset {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+/* The website's .btn-reset drops the outline; keep keyboard focus visible */
+.btn-reset:focus-visible {
+  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+.link-reset {
+  text-decoration: none;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.link-reset:hover {
+  opacity: 0.75;
+  transition: opacity var(--transition-duration) var(--transition-timing);
+}
+
+.content-link {
+  color: var(--bs-link-color);
+  text-decoration: none;
+}
+
+.content-link:hover {
+  color: var(--bs-link-hover-color);
+  text-decoration: underline;
+}
+
+.search-bar:focus-within {
+  border-color: #86b7fe !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+
+/* Tinted like the website's homepage search bar, which also sits on the page background */
+.search-bar {
+  background-color: var(--bs-tertiary-bg);
+  height: var(--header-button-size);
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.search-bar .form-control {
+  height: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Scrollable list filling the rest of the popup. It reaches into the content's
+   1rem right and bottom padding so the scrollbar sits at the popup's edge and
+   the cards line up with the search bar above. */
+.scroll-area {
+  margin-right: -1rem;
+  margin-bottom: -1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  overflow-y: scroll;
+}
+
+/* For browsers whose scrollbars take up layout space (see useScrollable) */
+.scroll-area.scrollbar-gutter {
+  padding-right: calc(1rem - 8px);
+}
+
+/* EmptyState icon, standardized for FontAwesome and MUI icons alike */
+.empty-state-icon {
+  display: inline-flex;
+  opacity: 0.5;
+}
+
+.empty-state-icon svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.min-h-0 {
+  min-height: 0;
+}
+
+.min-w-0 {
+  min-width: 0;
+}
+
+/* Evens out the lengths of wrapped lines (ignored by Chrome while line-clamp truncates) */
+.text-balance {
+  text-wrap: balance;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* Theme-specific styles */
+[data-bs-theme="light"] .bg-body-tertiary {
+  background-color: #f3f3f3 !important;
+}
+
+[data-bs-theme="light"] .btn-highlight {
+  background-color: var(--color-highlight-light);
+}
+
+[data-bs-theme="light"] .btn-bookmark:hover {
+  background-color: var(--bs-gray-400);
+  transition: background-color var(--transition-duration)
+    var(--transition-timing);
+}
+
+/* Bootstrap's .btn-secondary uses a fixed dark gray (#6c757d) that looks
+   too heavy and high-contrast against the light theme's background */
+[data-bs-theme="light"] .btn-secondary {
+  --bs-btn-color: var(--bs-body-color);
+  --bs-btn-bg: var(--bs-gray-300);
+  --bs-btn-border-color: var(--bs-gray-400);
+  --bs-btn-hover-color: var(--bs-body-color);
+  --bs-btn-hover-bg: var(--bs-gray-400);
+  --bs-btn-hover-border-color: var(--bs-gray-500);
+  --bs-btn-active-color: var(--bs-body-color);
+  --bs-btn-active-bg: var(--bs-gray-400);
+  --bs-btn-active-border-color: var(--bs-gray-500);
+  --bs-btn-disabled-color: var(--bs-secondary-color);
+  --bs-btn-disabled-bg: var(--bs-gray-300);
+  --bs-btn-disabled-border-color: var(--bs-gray-400);
+}
+
+[data-bs-theme="dark"] .btn-highlight {
+  background-color: var(--color-highlight-dark);
+}
+
+[data-bs-theme="dark"] .btn-bookmark:hover {
+  background-color: var(--bs-gray-700);
+  transition: background-color var(--transition-duration)
+    var(--transition-timing);
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion) {
+  .link-reset:hover,
+  .btn-bookmark:hover {
+    transition: none;
   }
-  *::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  *::-webkit-scrollbar-track {
-    background: oklch(0.92 0 0 / 50%);
-    border-radius: 9999px;
-  }
-  .dark *::-webkit-scrollbar-track {
-    background: oklch(0.25 0 0 / 50%);
-  }
-  *::-webkit-scrollbar-thumb {
-    background: oklch(0.75 0 0);
-    border-radius: 9999px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-  }
-  .dark *::-webkit-scrollbar-thumb {
-    background: oklch(0.4 0 0);
-    border-radius: 9999px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-  }
-  *::-webkit-scrollbar-thumb:hover {
-    background: var(--muted-foreground);
-    border: 2px solid transparent;
-    background-clip: content-box;
-  }
-  body {
-    @apply bg-background text-foreground;
-    overflow: hidden;
-  }
-  /* Radix UI injects padding-right on body to compensate for scrollbar width
-     when a dropdown/dialog opens. In extension popups/sidepanels this causes
-     unexpected layout shift - override it. */
-  body[data-scroll-locked] {
-    padding-right: 0 !important;
-    margin-right: 0 !important;
-  }
-  input[type="color"]::-webkit-color-swatch-wrapper {
-    padding: 2px;
-  }
-  input[type="color"]::-webkit-color-swatch {
-    border: none;
-    border-radius: var(--radius-sm);
-  }
-  input[type="color"]::-moz-color-swatch {
-    border: none;
-    border-radius: var(--radius-sm);
-  }
+}
+
+/* Global dropdown item active/hover/focus styles */
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: var(--bs-secondary-bg) !important;
+  color: var(--bs-body-color) !important;
+}
+
+[data-bs-theme="dark"] .dropdown-item.active,
+[data-bs-theme="dark"] .dropdown-item:active {
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }

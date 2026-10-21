@@ -1,25 +1,27 @@
+import classNames from "classnames";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  Bookmark,
-  BookmarkPlus,
-  Cloud,
-  Globe,
-  Loader2,
-  Search,
-  SearchX,
-  Telescope,
-  TriangleAlert,
-  X,
-} from "lucide-react";
+  faBookmark,
+  faCloud,
+  faGlobe,
+  faMagnifyingGlass,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
+import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
+import SearchOffIcon from "@mui/icons-material/SearchOff";
+import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import EmptyState from "@/components/EmptyState";
-import { Input } from "@/components/ui/input";
-import { Spinner } from "@/components/ui/spinner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ErrorAlert from "@/components/ErrorAlert";
+import Spinner from "@/components/Spinner";
+import { TabPanel, Tabs } from "@/components/Tabs";
 import { useScrollable } from "@/lib/useScrollable";
 import ToolCard from "./ToolCard";
 import SyncView from "./SyncView";
 import { useRapidToolSet } from "../lib/useRapidToolSet";
 import { t } from "../lib/i18n";
 import type { SearchTab } from "../lib/types";
+
+const TABS_ID = "rapidtoolset-tabs";
 
 export default function RapidToolSetView() {
   const {
@@ -59,101 +61,142 @@ export default function RapidToolSetView() {
         : false;
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-3">
+    <div className="d-flex flex-column flex-grow-1 min-h-0 gap-3 p-3">
       <Tabs
-        value={tab}
-        onValueChange={(v) => setTab(v as SearchTab)}
-        className="flex min-h-0 flex-1 flex-col gap-3"
-      >
-        <div className="flex shrink-0 flex-col gap-3">
-          <TabsList className="w-full">
-            <TabsTrigger value="online" className="flex-1 gap-1.5 ">
-              <Globe size={12} />
-              {t("tabOnline")}
-            </TabsTrigger>
-            <TabsTrigger value="bookmarks" className="flex-1 gap-1.5 ">
-              <Bookmark size={12} />
-              {t("tabBookmarks")}
-            </TabsTrigger>
-            <TabsTrigger value="sync" className="flex-1 gap-1.5 ">
-              <Cloud size={12} />
-              {t("tabSync")}
-            </TabsTrigger>
-          </TabsList>
+        id={TABS_ID}
+        activeTab={tab}
+        onTabChange={(key) => setTab(key as SearchTab)}
+        items={[
+          {
+            key: "online",
+            label: t("tabOnline"),
+            icon: <FontAwesomeIcon icon={faGlobe} widthAuto />,
+          },
+          {
+            key: "bookmarks",
+            label: t("tabBookmarks"),
+            icon: <FontAwesomeIcon icon={faBookmark} widthAuto />,
+          },
+          {
+            key: "sync",
+            label: t("tabSync"),
+            icon: <FontAwesomeIcon icon={faCloud} widthAuto />,
+          },
+        ]}
+      />
 
-          {tab !== "sync" && (
-            <div className="relative">
-              <Search
-                size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
-              />
-              <Input
-                autoFocus
-                spellCheck={false}
-                className="pl-9 pr-10 h-10"
-                placeholder={
-                  tab === "online"
-                    ? t("searchPlaceholderOnline")
-                    : t("searchPlaceholderBookmarks")
-                }
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                aria-label={t("searchAriaLabel")}
-              />
-              {showSpinner ? (
-                <Loader2
-                  size={14}
-                  className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 shrink-0 animate-spin text-primary"
-                />
-              ) : (
-                query && (
-                  <button
-                    type="button"
-                    onClick={() => setQuery("")}
-                    aria-label={t("clearSearch")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 shrink-0 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                  >
-                    <X size={14} />
-                  </button>
-                )
-              )}
+      {tab !== "sync" && (
+        <div className="search-bar rounded p-2 d-flex align-items-center border flex-shrink-0">
+          <div className="ps-2 pe-1">
+            <FontAwesomeIcon icon={faMagnifyingGlass} className="text-muted" />
+          </div>
+          <input
+            autoFocus
+            type="text"
+            spellCheck={false}
+            className="form-control border-0 bg-transparent shadow-none"
+            placeholder={
+              tab === "online"
+                ? t("searchPlaceholderOnline")
+                : t("searchPlaceholderBookmarks")
+            }
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label={t("searchAriaLabel")}
+          />
+          {showSpinner ? (
+            <div className="pe-2 ps-1 flex-shrink-0 d-flex">
+              <Spinner size="sm" color="muted" />
             </div>
-          )}
-
-          {searchError && (
-            <div className="flex items-start gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2.5 text-destructive">
-              <TriangleAlert size={14} className="mt-0.5 shrink-0" />
-              <span>{searchError}</span>
-            </div>
+          ) : (
+            query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label={t("clearSearch")}
+                className="btn btn-link text-muted pe-2 ps-1 py-0 border-0 flex-shrink-0"
+                style={{ lineHeight: 1 }}
+              >
+                <FontAwesomeIcon icon={faXmark} size="lg" />
+              </button>
+            )
           )}
         </div>
+      )}
 
-        <TabsContent
-          value="online"
-          ref={onlineRef}
-          className={`flex min-h-0 flex-1 flex-col gap-2 overflow-y-scroll ${onlinePadding ? "pr-3" : ""}`}
-        >
-          {!isSearchMode && !isSearching && (
+      {searchError && (
+        <ErrorAlert className="flex-shrink-0">{searchError}</ErrorAlert>
+      )}
+
+      <TabPanel
+        tabsId={TABS_ID}
+        value="online"
+        activeValue={tab}
+        ref={onlineRef}
+        className={classNames(
+          "scroll-area d-flex flex-column flex-grow-1 min-h-0 gap-2",
+          { "scrollbar-gutter": onlinePadding },
+        )}
+      >
+        {!isSearchMode && !isSearching && (
+          <EmptyState
+            icon={<TravelExploreIcon />}
+            title={t("emptyOnlinePrompt")}
+          />
+        )}
+
+        {isSearchMode &&
+          !isSearching &&
+          !searchError &&
+          hasSearched &&
+          searchResults.length === 0 && (
             <EmptyState
-              icon={<Telescope />}
-              title={t("emptyOnlinePrompt")}
-              className="flex-1"
+              icon={<SearchOffIcon />}
+              title={t("emptyNoToolsFound")}
             />
           )}
 
-          {isSearchMode &&
-            !isSearching &&
-            !searchError &&
-            hasSearched &&
-            searchResults.length === 0 && (
-              <EmptyState
-                icon={<SearchX />}
-                title={t("emptyNoToolsFound")}
-                className="flex-1"
-              />
-            )}
+        {searchResults.map((tool) => (
+          <ToolCard
+            key={tool.url}
+            tool={tool}
+            bookmarked={isBookmarked(tool.url)}
+            onToggleBookmark={toggleBookmark}
+          />
+        ))}
+      </TabPanel>
 
-          {searchResults.map((tool) => (
+      <TabPanel
+        tabsId={TABS_ID}
+        value="bookmarks"
+        activeValue={tab}
+        ref={bookmarksRef}
+        className={classNames(
+          "scroll-area d-flex flex-column flex-grow-1 min-h-0 gap-2",
+          { "scrollbar-gutter": bookmarksPadding },
+        )}
+      >
+        {loadingBookmarks && (
+          <div className="d-flex align-items-center justify-content-center gap-2 py-4 text-body-secondary">
+            <Spinner size="sm" />
+            {t("statusLoading")}
+          </div>
+        )}
+
+        {!loadingBookmarks && bookmarks.length === 0 && (
+          <EmptyState
+            icon={<BookmarkAddOutlinedIcon />}
+            title={
+              query.trim()
+                ? t("emptyBookmarksNoMatch")
+                : t("emptyBookmarksNone")
+            }
+            description={!query.trim() ? t("emptyBookmarksCta") : undefined}
+          />
+        )}
+
+        {!loadingBookmarks &&
+          bookmarks.map((tool) => (
             <ToolCard
               key={tool.url}
               tool={tool}
@@ -161,58 +204,26 @@ export default function RapidToolSetView() {
               onToggleBookmark={toggleBookmark}
             />
           ))}
-        </TabsContent>
+      </TabPanel>
 
-        <TabsContent
-          value="bookmarks"
-          ref={bookmarksRef}
-          className={`flex min-h-0 flex-1 flex-col gap-2 overflow-y-scroll ${bookmarksPadding ? "pr-3" : ""}`}
-        >
-          {loadingBookmarks && (
-            <div className="flex items-center justify-center gap-2 py-6 text-muted-foreground">
-              <Spinner className="size-3.5" />
-              {t("statusLoading")}
-            </div>
-          )}
-
-          {!loadingBookmarks && bookmarks.length === 0 && (
-            <EmptyState
-              icon={<BookmarkPlus />}
-              title={
-                query.trim()
-                  ? t("emptyBookmarksNoMatch")
-                  : t("emptyBookmarksNone")
-              }
-              description={!query.trim() ? t("emptyBookmarksCta") : undefined}
-              className="flex-1"
-            />
-          )}
-
-          {!loadingBookmarks &&
-            bookmarks.map((tool) => (
-              <ToolCard
-                key={tool.url}
-                tool={tool}
-                bookmarked={isBookmarked(tool.url)}
-                onToggleBookmark={toggleBookmark}
-              />
-            ))}
-        </TabsContent>
-
-        <TabsContent value="sync" className="flex min-h-0 flex-1 flex-col">
-          <SyncView
-            connected={connected}
-            connecting={connecting}
-            syncing={syncing}
-            error={syncError}
-            lastSyncedAt={lastSyncedAt}
-            user={remoteUser}
-            onConnect={connect}
-            onDisconnect={disconnect}
-            onSync={sync}
-          />
-        </TabsContent>
-      </Tabs>
+      <TabPanel
+        tabsId={TABS_ID}
+        value="sync"
+        activeValue={tab}
+        className="d-flex flex-column flex-grow-1 min-h-0"
+      >
+        <SyncView
+          connected={connected}
+          connecting={connecting}
+          syncing={syncing}
+          error={syncError}
+          lastSyncedAt={lastSyncedAt}
+          user={remoteUser}
+          onConnect={connect}
+          onDisconnect={disconnect}
+          onSync={sync}
+        />
+      </TabPanel>
     </div>
   );
 }

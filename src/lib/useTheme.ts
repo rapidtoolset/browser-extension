@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 
 export type ThemePreference = "light" | "dark" | "system";
 
@@ -22,11 +22,12 @@ export function useTheme() {
   const [preference, setPreferenceState] =
     useState<ThemePreference>(getInitialPreference);
 
-  useEffect(() => {
+  // Layout effect so the theme is applied before the first paint (no light flash in dark mode)
+  useLayoutEffect(() => {
     const apply = () => {
-      document.documentElement.classList.toggle(
-        "dark",
-        resolveTheme(preference) === "dark",
+      document.documentElement.setAttribute(
+        "data-bs-theme",
+        resolveTheme(preference),
       );
     };
     apply();
