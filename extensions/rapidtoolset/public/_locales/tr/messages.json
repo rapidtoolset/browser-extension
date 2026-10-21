@@ -48,7 +48,7 @@
     "description": "Label for the bookmarks tab"
   },
   "tabSync": {
-    "message": "Senkronizasyon",
+    "message": "Eşitleme",
     "description": "Label for the sync tab"
   },
   "searchPlaceholderOnline": {
@@ -124,19 +124,19 @@
     "description": "Status text shown when connected but not yet synced"
   },
   "syncNeverSynced": {
-    "message": "Henüz senkronize edilmedi",
+    "message": "Henüz eşitlenmedi",
     "description": "Status text shown when connected but a sync hasn't run yet"
   },
   "syncEmptyTitle": {
-    "message": "Yer işaretlerinizi cihazlarınız arasında senkronize etmek için RapidToolSet hesabınızı bağlayın",
+    "message": "Yer işaretlerinizi cihazlarınız arasında eşitlemek için RapidToolSet hesabınızı bağlayın",
     "description": "Title shown on the sync tab before connecting"
   },
   "syncSyncing": {
-    "message": "Senkronize ediliyor…",
+    "message": "Eşitleniyor…",
     "description": "Status text shown while a sync is in progress"
   },
   "syncedAgo": {
-    "message": "Son senkronizasyon: $TIME$",
+    "message": "Son eşitleme: $TIME$",
     "description": "Status text showing how long ago bookmarks were last synced",
     "placeholders": {
       "time": {
@@ -146,7 +146,7 @@
     }
   },
   "syncNow": {
-    "message": "Şimdi senkronize et",
+    "message": "Şimdi eşitle",
     "description": "Accessible label for the manual sync button"
   },
   "syncDisconnect": {
@@ -154,7 +154,7 @@
     "description": "Accessible label for the disconnect-from-RapidToolSet button"
   },
   "syncedBookmarkDescription": {
-    "message": "RapidToolSet'ten senkronize edildi",
+    "message": "RapidToolSet'ten eşitlendi",
     "description": "Placeholder description for a bookmark pulled from RapidToolSet with no local metadata"
   },
   "syncErrorCancelled": {
@@ -184,7 +184,7 @@
     }
   },
   "syncErrorUnknown": {
-    "message": "Senkronizasyon başarısız oldu",
+    "message": "Eşitleme başarısız oldu",
     "description": "Error shown when a sync fails without a more specific message"
   },
   "syncErrorConnectFailed": {

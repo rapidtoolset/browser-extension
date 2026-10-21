@@ -40,7 +40,7 @@
     }
   },
   "tabOnline": {
-    "message": "Διαδικτυακά",
+    "message": "Ιστός",
     "description": "Label for the online search tab"
   },
   "tabBookmarks": {
