@@ -1,0 +1,202 @@
+{
+  "extName": {
+    "message": "RapidToolSet",
+    "description": "Extension name shown in Chrome Web Store and extension management"
+  },
+  "extDescription": {
+    "message": "Viktiga verktyg för arbete och vardag",
+    "description": "Extension description shown in Chrome Web Store"
+  },
+  "headerByline": {
+    "message": "av $SITE$",
+    "description": "Byline below the extension name in the popup header, crediting the website (rendered as a link)",
+    "placeholders": {
+      "site": {
+        "content": "$1",
+        "example": "rapidtoolset.com"
+      }
+    }
+  },
+  "themeLight": {
+    "message": "Ljust",
+    "description": "Theme menu option for the light color theme"
+  },
+  "themeDark": {
+    "message": "Mörkt",
+    "description": "Theme menu option for the dark color theme"
+  },
+  "themeSystem": {
+    "message": "System",
+    "description": "Theme menu option for following the operating system's color theme"
+  },
+  "themeAriaLabel": {
+    "message": "Tema: $THEME$",
+    "description": "Accessible label for the theme menu button, naming the selected theme option",
+    "placeholders": {
+      "theme": {
+        "content": "$1",
+        "example": "Mörkt"
+      }
+    }
+  },
+  "tabOnline": {
+    "message": "Online",
+    "description": "Label for the online search tab"
+  },
+  "tabBookmarks": {
+    "message": "Bokmärken",
+    "description": "Label for the bookmarks tab"
+  },
+  "tabSync": {
+    "message": "Synkronisering",
+    "description": "Label for the sync tab"
+  },
+  "searchPlaceholderOnline": {
+    "message": "Sök efter verktyg online…",
+    "description": "Placeholder text in the search input when on the online tab"
+  },
+  "searchPlaceholderBookmarks": {
+    "message": "Filtrera bokmärken…",
+    "description": "Placeholder text in the search input when on the bookmarks tab"
+  },
+  "searchAriaLabel": {
+    "message": "Sök efter verktyg",
+    "description": "Accessible label for the search input"
+  },
+  "clearSearch": {
+    "message": "Rensa sökningen",
+    "description": "Accessible label for the button that clears the search input"
+  },
+  "searchErrorUnknown": {
+    "message": "Något gick fel",
+    "description": "Error shown when a tool search fails without a more specific message"
+  },
+  "statusLoading": {
+    "message": "Läser in…",
+    "description": "Status text shown while bookmarks are loading"
+  },
+  "emptyOnlinePrompt": {
+    "message": "Skriv en sökfråga för att söka efter verktyg online.",
+    "description": "Placeholder message in the online tab before searching"
+  },
+  "emptyNoToolsFound": {
+    "message": "Inga verktyg hittades för din sökning.",
+    "description": "Message shown when a search returns no matching tools"
+  },
+  "emptyBookmarksNone": {
+    "message": "Inga bokmärken ännu.",
+    "description": "Message shown when the user has no bookmarks"
+  },
+  "emptyBookmarksNoMatch": {
+    "message": "Inga bokmärken matchar filtret.",
+    "description": "Message shown when the bookmark filter matches nothing"
+  },
+  "emptyBookmarksCta": {
+    "message": "Sök efter verktyg online och spara dem som bokmärken.",
+    "description": "Call-to-action shown below the empty bookmarks message"
+  },
+  "showMore": {
+    "message": "Visa mer",
+    "description": "Button to expand a tool description"
+  },
+  "showLess": {
+    "message": "Visa mindre",
+    "description": "Button to collapse a tool description"
+  },
+  "removeBookmark": {
+    "message": "Ta bort bokmärke",
+    "description": "Accessible label for the remove-bookmark button"
+  },
+  "addBookmark": {
+    "message": "Lägg till bokmärke",
+    "description": "Accessible label for the add-bookmark button"
+  },
+  "syncConnectCta": {
+    "message": "Anslut",
+    "description": "Button label to start the RapidToolSet sync connection flow"
+  },
+  "syncConnecting": {
+    "message": "Ansluter…",
+    "description": "Button label shown while the RapidToolSet auth flow is in progress"
+  },
+  "syncConnected": {
+    "message": "Ansluten till RapidToolSet",
+    "description": "Status text shown when connected but not yet synced"
+  },
+  "syncNeverSynced": {
+    "message": "Inte synkroniserad än",
+    "description": "Status text shown when connected but a sync hasn't run yet"
+  },
+  "syncEmptyTitle": {
+    "message": "Anslut ditt RapidToolSet-konto för att synkronisera bokmärken mellan enheter",
+    "description": "Title shown on the sync tab before connecting"
+  },
+  "syncSyncing": {
+    "message": "Synkroniserar…",
+    "description": "Status text shown while a sync is in progress"
+  },
+  "syncedAgo": {
+    "message": "Synkroniserad för $TIME$",
+    "description": "Status text showing how long ago bookmarks were last synced",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "fem minuter sedan"
+      }
+    }
+  },
+  "syncNow": {
+    "message": "Synkronisera nu",
+    "description": "Accessible label for the manual sync button"
+  },
+  "syncDisconnect": {
+    "message": "Koppla från",
+    "description": "Accessible label for the disconnect-from-RapidToolSet button"
+  },
+  "syncedBookmarkDescription": {
+    "message": "Synkroniserad från RapidToolSet",
+    "description": "Placeholder description for a bookmark pulled from RapidToolSet with no local metadata"
+  },
+  "syncErrorCancelled": {
+    "message": "Auktoriseringen avbröts.",
+    "description": "Error shown when the user closes the RapidToolSet auth window without completing it"
+  },
+  "syncErrorDenied": {
+    "message": "Auktoriseringen nekades.",
+    "description": "Error shown when the user clicks Deny on the RapidToolSet consent screen"
+  },
+  "syncErrorNoToken": {
+    "message": "RapidToolSet returnerade ingen token.",
+    "description": "Error shown when the auth flow completes without a token"
+  },
+  "syncErrorExpired": {
+    "message": "RapidToolSet-sessionen har gått ut. Anslut igen.",
+    "description": "Error shown when the stored token is rejected as invalid or revoked"
+  },
+  "syncErrorRequestFailed": {
+    "message": "Begäran till RapidToolSet misslyckades ($STATUS$).",
+    "description": "Error shown when a sync API request fails",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "500"
+      }
+    }
+  },
+  "syncErrorUnknown": {
+    "message": "Synkroniseringen misslyckades",
+    "description": "Error shown when a sync fails without a more specific message"
+  },
+  "syncErrorConnectFailed": {
+    "message": "Det gick inte att ansluta",
+    "description": "Error shown when connecting a RapidToolSet account fails without a more specific message"
+  },
+  "syncAccountName": {
+    "message": "Namn",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's name"
+  },
+  "syncAccountEmail": {
+    "message": "E-post",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's email"
+  }
+}

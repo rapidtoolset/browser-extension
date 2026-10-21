@@ -1,0 +1,202 @@
+{
+  "extName": {
+    "message": "RapidToolSet",
+    "description": "Extension name shown in Chrome Web Store and extension management"
+  },
+  "extDescription": {
+    "message": "Ferramentas essenciais para o trabalho e o dia a dia",
+    "description": "Extension description shown in Chrome Web Store"
+  },
+  "headerByline": {
+    "message": "por $SITE$",
+    "description": "Byline below the extension name in the popup header, crediting the website (rendered as a link)",
+    "placeholders": {
+      "site": {
+        "content": "$1",
+        "example": "rapidtoolset.com"
+      }
+    }
+  },
+  "themeLight": {
+    "message": "Claro",
+    "description": "Theme menu option for the light color theme"
+  },
+  "themeDark": {
+    "message": "Escuro",
+    "description": "Theme menu option for the dark color theme"
+  },
+  "themeSystem": {
+    "message": "Sistema",
+    "description": "Theme menu option for following the operating system's color theme"
+  },
+  "themeAriaLabel": {
+    "message": "Tema: $THEME$",
+    "description": "Accessible label for the theme menu button, naming the selected theme option",
+    "placeholders": {
+      "theme": {
+        "content": "$1",
+        "example": "Escuro"
+      }
+    }
+  },
+  "tabOnline": {
+    "message": "Online",
+    "description": "Label for the online search tab"
+  },
+  "tabBookmarks": {
+    "message": "Favoritos",
+    "description": "Label for the bookmarks tab"
+  },
+  "tabSync": {
+    "message": "Sincronização",
+    "description": "Label for the sync tab"
+  },
+  "searchPlaceholderOnline": {
+    "message": "Pesquisar ferramentas online…",
+    "description": "Placeholder text in the search input when on the online tab"
+  },
+  "searchPlaceholderBookmarks": {
+    "message": "Filtrar favoritos…",
+    "description": "Placeholder text in the search input when on the bookmarks tab"
+  },
+  "searchAriaLabel": {
+    "message": "Pesquisar ferramentas",
+    "description": "Accessible label for the search input"
+  },
+  "clearSearch": {
+    "message": "Limpar pesquisa",
+    "description": "Accessible label for the button that clears the search input"
+  },
+  "searchErrorUnknown": {
+    "message": "Algo deu errado",
+    "description": "Error shown when a tool search fails without a more specific message"
+  },
+  "statusLoading": {
+    "message": "Carregando…",
+    "description": "Status text shown while bookmarks are loading"
+  },
+  "emptyOnlinePrompt": {
+    "message": "Digite uma pesquisa para encontrar ferramentas online.",
+    "description": "Placeholder message in the online tab before searching"
+  },
+  "emptyNoToolsFound": {
+    "message": "Nenhuma ferramenta encontrada para sua pesquisa.",
+    "description": "Message shown when a search returns no matching tools"
+  },
+  "emptyBookmarksNone": {
+    "message": "Ainda não há favoritos.",
+    "description": "Message shown when the user has no bookmarks"
+  },
+  "emptyBookmarksNoMatch": {
+    "message": "Nenhum favorito corresponde ao seu filtro.",
+    "description": "Message shown when the bookmark filter matches nothing"
+  },
+  "emptyBookmarksCta": {
+    "message": "Pesquise ferramentas online e adicione-as aos favoritos.",
+    "description": "Call-to-action shown below the empty bookmarks message"
+  },
+  "showMore": {
+    "message": "Mostrar mais",
+    "description": "Button to expand a tool description"
+  },
+  "showLess": {
+    "message": "Mostrar menos",
+    "description": "Button to collapse a tool description"
+  },
+  "removeBookmark": {
+    "message": "Remover favorito",
+    "description": "Accessible label for the remove-bookmark button"
+  },
+  "addBookmark": {
+    "message": "Adicionar favorito",
+    "description": "Accessible label for the add-bookmark button"
+  },
+  "syncConnectCta": {
+    "message": "Vincular",
+    "description": "Button label to start the RapidToolSet sync connection flow"
+  },
+  "syncConnecting": {
+    "message": "Conectando…",
+    "description": "Button label shown while the RapidToolSet auth flow is in progress"
+  },
+  "syncConnected": {
+    "message": "Conectado ao RapidToolSet",
+    "description": "Status text shown when connected but not yet synced"
+  },
+  "syncNeverSynced": {
+    "message": "Ainda não sincronizado",
+    "description": "Status text shown when connected but a sync hasn't run yet"
+  },
+  "syncEmptyTitle": {
+    "message": "Vincule sua conta do RapidToolSet para sincronizar seus favoritos entre dispositivos",
+    "description": "Title shown on the sync tab before connecting"
+  },
+  "syncSyncing": {
+    "message": "Sincronizando…",
+    "description": "Status text shown while a sync is in progress"
+  },
+  "syncedAgo": {
+    "message": "Sincronizado $TIME$",
+    "description": "Status text showing how long ago bookmarks were last synced",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "há 5 minutos"
+      }
+    }
+  },
+  "syncNow": {
+    "message": "Sincronizar agora",
+    "description": "Accessible label for the manual sync button"
+  },
+  "syncDisconnect": {
+    "message": "Desconectar",
+    "description": "Accessible label for the disconnect-from-RapidToolSet button"
+  },
+  "syncedBookmarkDescription": {
+    "message": "Sincronizado do RapidToolSet",
+    "description": "Placeholder description for a bookmark pulled from RapidToolSet with no local metadata"
+  },
+  "syncErrorCancelled": {
+    "message": "A autorização foi cancelada.",
+    "description": "Error shown when the user closes the RapidToolSet auth window without completing it"
+  },
+  "syncErrorDenied": {
+    "message": "A autorização foi negada.",
+    "description": "Error shown when the user clicks Deny on the RapidToolSet consent screen"
+  },
+  "syncErrorNoToken": {
+    "message": "O RapidToolSet não retornou nenhum token.",
+    "description": "Error shown when the auth flow completes without a token"
+  },
+  "syncErrorExpired": {
+    "message": "A sessão do RapidToolSet expirou. Conecte-se novamente.",
+    "description": "Error shown when the stored token is rejected as invalid or revoked"
+  },
+  "syncErrorRequestFailed": {
+    "message": "A solicitação ao RapidToolSet falhou ($STATUS$).",
+    "description": "Error shown when a sync API request fails",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "500"
+      }
+    }
+  },
+  "syncErrorUnknown": {
+    "message": "Falha na sincronização",
+    "description": "Error shown when a sync fails without a more specific message"
+  },
+  "syncErrorConnectFailed": {
+    "message": "Falha ao conectar",
+    "description": "Error shown when connecting a RapidToolSet account fails without a more specific message"
+  },
+  "syncAccountName": {
+    "message": "Nome",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's name"
+  },
+  "syncAccountEmail": {
+    "message": "E-mail",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's email"
+  }
+}

@@ -1,6 +1,6 @@
 # RapidToolSet
 
-Discover and launch web tools, with i18n support. Built with [WXT](https://wxt.dev/), React 19, TypeScript, and Tailwind CSS v4.
+Discover and launch web tools, with i18n support. Built with [WXT](https://wxt.dev/), React 19, TypeScript, and Bootstrap 5, styled to match the [RapidToolSet](https://rapidtoolset.com/) website.
 
 [Chrome](https://chromewebstore.google.com/detail/njmnbhbdgnbkjknnmfhinhbbpjpcclld) | [Firefox](https://addons.mozilla.org/en-US/firefox/addon/rapidtoolset/)
 
@@ -22,9 +22,19 @@ npm run format:check         # verify formatting without modifying files
 
 ## Project layout
 
-- [src/components/ui/](src/components/ui/) — [shadcn/ui](https://ui.shadcn.com/) primitives
-- [src/components/](src/components/) — shared widgets (`ExtensionHeader`, `PopupContainer`, `EmptyState`)
+- [src/components/](src/components/) — shared widgets (`ExtensionHeader`, `PopupContainer`, `EmptyState`, `Tabs`, …), modeled on the website's components
+- [src/index.css](src/index.css) — global styles on top of Bootstrap, mostly shared with the website
 - [extensions/rapidtoolset/](extensions/rapidtoolset/) — extension-specific code
+
+## Languages
+
+The popup follows the browser's language, in any of the website's 16 languages (English otherwise; Arabic switches it to a right-to-left layout). Its strings are in [extensions/rapidtoolset/public/\_locales/](extensions/rapidtoolset/public/_locales/), with English as the source, and the supported locales are listed in [extensions/rapidtoolset/lib/locales.ts](extensions/rapidtoolset/lib/locales.ts).
+
+To run the dev browser in another language, pass its locale code:
+
+```bash
+WXT_RAPIDTOOLSET_LOCALE=fr npm run dev
+```
 
 ## Icons
 
@@ -41,8 +51,8 @@ Override icon generation inputs by passing `--source`, `--output`, `--sizes`, `-
 
 - [WXT](https://wxt.dev/) — extension framework
 - [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS v4](https://tailwindcss.com/)
-- [shadcn/ui](https://ui.shadcn.com/), [Radix UI](https://www.radix-ui.com/)
+- [Bootstrap 5](https://getbootstrap.com/)
+- [Font Awesome](https://fontawesome.com/) and [Material Icons](https://mui.com/material-ui/material-icons/) (`@mui/icons-material`)
 
 ## License
 

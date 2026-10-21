@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import classNames from "classnames";
 
 interface EmptyStateProps {
   /** Icon element (size and color are standardized by EmptyState) */
@@ -14,6 +14,7 @@ interface EmptyStateProps {
   className?: string;
 }
 
+/** Message panel for empty lists, in the website's tinted panel style. */
 export default function EmptyState({
   icon,
   title,
@@ -23,18 +24,22 @@ export default function EmptyState({
 }: EmptyStateProps) {
   return (
     <div
-      className={cn(
-        "flex flex-col items-center gap-2 px-8 py-6 text-center text-muted-foreground",
+      className={classNames(
+        "bg-body-tertiary rounded d-flex flex-column align-items-center gap-2 p-4 text-center",
         className,
       )}
     >
       {icon && (
-        <span className="mb-1 text-muted-foreground opacity-25 [&_svg]:size-8 [&_svg]:shrink-0">
+        <span className="empty-state-icon mb-1 text-body-secondary">
           {icon}
         </span>
       )}
-      <p className="text-sm font-medium text-balance">{title}</p>
-      {description && <p className="text-sm text-balance">{description}</p>}
+      <p className="mb-0 fw-medium text-balance">{title}</p>
+      {description && (
+        <p className="mb-0 small text-body-secondary text-balance">
+          {description}
+        </p>
+      )}
       {children}
     </div>
   );

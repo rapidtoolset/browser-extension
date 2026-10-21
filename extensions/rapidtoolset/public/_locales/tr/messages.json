@@ -1,0 +1,202 @@
+{
+  "extName": {
+    "message": "RapidToolSet",
+    "description": "Extension name shown in Chrome Web Store and extension management"
+  },
+  "extDescription": {
+    "message": "İş ve yaşam için temel araçlar",
+    "description": "Extension description shown in Chrome Web Store"
+  },
+  "headerByline": {
+    "message": "$SITE$ tarafından",
+    "description": "Byline below the extension name in the popup header, crediting the website (rendered as a link)",
+    "placeholders": {
+      "site": {
+        "content": "$1",
+        "example": "rapidtoolset.com"
+      }
+    }
+  },
+  "themeLight": {
+    "message": "Açık",
+    "description": "Theme menu option for the light color theme"
+  },
+  "themeDark": {
+    "message": "Koyu",
+    "description": "Theme menu option for the dark color theme"
+  },
+  "themeSystem": {
+    "message": "Sistem",
+    "description": "Theme menu option for following the operating system's color theme"
+  },
+  "themeAriaLabel": {
+    "message": "Tema: $THEME$",
+    "description": "Accessible label for the theme menu button, naming the selected theme option",
+    "placeholders": {
+      "theme": {
+        "content": "$1",
+        "example": "Koyu"
+      }
+    }
+  },
+  "tabOnline": {
+    "message": "Çevrimiçi",
+    "description": "Label for the online search tab"
+  },
+  "tabBookmarks": {
+    "message": "Yer İşaretleri",
+    "description": "Label for the bookmarks tab"
+  },
+  "tabSync": {
+    "message": "Eşitleme",
+    "description": "Label for the sync tab"
+  },
+  "searchPlaceholderOnline": {
+    "message": "Çevrimiçi araç ara…",
+    "description": "Placeholder text in the search input when on the online tab"
+  },
+  "searchPlaceholderBookmarks": {
+    "message": "Yer işaretlerini filtrele…",
+    "description": "Placeholder text in the search input when on the bookmarks tab"
+  },
+  "searchAriaLabel": {
+    "message": "Araç ara",
+    "description": "Accessible label for the search input"
+  },
+  "clearSearch": {
+    "message": "Aramayı temizle",
+    "description": "Accessible label for the button that clears the search input"
+  },
+  "searchErrorUnknown": {
+    "message": "Bir şeyler ters gitti",
+    "description": "Error shown when a tool search fails without a more specific message"
+  },
+  "statusLoading": {
+    "message": "Yükleniyor…",
+    "description": "Status text shown while bookmarks are loading"
+  },
+  "emptyOnlinePrompt": {
+    "message": "Çevrimiçi araç aramak için bir sorgu yazın.",
+    "description": "Placeholder message in the online tab before searching"
+  },
+  "emptyNoToolsFound": {
+    "message": "Sorgunuzla eşleşen araç bulunamadı.",
+    "description": "Message shown when a search returns no matching tools"
+  },
+  "emptyBookmarksNone": {
+    "message": "Henüz yer işareti yok.",
+    "description": "Message shown when the user has no bookmarks"
+  },
+  "emptyBookmarksNoMatch": {
+    "message": "Filtrenizle eşleşen yer işareti yok.",
+    "description": "Message shown when the bookmark filter matches nothing"
+  },
+  "emptyBookmarksCta": {
+    "message": "Çevrimiçi araç arayın ve yer işaretlerinize ekleyin.",
+    "description": "Call-to-action shown below the empty bookmarks message"
+  },
+  "showMore": {
+    "message": "Daha fazla göster",
+    "description": "Button to expand a tool description"
+  },
+  "showLess": {
+    "message": "Daha az göster",
+    "description": "Button to collapse a tool description"
+  },
+  "removeBookmark": {
+    "message": "Yer işaretini kaldır",
+    "description": "Accessible label for the remove-bookmark button"
+  },
+  "addBookmark": {
+    "message": "Yer işareti ekle",
+    "description": "Accessible label for the add-bookmark button"
+  },
+  "syncConnectCta": {
+    "message": "Bağla",
+    "description": "Button label to start the RapidToolSet sync connection flow"
+  },
+  "syncConnecting": {
+    "message": "Bağlanıyor…",
+    "description": "Button label shown while the RapidToolSet auth flow is in progress"
+  },
+  "syncConnected": {
+    "message": "RapidToolSet'e bağlı",
+    "description": "Status text shown when connected but not yet synced"
+  },
+  "syncNeverSynced": {
+    "message": "Henüz eşitlenmedi",
+    "description": "Status text shown when connected but a sync hasn't run yet"
+  },
+  "syncEmptyTitle": {
+    "message": "Yer işaretlerinizi cihazlarınız arasında eşitlemek için RapidToolSet hesabınızı bağlayın",
+    "description": "Title shown on the sync tab before connecting"
+  },
+  "syncSyncing": {
+    "message": "Eşitleniyor…",
+    "description": "Status text shown while a sync is in progress"
+  },
+  "syncedAgo": {
+    "message": "Son eşitleme: $TIME$",
+    "description": "Status text showing how long ago bookmarks were last synced",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "5 dakika önce"
+      }
+    }
+  },
+  "syncNow": {
+    "message": "Şimdi eşitle",
+    "description": "Accessible label for the manual sync button"
+  },
+  "syncDisconnect": {
+    "message": "Bağlantıyı kes",
+    "description": "Accessible label for the disconnect-from-RapidToolSet button"
+  },
+  "syncedBookmarkDescription": {
+    "message": "RapidToolSet'ten eşitlendi",
+    "description": "Placeholder description for a bookmark pulled from RapidToolSet with no local metadata"
+  },
+  "syncErrorCancelled": {
+    "message": "Yetkilendirme iptal edildi.",
+    "description": "Error shown when the user closes the RapidToolSet auth window without completing it"
+  },
+  "syncErrorDenied": {
+    "message": "Yetkilendirme reddedildi.",
+    "description": "Error shown when the user clicks Deny on the RapidToolSet consent screen"
+  },
+  "syncErrorNoToken": {
+    "message": "RapidToolSet bir belirteç döndürmedi.",
+    "description": "Error shown when the auth flow completes without a token"
+  },
+  "syncErrorExpired": {
+    "message": "RapidToolSet oturumunun süresi doldu. Lütfen yeniden bağlanın.",
+    "description": "Error shown when the stored token is rejected as invalid or revoked"
+  },
+  "syncErrorRequestFailed": {
+    "message": "RapidToolSet isteği başarısız oldu ($STATUS$).",
+    "description": "Error shown when a sync API request fails",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "500"
+      }
+    }
+  },
+  "syncErrorUnknown": {
+    "message": "Eşitleme başarısız oldu",
+    "description": "Error shown when a sync fails without a more specific message"
+  },
+  "syncErrorConnectFailed": {
+    "message": "Bağlantı kurulamadı",
+    "description": "Error shown when connecting a RapidToolSet account fails without a more specific message"
+  },
+  "syncAccountName": {
+    "message": "Ad",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's name"
+  },
+  "syncAccountEmail": {
+    "message": "E-posta",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's email"
+  }
+}

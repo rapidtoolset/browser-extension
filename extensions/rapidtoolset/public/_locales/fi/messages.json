@@ -1,0 +1,202 @@
+{
+  "extName": {
+    "message": "RapidToolSet",
+    "description": "Extension name shown in Chrome Web Store and extension management"
+  },
+  "extDescription": {
+    "message": "Välttämättömät työkalut työhön ja elämään",
+    "description": "Extension description shown in Chrome Web Store"
+  },
+  "headerByline": {
+    "message": "tekijä: $SITE$",
+    "description": "Byline below the extension name in the popup header, crediting the website (rendered as a link)",
+    "placeholders": {
+      "site": {
+        "content": "$1",
+        "example": "rapidtoolset.com"
+      }
+    }
+  },
+  "themeLight": {
+    "message": "Vaalea",
+    "description": "Theme menu option for the light color theme"
+  },
+  "themeDark": {
+    "message": "Tumma",
+    "description": "Theme menu option for the dark color theme"
+  },
+  "themeSystem": {
+    "message": "Järjestelmä",
+    "description": "Theme menu option for following the operating system's color theme"
+  },
+  "themeAriaLabel": {
+    "message": "Teema: $THEME$",
+    "description": "Accessible label for the theme menu button, naming the selected theme option",
+    "placeholders": {
+      "theme": {
+        "content": "$1",
+        "example": "Tumma"
+      }
+    }
+  },
+  "tabOnline": {
+    "message": "Verkossa",
+    "description": "Label for the online search tab"
+  },
+  "tabBookmarks": {
+    "message": "Kirjanmerkit",
+    "description": "Label for the bookmarks tab"
+  },
+  "tabSync": {
+    "message": "Synkronointi",
+    "description": "Label for the sync tab"
+  },
+  "searchPlaceholderOnline": {
+    "message": "Hae työkaluja verkosta…",
+    "description": "Placeholder text in the search input when on the online tab"
+  },
+  "searchPlaceholderBookmarks": {
+    "message": "Suodata kirjanmerkit…",
+    "description": "Placeholder text in the search input when on the bookmarks tab"
+  },
+  "searchAriaLabel": {
+    "message": "Hae työkaluja",
+    "description": "Accessible label for the search input"
+  },
+  "clearSearch": {
+    "message": "Tyhjennä haku",
+    "description": "Accessible label for the button that clears the search input"
+  },
+  "searchErrorUnknown": {
+    "message": "Jotain meni pieleen",
+    "description": "Error shown when a tool search fails without a more specific message"
+  },
+  "statusLoading": {
+    "message": "Ladataan…",
+    "description": "Status text shown while bookmarks are loading"
+  },
+  "emptyOnlinePrompt": {
+    "message": "Kirjoita hakusana etsiäksesi työkaluja verkosta.",
+    "description": "Placeholder message in the online tab before searching"
+  },
+  "emptyNoToolsFound": {
+    "message": "Hakuasi vastaavia työkaluja ei löytynyt.",
+    "description": "Message shown when a search returns no matching tools"
+  },
+  "emptyBookmarksNone": {
+    "message": "Ei vielä kirjanmerkkejä.",
+    "description": "Message shown when the user has no bookmarks"
+  },
+  "emptyBookmarksNoMatch": {
+    "message": "Suodatinta vastaavia kirjanmerkkejä ei ole.",
+    "description": "Message shown when the bookmark filter matches nothing"
+  },
+  "emptyBookmarksCta": {
+    "message": "Hae työkaluja verkosta ja lisää ne kirjanmerkkeihin.",
+    "description": "Call-to-action shown below the empty bookmarks message"
+  },
+  "showMore": {
+    "message": "Näytä lisää",
+    "description": "Button to expand a tool description"
+  },
+  "showLess": {
+    "message": "Näytä vähemmän",
+    "description": "Button to collapse a tool description"
+  },
+  "removeBookmark": {
+    "message": "Poista kirjanmerkki",
+    "description": "Accessible label for the remove-bookmark button"
+  },
+  "addBookmark": {
+    "message": "Lisää kirjanmerkki",
+    "description": "Accessible label for the add-bookmark button"
+  },
+  "syncConnectCta": {
+    "message": "Yhdistä",
+    "description": "Button label to start the RapidToolSet sync connection flow"
+  },
+  "syncConnecting": {
+    "message": "Yhdistetään…",
+    "description": "Button label shown while the RapidToolSet auth flow is in progress"
+  },
+  "syncConnected": {
+    "message": "Yhdistetty RapidToolSetiin",
+    "description": "Status text shown when connected but not yet synced"
+  },
+  "syncNeverSynced": {
+    "message": "Ei vielä synkronoitu",
+    "description": "Status text shown when connected but a sync hasn't run yet"
+  },
+  "syncEmptyTitle": {
+    "message": "Yhdistä RapidToolSet-tilisi synkronoidaksesi kirjanmerkit laitteiden välillä",
+    "description": "Title shown on the sync tab before connecting"
+  },
+  "syncSyncing": {
+    "message": "Synkronoidaan…",
+    "description": "Status text shown while a sync is in progress"
+  },
+  "syncedAgo": {
+    "message": "Synkronoitu $TIME$",
+    "description": "Status text showing how long ago bookmarks were last synced",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "5 minuuttia sitten"
+      }
+    }
+  },
+  "syncNow": {
+    "message": "Synkronoi nyt",
+    "description": "Accessible label for the manual sync button"
+  },
+  "syncDisconnect": {
+    "message": "Katkaise yhteys",
+    "description": "Accessible label for the disconnect-from-RapidToolSet button"
+  },
+  "syncedBookmarkDescription": {
+    "message": "Synkronoitu RapidToolSetistä",
+    "description": "Placeholder description for a bookmark pulled from RapidToolSet with no local metadata"
+  },
+  "syncErrorCancelled": {
+    "message": "Valtuutus peruutettiin.",
+    "description": "Error shown when the user closes the RapidToolSet auth window without completing it"
+  },
+  "syncErrorDenied": {
+    "message": "Valtuutus evättiin.",
+    "description": "Error shown when the user clicks Deny on the RapidToolSet consent screen"
+  },
+  "syncErrorNoToken": {
+    "message": "RapidToolSet ei palauttanut käyttöoikeustunnusta.",
+    "description": "Error shown when the auth flow completes without a token"
+  },
+  "syncErrorExpired": {
+    "message": "RapidToolSet-istunto on vanhentunut. Yhdistä uudelleen.",
+    "description": "Error shown when the stored token is rejected as invalid or revoked"
+  },
+  "syncErrorRequestFailed": {
+    "message": "RapidToolSet-pyyntö epäonnistui ($STATUS$).",
+    "description": "Error shown when a sync API request fails",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "500"
+      }
+    }
+  },
+  "syncErrorUnknown": {
+    "message": "Synkronointi epäonnistui",
+    "description": "Error shown when a sync fails without a more specific message"
+  },
+  "syncErrorConnectFailed": {
+    "message": "Yhdistäminen epäonnistui",
+    "description": "Error shown when connecting a RapidToolSet account fails without a more specific message"
+  },
+  "syncAccountName": {
+    "message": "Nimi",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's name"
+  },
+  "syncAccountEmail": {
+    "message": "Sähköposti",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's email"
+  }
+}

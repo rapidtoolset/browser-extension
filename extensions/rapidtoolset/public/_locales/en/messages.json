@@ -7,6 +7,38 @@
     "message": "Essential tools for work and life",
     "description": "Extension description shown in Chrome Web Store"
   },
+  "headerByline": {
+    "message": "by $SITE$",
+    "description": "Byline below the extension name in the popup header, crediting the website (rendered as a link)",
+    "placeholders": {
+      "site": {
+        "content": "$1",
+        "example": "rapidtoolset.com"
+      }
+    }
+  },
+  "themeLight": {
+    "message": "Light",
+    "description": "Theme menu option for the light color theme"
+  },
+  "themeDark": {
+    "message": "Dark",
+    "description": "Theme menu option for the dark color theme"
+  },
+  "themeSystem": {
+    "message": "System",
+    "description": "Theme menu option for following the operating system's color theme"
+  },
+  "themeAriaLabel": {
+    "message": "Theme: $THEME$",
+    "description": "Accessible label for the theme menu button, naming the selected theme option",
+    "placeholders": {
+      "theme": {
+        "content": "$1",
+        "example": "Dark"
+      }
+    }
+  },
   "tabOnline": {
     "message": "Online",
     "description": "Label for the online search tab"
@@ -34,6 +66,10 @@
   "clearSearch": {
     "message": "Clear search",
     "description": "Accessible label for the button that clears the search input"
+  },
+  "searchErrorUnknown": {
+    "message": "Something went wrong",
+    "description": "Error shown when a tool search fails without a more specific message"
   },
   "statusLoading": {
     "message": "Loading…",
@@ -146,6 +182,14 @@
         "example": "500"
       }
     }
+  },
+  "syncErrorUnknown": {
+    "message": "Sync failed",
+    "description": "Error shown when a sync fails without a more specific message"
+  },
+  "syncErrorConnectFailed": {
+    "message": "Failed to connect",
+    "description": "Error shown when connecting a RapidToolSet account fails without a more specific message"
   },
   "syncAccountName": {
     "message": "Name",

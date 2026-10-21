@@ -1,5 +1,4 @@
 import path from "node:path";
-import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "wxt";
 import manifest from "./extensions/rapidtoolset/manifest.config";
@@ -11,19 +10,14 @@ function getBrowserLocaleConfig() {
   const locale = process.env.WXT_RAPIDTOOLSET_LOCALE?.toLowerCase();
   if (!locale || !isSupportedLocale(locale)) return {};
 
-  return locale === "ru"
-    ? {
-        chromiumArgs: ["--lang=ru"],
-        firefoxPref: {
-          "intl.locale.requested": "ru",
-        },
-      }
-    : {
-        chromiumArgs: ["--lang=en"],
-        firefoxPref: {
-          "intl.locale.requested": "en",
-        },
-      };
+  // Browsers call Norwegian Bokmål "nb", the website calls it "no"
+  const browserLocale = locale === "no" ? "nb" : locale;
+  return {
+    chromiumArgs: [`--lang=${browserLocale}`],
+    firefoxPref: {
+      "intl.locale.requested": browserLocale,
+    },
+  };
 }
 
 export default defineConfig({
@@ -65,6 +59,6 @@ export default defineConfig({
     artifactTemplate: "rapidtoolset-{{version}}-{{browser}}.zip",
   },
   vite: () => ({
-    plugins: [tailwindcss(), react()],
+    plugins: [react()],
   }),
 });

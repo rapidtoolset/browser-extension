@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Bookmark, BookmarkCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import classNames from "classnames";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import { DEFAULT_FONT_WEIGHT } from "@/lib/constants";
 import { t } from "../lib/i18n";
 import type { Tool } from "../lib/types";
 
@@ -26,47 +27,56 @@ export default function ToolCard(props: Props) {
   }, [tool.description, checkClamp]);
 
   return (
-    <div className="flex items-start gap-2 rounded-lg border bg-card p-3 text-sm text-card-foreground shadow-xs transition-colors hover:bg-accent/30">
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-1.5 flex-wrap">
+    <div className="bg-body-tertiary rounded d-flex align-items-start gap-2 p-3 flex-shrink-0">
+      <div className="min-w-0 flex-grow-1">
+        {/* Balancing applies to the block around the (inline) link */}
+        <div className="text-balance">
           <a
             href={tool.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium leading-snug hover:underline"
+            className="link-reset text-dark-emphasis text-uppercase"
+            style={{
+              fontWeight: DEFAULT_FONT_WEIGHT,
+              overflowWrap: "anywhere",
+            }}
           >
             {tool.name}
           </a>
         </div>
         <p
           ref={descRef}
-          className={`mt-0.5 leading-snug text-muted-foreground transition-all duration-200 ${expanded ? "" : "line-clamp-2"}`}
+          className={classNames("text-muted small text-balance mt-1 mb-0", {
+            "line-clamp-2": !expanded,
+          })}
         >
           {tool.description}
         </p>
         {(clamped || expanded) && (
-          <button
-            type="button"
-            className="mt-0.5 font-medium text-primary hover:text-primary/80 transition-colors cursor-pointer"
-            onClick={() => setExpanded((v) => !v)}
-          >
-            {expanded ? t("showLess") : t("showMore")}
-          </button>
+          // .btn-reset inherits its font, so the wrapper sets the size
+          <div className="small mt-1">
+            <button
+              type="button"
+              className="btn-reset content-link fw-medium"
+              onClick={() => setExpanded((v) => !v)}
+            >
+              {expanded ? t("showLess") : t("showMore")}
+            </button>
+          </div>
         )}
       </div>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="shrink-0"
+      <button
+        type="button"
+        className={classNames(
+          "btn-reset btn-bookmark p-2 rounded flex-shrink-0 d-inline-flex",
+          { "text-body-tertiary": !bookmarked },
+        )}
+        style={bookmarked ? { color: "var(--color-bookmark)" } : undefined}
         aria-label={bookmarked ? t("removeBookmark") : t("addBookmark")}
         onClick={() => onToggleBookmark(tool)}
       >
-        {bookmarked ? (
-          <BookmarkCheck size={20} className="text-black dark:text-white" />
-        ) : (
-          <Bookmark size={20} className="text-muted-foreground/50" />
-        )}
-      </Button>
+        <BookmarkIcon sx={{ fontSize: 24 }} />
+      </button>
     </div>
   );
 }

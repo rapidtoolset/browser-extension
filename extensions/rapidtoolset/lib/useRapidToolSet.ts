@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getLocale } from "./i18n";
+import { getLocale, t } from "./i18n";
 import type { RemoteUser, SearchTab, Tool } from "./types";
 import {
   addBookmark,
@@ -123,7 +123,7 @@ export function useRapidToolSet() {
       } catch (err) {
         if (err instanceof DOMException && err.name === "AbortError") return;
         setSearchError(
-          err instanceof Error ? err.message : "Something went wrong",
+          err instanceof Error ? err.message : t("searchErrorUnknown"),
         );
         setSearchResults([]);
       } finally {
@@ -154,7 +154,7 @@ export function useRapidToolSet() {
 
   /** Records a failed request's error, additionally resetting auth state if the token was revoked. */
   const handleRequestError = useCallback((err: unknown) => {
-    setSyncError(err instanceof Error ? err.message : "Sync failed");
+    setSyncError(err instanceof Error ? err.message : t("syncErrorUnknown"));
     if (err instanceof AuthRevokedError) {
       setAuthToken(null);
       setRemoteUser(null);
@@ -231,7 +231,9 @@ export function useRapidToolSet() {
       // as soon as the account is linked, so the UI reflects the account's real state right away.
       await sync(token);
     } catch (err) {
-      setSyncError(err instanceof Error ? err.message : "Failed to connect");
+      setSyncError(
+        err instanceof Error ? err.message : t("syncErrorConnectFailed"),
+      );
     } finally {
       setConnecting(false);
     }

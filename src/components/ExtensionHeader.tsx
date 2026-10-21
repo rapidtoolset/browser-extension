@@ -1,14 +1,9 @@
 import { browser } from "wxt/browser";
-import { useTheme, type ThemePreference } from "@/lib/useTheme";
-import { Sun, Moon, Palette } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import BrandIcon from "@/components/BrandIcon";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { t } from "@/lib/i18n";
+
+const SITE = "rapidtoolset.com";
 
 interface ExtensionHeaderProps {
   /** Override the extension name (defaults to manifest name) */
@@ -17,71 +12,46 @@ interface ExtensionHeaderProps {
   developer?: string;
 }
 
-const themeOptions: {
-  value: ThemePreference;
-  label: string;
-  icon: React.ReactNode;
-}[] = [
-  { value: "light", label: "Light", icon: <Sun size={14} /> },
-  { value: "dark", label: "Dark", icon: <Moon size={14} /> },
-  { value: "system", label: "System", icon: <Palette size={14} /> },
-];
-
-function ThemeIcon({ theme }: { theme: ThemePreference }) {
-  if (theme === "light") return <Sun size={14} />;
-  if (theme === "dark") return <Moon size={14} />;
-  return <Palette size={14} />;
-}
-
+/** Popup header, styled like the website's navbar: brand on the left, controls on the right. */
 export default function ExtensionHeader(props: ExtensionHeaderProps) {
   const manifest = browser.runtime.getManifest();
   const name = props.name ?? manifest.name ?? "Extension";
-  const { theme, setTheme } = useTheme();
+  // The translation decides where the site goes ("by X", "X tarafından")
+  const [bylineStart, bylineEnd] = t("headerByline", SITE).split(SITE);
 
   return (
-    <div className="mb-3 space-y-2">
-      <div className="flex items-center text-sm mb-3">
-        <div className="flex flex-col gap-0.5">
-          <span className="font-semibold tracking-tight text-sm text-foreground/90">
+    <header className="extension-header bg-body-tertiary shadow d-flex align-items-center gap-3 px-3">
+      <div className="d-flex align-items-center gap-2 min-w-0">
+        <span className="text-dark-emphasis d-flex align-items-center">
+          <BrandIcon size={24} />
+        </span>
+        <div className="d-flex flex-column gap-1 min-w-0">
+          {/* The English brand name stays "RAPIDTOOLSET" when uppercased,
+              where Turkish rules would make it "RAPİDTOOLSET" */}
+          <span
+            lang="en"
+            className="extension-header-name h5 mb-0 text-dark-emphasis text-truncate"
+          >
             {name}
           </span>
-          <span className="text-muted-foreground/50 text-xs">
-            by{" "}
+          <span className="small lh-1 text-body-tertiary text-truncate">
+            {bylineStart}
             <a
-              href="https://rapidtoolset.com/"
+              href={`https://${SITE}/`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground/70 transition-colors hover:text-muted-foreground"
+              className="link-secondary text-decoration-none"
             >
-              rapidtoolset.com
+              {SITE}
             </a>
+            {bylineEnd}
           </span>
-        </div>
-
-        <div className="ml-auto">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon-sm">
-                <ThemeIcon theme={theme} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {themeOptions.map(({ value, label, icon }) => (
-                <DropdownMenuItem
-                  key={value}
-                  onClick={() => setTheme(value)}
-                  className={theme === value ? "bg-accent" : ""}
-                >
-                  <span className="mr-2">{icon}</span>
-                  {label}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </div>
 
-      <Separator />
-    </div>
+      <div className="ms-auto">
+        <ThemeSwitcher />
+      </div>
+    </header>
   );
 }
