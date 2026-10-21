@@ -57,12 +57,14 @@ export function Tabs({ id, items, activeTab, onTabChange }: TabsProps) {
     event: KeyboardEvent<HTMLButtonElement>,
     index: number,
   ) => {
+    // Right-to-left layouts order the tabs from right to left
+    const rtl = getComputedStyle(event.currentTarget).direction === "rtl";
     let next: number;
     switch (event.key) {
-      case "ArrowRight":
+      case rtl ? "ArrowLeft" : "ArrowRight":
         next = (index + 1) % items.length;
         break;
-      case "ArrowLeft":
+      case rtl ? "ArrowRight" : "ArrowLeft":
         next = (index - 1 + items.length) % items.length;
         break;
       case "Home":

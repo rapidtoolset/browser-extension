@@ -10,19 +10,14 @@ function getBrowserLocaleConfig() {
   const locale = process.env.WXT_RAPIDTOOLSET_LOCALE?.toLowerCase();
   if (!locale || !isSupportedLocale(locale)) return {};
 
-  return locale === "ru"
-    ? {
-        chromiumArgs: ["--lang=ru"],
-        firefoxPref: {
-          "intl.locale.requested": "ru",
-        },
-      }
-    : {
-        chromiumArgs: ["--lang=en"],
-        firefoxPref: {
-          "intl.locale.requested": "en",
-        },
-      };
+  // Browsers call Norwegian Bokmål "nb", the website calls it "no"
+  const browserLocale = locale === "no" ? "nb" : locale;
+  return {
+    chromiumArgs: [`--lang=${browserLocale}`],
+    firefoxPref: {
+      "intl.locale.requested": browserLocale,
+    },
+  };
 }
 
 export default defineConfig({

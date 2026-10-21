@@ -177,19 +177,20 @@ body {
 }
 
 /* Scrollable list filling the rest of the popup. It reaches into the content's
-   1rem right and bottom padding so the scrollbar sits at the popup's edge and
+   1rem end (right, or left in right-to-left layouts, where the scrollbar is on
+   the left) and bottom padding so the scrollbar sits at the popup's edge and
    the cards line up with the search bar above. */
 .scroll-area {
-  margin-right: -1rem;
+  margin-inline-end: -1rem;
   margin-bottom: -1rem;
-  padding-right: 1rem;
+  padding-inline-end: 1rem;
   padding-bottom: 1rem;
   overflow-y: scroll;
 }
 
 /* For browsers whose scrollbars take up layout space (see useScrollable) */
 .scroll-area.scrollbar-gutter {
-  padding-right: calc(1rem - 8px);
+  padding-inline-end: calc(1rem - 8px);
 }
 
 /* EmptyState icon, standardized for FontAwesome and MUI icons alike */

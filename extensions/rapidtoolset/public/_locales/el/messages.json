@@ -1,0 +1,202 @@
+{
+  "extName": {
+    "message": "RapidToolSet",
+    "description": "Extension name shown in Chrome Web Store and extension management"
+  },
+  "extDescription": {
+    "message": "Απαραίτητα εργαλεία για εργασία και ζωή",
+    "description": "Extension description shown in Chrome Web Store"
+  },
+  "headerByline": {
+    "message": "από $SITE$",
+    "description": "Byline below the extension name in the popup header, crediting the website (rendered as a link)",
+    "placeholders": {
+      "site": {
+        "content": "$1",
+        "example": "rapidtoolset.com"
+      }
+    }
+  },
+  "themeLight": {
+    "message": "Ανοιχτόχρωμο",
+    "description": "Theme menu option for the light color theme"
+  },
+  "themeDark": {
+    "message": "Σκούρο",
+    "description": "Theme menu option for the dark color theme"
+  },
+  "themeSystem": {
+    "message": "Σύστημα",
+    "description": "Theme menu option for following the operating system's color theme"
+  },
+  "themeAriaLabel": {
+    "message": "Θέμα: $THEME$",
+    "description": "Accessible label for the theme menu button, naming the selected theme option",
+    "placeholders": {
+      "theme": {
+        "content": "$1",
+        "example": "Σκούρο"
+      }
+    }
+  },
+  "tabOnline": {
+    "message": "Διαδικτυακά",
+    "description": "Label for the online search tab"
+  },
+  "tabBookmarks": {
+    "message": "Σελιδοδείκτες",
+    "description": "Label for the bookmarks tab"
+  },
+  "tabSync": {
+    "message": "Συγχρονισμός",
+    "description": "Label for the sync tab"
+  },
+  "searchPlaceholderOnline": {
+    "message": "Αναζήτηση εργαλείων στο διαδίκτυο…",
+    "description": "Placeholder text in the search input when on the online tab"
+  },
+  "searchPlaceholderBookmarks": {
+    "message": "Φιλτράρισμα σελιδοδεικτών…",
+    "description": "Placeholder text in the search input when on the bookmarks tab"
+  },
+  "searchAriaLabel": {
+    "message": "Αναζήτηση εργαλείων",
+    "description": "Accessible label for the search input"
+  },
+  "clearSearch": {
+    "message": "Εκκαθάριση αναζήτησης",
+    "description": "Accessible label for the button that clears the search input"
+  },
+  "searchErrorUnknown": {
+    "message": "Κάτι πήγε στραβά",
+    "description": "Error shown when a tool search fails without a more specific message"
+  },
+  "statusLoading": {
+    "message": "Φόρτωση…",
+    "description": "Status text shown while bookmarks are loading"
+  },
+  "emptyOnlinePrompt": {
+    "message": "Πληκτρολογήστε έναν όρο αναζήτησης για να βρείτε εργαλεία στο διαδίκτυο.",
+    "description": "Placeholder message in the online tab before searching"
+  },
+  "emptyNoToolsFound": {
+    "message": "Δεν βρέθηκαν εργαλεία για την αναζήτησή σας.",
+    "description": "Message shown when a search returns no matching tools"
+  },
+  "emptyBookmarksNone": {
+    "message": "Δεν υπάρχουν ακόμη σελιδοδείκτες.",
+    "description": "Message shown when the user has no bookmarks"
+  },
+  "emptyBookmarksNoMatch": {
+    "message": "Κανένας σελιδοδείκτης δεν ταιριάζει με το φίλτρο σας.",
+    "description": "Message shown when the bookmark filter matches nothing"
+  },
+  "emptyBookmarksCta": {
+    "message": "Αναζητήστε εργαλεία στο διαδίκτυο και προσθέστε τα στους σελιδοδείκτες σας.",
+    "description": "Call-to-action shown below the empty bookmarks message"
+  },
+  "showMore": {
+    "message": "Εμφάνιση περισσότερων",
+    "description": "Button to expand a tool description"
+  },
+  "showLess": {
+    "message": "Εμφάνιση λιγότερων",
+    "description": "Button to collapse a tool description"
+  },
+  "removeBookmark": {
+    "message": "Αφαίρεση σελιδοδείκτη",
+    "description": "Accessible label for the remove-bookmark button"
+  },
+  "addBookmark": {
+    "message": "Προσθήκη σελιδοδείκτη",
+    "description": "Accessible label for the add-bookmark button"
+  },
+  "syncConnectCta": {
+    "message": "Σύνδεση",
+    "description": "Button label to start the RapidToolSet sync connection flow"
+  },
+  "syncConnecting": {
+    "message": "Σύνδεση…",
+    "description": "Button label shown while the RapidToolSet auth flow is in progress"
+  },
+  "syncConnected": {
+    "message": "Συνδεδεμένο με το RapidToolSet",
+    "description": "Status text shown when connected but not yet synced"
+  },
+  "syncNeverSynced": {
+    "message": "Δεν έχει συγχρονιστεί ακόμη",
+    "description": "Status text shown when connected but a sync hasn't run yet"
+  },
+  "syncEmptyTitle": {
+    "message": "Συνδέστε τον λογαριασμό σας RapidToolSet για να συγχρονίζετε τους σελιδοδείκτες σας σε όλες τις συσκευές",
+    "description": "Title shown on the sync tab before connecting"
+  },
+  "syncSyncing": {
+    "message": "Συγχρονισμός…",
+    "description": "Status text shown while a sync is in progress"
+  },
+  "syncedAgo": {
+    "message": "Συγχρονίστηκε $TIME$",
+    "description": "Status text showing how long ago bookmarks were last synced",
+    "placeholders": {
+      "time": {
+        "content": "$1",
+        "example": "5 λεπτά πριν"
+      }
+    }
+  },
+  "syncNow": {
+    "message": "Συγχρονισμός τώρα",
+    "description": "Accessible label for the manual sync button"
+  },
+  "syncDisconnect": {
+    "message": "Αποσύνδεση",
+    "description": "Accessible label for the disconnect-from-RapidToolSet button"
+  },
+  "syncedBookmarkDescription": {
+    "message": "Συγχρονίστηκε από το RapidToolSet",
+    "description": "Placeholder description for a bookmark pulled from RapidToolSet with no local metadata"
+  },
+  "syncErrorCancelled": {
+    "message": "Η εξουσιοδότηση ακυρώθηκε.",
+    "description": "Error shown when the user closes the RapidToolSet auth window without completing it"
+  },
+  "syncErrorDenied": {
+    "message": "Η εξουσιοδότηση απορρίφθηκε.",
+    "description": "Error shown when the user clicks Deny on the RapidToolSet consent screen"
+  },
+  "syncErrorNoToken": {
+    "message": "Το RapidToolSet δεν επέστρεψε διακριτικό.",
+    "description": "Error shown when the auth flow completes without a token"
+  },
+  "syncErrorExpired": {
+    "message": "Η συνεδρία του RapidToolSet έληξε. Συνδεθείτε ξανά.",
+    "description": "Error shown when the stored token is rejected as invalid or revoked"
+  },
+  "syncErrorRequestFailed": {
+    "message": "Το αίτημα προς το RapidToolSet απέτυχε ($STATUS$).",
+    "description": "Error shown when a sync API request fails",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "500"
+      }
+    }
+  },
+  "syncErrorUnknown": {
+    "message": "Ο συγχρονισμός απέτυχε",
+    "description": "Error shown when a sync fails without a more specific message"
+  },
+  "syncErrorConnectFailed": {
+    "message": "Η σύνδεση απέτυχε",
+    "description": "Error shown when connecting a RapidToolSet account fails without a more specific message"
+  },
+  "syncAccountName": {
+    "message": "Όνομα",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's name"
+  },
+  "syncAccountEmail": {
+    "message": "Email",
+    "description": "Label for the disabled field showing the connected RapidToolSet account's email"
+  }
+}

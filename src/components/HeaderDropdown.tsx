@@ -128,7 +128,8 @@ export default function HeaderDropdown({
           style={{
             position: "absolute",
             top: "calc(100% + 8px)",
-            right: 0,
+            // Aligned with the button's end edge, which is its left one in right-to-left layouts
+            insetInlineEnd: 0,
             zIndex: 1050,
             minWidth,
           }}

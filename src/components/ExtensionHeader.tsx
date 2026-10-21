@@ -1,6 +1,9 @@
 import { browser } from "wxt/browser";
 import BrandIcon from "@/components/BrandIcon";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { t } from "@/lib/i18n";
+
+const SITE = "rapidtoolset.com";
 
 interface ExtensionHeaderProps {
   /** Override the extension name (defaults to manifest name) */
@@ -13,6 +16,8 @@ interface ExtensionHeaderProps {
 export default function ExtensionHeader(props: ExtensionHeaderProps) {
   const manifest = browser.runtime.getManifest();
   const name = props.name ?? manifest.name ?? "Extension";
+  // The translation decides where the site goes ("by X", "X tarafından")
+  const [bylineStart, bylineEnd] = t("headerByline", SITE).split(SITE);
 
   return (
     <header className="extension-header bg-body-tertiary shadow d-flex align-items-center gap-3 px-3">
@@ -25,15 +30,16 @@ export default function ExtensionHeader(props: ExtensionHeaderProps) {
             {name}
           </span>
           <span className="small lh-1 text-body-tertiary text-truncate">
-            by{" "}
+            {bylineStart}
             <a
-              href="https://rapidtoolset.com/"
+              href={`https://${SITE}/`}
               target="_blank"
               rel="noopener noreferrer"
               className="link-secondary text-decoration-none"
             >
-              rapidtoolset.com
+              {SITE}
             </a>
+            {bylineEnd}
           </span>
         </div>
       </div>

@@ -4,16 +4,21 @@ import BrightnessAutoOutlinedIcon from "@mui/icons-material/BrightnessAutoOutlin
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import HeaderDropdown from "@/components/HeaderDropdown";
+import { t } from "@/lib/i18n";
 import { useTheme, type ThemePreference } from "@/lib/useTheme";
 
 const themeOptions: {
   value: ThemePreference;
-  label: string;
+  labelKey: "themeLight" | "themeDark" | "themeSystem";
   Icon: SvgIconComponent;
 }[] = [
-  { value: "light", label: "Light", Icon: WbSunnyOutlinedIcon },
-  { value: "dark", label: "Dark", Icon: DarkModeOutlinedIcon },
-  { value: "system", label: "System", Icon: BrightnessAutoOutlinedIcon },
+  { value: "light", labelKey: "themeLight", Icon: WbSunnyOutlinedIcon },
+  { value: "dark", labelKey: "themeDark", Icon: DarkModeOutlinedIcon },
+  {
+    value: "system",
+    labelKey: "themeSystem",
+    Icon: BrightnessAutoOutlinedIcon,
+  },
 ];
 
 export default function ThemeSwitcher() {
@@ -25,10 +30,10 @@ export default function ThemeSwitcher() {
   return (
     <HeaderDropdown
       triggerContent={<current.Icon />}
-      ariaLabel={`Theme: ${current.label}`}
+      ariaLabel={t("themeAriaLabel", t(current.labelKey))}
     >
       {(close) =>
-        themeOptions.map(({ value, label, Icon }) => (
+        themeOptions.map(({ value, labelKey, Icon }) => (
           <li key={value} role="none">
             <button
               type="button"
@@ -43,7 +48,7 @@ export default function ThemeSwitcher() {
               }}
             >
               <Icon fontSize="small" className="text-body-secondary" />
-              {label}
+              {t(labelKey)}
             </button>
           </li>
         ))

@@ -10,7 +10,7 @@ import { formatDistanceToNow } from "date-fns";
 import EmptyState from "@/components/EmptyState";
 import ErrorAlert from "@/components/ErrorAlert";
 import { DEFAULT_FONT_WEIGHT } from "@/lib/constants";
-import { t } from "../lib/i18n";
+import { getDateFnsLocale, t } from "../lib/i18n";
 import type { RemoteUser } from "../lib/types";
 
 interface Props {
@@ -76,7 +76,10 @@ export default function SyncView(props: Props) {
               : lastSyncedAt
                 ? t(
                     "syncedAgo",
-                    formatDistanceToNow(lastSyncedAt, { addSuffix: true }),
+                    formatDistanceToNow(lastSyncedAt, {
+                      addSuffix: true,
+                      locale: getDateFnsLocale(),
+                    }),
                   )
                 : t("syncNeverSynced")}
           </span>
