@@ -1,6 +1,9 @@
 /** Active search tab */
 export type SearchTab = "online" | "bookmarks" | "sync";
 
+/** Where a click on a tool opens it (a setting): the website in a new tab, or the tool inside the popup */
+export type OpenToolsIn = "tab" | "popup";
+
 /** A single tool returned from the search API */
 export interface Tool {
   alias: string;

@@ -17,6 +17,14 @@
       }
     }
   },
+  "settings": {
+    "message": "Ustawienia",
+    "description": "Accessible label for the settings menu button in the popup header, and of the menu"
+  },
+  "settingsTheme": {
+    "message": "Motyw",
+    "description": "Heading of the color theme options in the settings menu"
+  },
   "themeLight": {
     "message": "Jasny",
     "description": "Theme menu option for the light color theme"
@@ -29,15 +37,17 @@
     "message": "Systemowy",
     "description": "Theme menu option for following the operating system's color theme"
   },
-  "themeAriaLabel": {
-    "message": "Motyw: $THEME$",
-    "description": "Accessible label for the theme menu button, naming the selected theme option",
-    "placeholders": {
-      "theme": {
-        "content": "$1",
-        "example": "Ciemny"
-      }
-    }
+  "settingsOpenTools": {
+    "message": "Otwieraj narzędzia",
+    "description": "Heading of the settings menu options for where a click on a tool opens it"
+  },
+  "openToolsInTab": {
+    "message": "W nowej karcie",
+    "description": "Settings menu option: a click on a tool opens it on the website in a new browser tab (the default)"
+  },
+  "openToolsInPopup": {
+    "message": "W wyskakującym okienku",
+    "description": "Settings menu option: a click on a tool opens it inside the extension popup"
   },
   "tabOnline": {
     "message": "Online",
@@ -111,6 +121,32 @@
     "message": "Dodaj zakładkę",
     "description": "Accessible label for the add-bookmark button"
   },
+  "back": {
+    "message": "Wstecz",
+    "description": "Accessible label for the button that closes the tool open in the popup and goes back to the list"
+  },
+  "openInNewTab": {
+    "message": "Otwórz w nowej karcie",
+    "description": "Accessible label for the button that opens the tool on the website in a new browser tab"
+  },
+  "popupCloseWarning": {
+    "message": "Z powodu ograniczeń rozszerzeń wpisane dane znikają po zamknięciu okienka. Aby zachować dane, $LINK$.",
+    "description": "Warning above a tool opened inside the extension popup. First sentence: what the user enters disappears when the popup closes, because of what browser extensions can do; second: opening the tool in a new tab keeps it, with $LINK$ standing for that action as a link (popupCloseWarningLink). Simple everyday words",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "otwórz to narzędzie w nowej karcie"
+      }
+    }
+  },
+  "popupCloseWarningLink": {
+    "message": "otwórz to narzędzie w nowej karcie",
+    "description": "Link inside the warning above a tool opened in the popup (it replaces $LINK$ in popupCloseWarning, so it must fit that sentence): opens the tool on the website in a new browser tab"
+  },
+  "dontShowAgain": {
+    "message": "Nie pokazuj ponownie",
+    "description": "Button in the warning above a tool opened in the popup that turns the warning off for good"
+  },
   "syncConnectCta": {
     "message": "Połącz",
     "description": "Button label to start the RapidToolSet sync connection flow"
@@ -120,7 +156,7 @@
     "description": "Button label shown while the RapidToolSet auth flow is in progress"
   },
   "syncConnected": {
-    "message": "Połączono z RapidToolSet",
+    "message": "Połączono",
     "description": "Status text shown when connected but not yet synced"
   },
   "syncNeverSynced": {

@@ -4,7 +4,6 @@
 
 :root {
   /* Theme colors */
-  --color-bookmark: #6ea8fe;
   --color-highlight-light: rgba(33, 37, 41, 0.1);
   --color-highlight-dark: rgba(33, 37, 41, 0.6);
 
@@ -20,13 +19,68 @@
   --disabled-color-dark: #24282d;
 }
 
+/* Each theme has one accent blue, --bs-primary: a 10% tint of Bootstrap's #0d6efd in the light theme
+   and, in the dark one, a 23% tint of Bootstrap's dark-theme link blue (#6ea8fe). Both sit the same
+   step (OKLCH lightness +0.034) above Bootstrap's pair. Links, icons, buttons and focus rings all
+   use it, with --color-on-primary for text on it, and the --color-primary-* shades below for the
+   Bootstrap components that hard-code #0d6efd. The variables are set on :root so they outrank
+   Bootstrap's own [data-bs-theme] ones */
 :root[data-bs-theme="light"] {
   color-scheme: light;
   --disabled-color: var(--disabled-color-light);
+  --bs-primary: #257dfd;
+  --bs-primary-rgb: 37, 125, 253;
+  --bs-focus-ring-color: rgba(37, 125, 253, 0.25);
+  --color-on-primary: #fff;
+  /* Bootstrap's shades of its primary, taken of this one: 50% tint, 15% and 20% shade on hover
+     and press, 25% shade for the pressed border */
+  --color-focus-border: #92befe;
+  --color-primary-hover-bg: #1f6ad7;
+  --color-primary-hover-border: #1e64ca;
+  --color-primary-active-bg: #1e64ca;
+  --color-primary-active-border: #1c5ebe;
+  --color-primary-focus-shadow-rgb: 70, 145, 253;
+
+  /* Links: the primary is 3.5:1 on the gray panels; its 20% shade reads on all of them (5:1), as
+     Bootstrap's #0a58ca does for #0d6efd. Hover is the 40% shade */
+  --bs-link-color: #1e64ca;
+  --bs-link-color-rgb: 30, 100, 202;
+  --bs-link-hover-color: #164b98;
+  --bs-link-hover-color-rgb: 22, 75, 152;
+
+  /* Panels: halfway between gray-100 (too faint on white) and gray-200, so .bg-body-tertiary and
+     everything using the variable match */
+  --bs-tertiary-bg: #f1f3f5;
+  --bs-tertiary-bg-rgb: 241, 243, 245;
+  /* Hints and icons: Bootstrap's 50% is 3:1 on the panels */
+  --bs-tertiary-color: rgba(33, 37, 41, 0.6);
 }
 
 :root[data-bs-theme="dark"] {
   --disabled-color: var(--disabled-color-dark);
+  --bs-primary: #8fbcfe;
+  --bs-primary-rgb: 143, 188, 254;
+  --bs-primary-text-emphasis: #8fbcfe;
+  --bs-link-color: #8fbcfe;
+  --bs-link-color-rgb: 143, 188, 254;
+  --bs-link-hover-color: #a5c9fe;
+  --bs-link-hover-color-rgb: 165, 201, 254;
+  --bs-focus-ring-color: rgba(143, 188, 254, 0.25);
+  /* Headings (.text-dark-emphasis): Bootstrap's is the body text color here, brighter than the light
+     theme's, whose #495057 sits just above the gray descriptions. Halfway between gray-300 and
+     gray-500 does the same on dark */
+  --bs-dark-text-emphasis: #c6ccd2;
+  /* Black, as on Bootstrap's other light buttons (info, warning): white on the light blue is 2:1
+     and navy blurs into it */
+  --color-on-primary: #000;
+  /* Bootstrap's shades for its other light buttons: 15% and 20% tint on hover and press, 10% tint
+     borders, a 15% black focus shadow */
+  --color-focus-border: var(--bs-primary);
+  --color-primary-hover-bg: #a0c6fe;
+  --color-primary-hover-border: #9ac3fe;
+  --color-primary-active-bg: #a5c9fe;
+  --color-primary-active-border: #9ac3fe;
+  --color-primary-focus-shadow-rgb: 122, 160, 216;
 }
 
 /* Bootstrap's .link-secondary keeps the light-theme --bs-secondary-rgb value in dark mode, making it too dark to read */
@@ -110,6 +164,16 @@ body {
   line-height: 1;
 }
 
+/* Bar above a tool opened in the popup: a neutral gray (the text color over the background), a
+   shade apart from both the header above and the tool below */
+.tool-bar {
+  background-color: color-mix(
+    in srgb,
+    var(--bs-emphasis-color) 8%,
+    var(--bs-body-bg)
+  );
+}
+
 /* Form styles */
 .form-floating > label {
   color: rgba(var(--bs-body-color-rgb), 0.65);
@@ -137,7 +201,7 @@ body {
 
 /* The website's .btn-reset drops the outline; keep keyboard focus visible */
 .btn-reset:focus-visible {
-  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+  box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color);
 }
 
 .link-reset {
@@ -163,8 +227,8 @@ body {
 }
 
 .search-bar:focus-within {
-  border-color: #86b7fe !important;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+  border-color: var(--color-focus-border) !important;
+  box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color) !important;
 }
 
 /* Tinted like the website's homepage search bar, which also sits on the page background */
@@ -209,6 +273,11 @@ body {
   height: 2rem;
 }
 
+/* Arrows pointing to where the text starts (back) turn in right-to-left languages, as on the website */
+[dir="rtl"] .flip-rtl {
+  transform: scaleX(-1);
+}
+
 .min-h-0 {
   min-height: 0;
 }
@@ -230,8 +299,12 @@ body {
 }
 
 /* Theme-specific styles */
-[data-bs-theme="light"] .bg-body-tertiary {
-  background-color: #f3f3f3 !important;
+
+/* Bootstrap's .shadow is a wide gray blur under the light header; a hairline edge instead */
+[data-bs-theme="light"] .extension-header.shadow {
+  box-shadow:
+    0 1px 0 var(--bs-border-color),
+    0 0.25rem 0.75rem rgba(0, 0, 0, 0.04) !important;
 }
 
 [data-bs-theme="light"] .btn-highlight {
@@ -269,6 +342,27 @@ body {
   background-color: var(--bs-gray-700);
   transition: background-color var(--transition-duration)
     var(--transition-timing);
+}
+
+/* Each theme's accent in the Bootstrap components that hard-code #0d6efd */
+[data-bs-theme] .btn-primary {
+  --bs-btn-color: var(--color-on-primary);
+  --bs-btn-bg: var(--bs-primary);
+  --bs-btn-border-color: var(--bs-primary);
+  --bs-btn-hover-color: var(--color-on-primary);
+  --bs-btn-hover-bg: var(--color-primary-hover-bg);
+  --bs-btn-hover-border-color: var(--color-primary-hover-border);
+  --bs-btn-focus-shadow-rgb: var(--color-primary-focus-shadow-rgb);
+  --bs-btn-active-color: var(--color-on-primary);
+  --bs-btn-active-bg: var(--color-primary-active-bg);
+  --bs-btn-active-border-color: var(--color-primary-active-border);
+  --bs-btn-disabled-color: var(--color-on-primary);
+  --bs-btn-disabled-bg: var(--bs-primary);
+  --bs-btn-disabled-border-color: var(--bs-primary);
+}
+
+[data-bs-theme] .btn-link {
+  --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
 }
 
 /* Reduced motion preferences */

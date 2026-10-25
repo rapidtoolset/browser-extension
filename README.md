@@ -38,7 +38,7 @@ WXT_RAPIDTOOLSET_LOCALE=fr npm run dev
 
 ## Icons
 
-Icons and promo tiles are auto-generated into `extensions/rapidtoolset/public/` from `public/logo.png`:
+Icons and promo tiles are auto-generated into `extensions/rapidtoolset/public/` from `public/logo.png`, which is the website's logo tile (`public/lightning-bolt.svg` in rapid-tool-set) rendered at 1024 px:
 
 ```bash
 npm run generate-icons

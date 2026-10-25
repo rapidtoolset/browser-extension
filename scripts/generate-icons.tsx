@@ -92,7 +92,8 @@ function buildRoundedMask(size: number, radius: number): Buffer {
 export async function generateIconSet(options: GenerateIconOptions) {
   const sizes = options.sizes?.length ? options.sizes : REQUIRED_ICON_SIZES;
   const background = options.background ?? "#000000";
-  const cornerRadiusRatio = options.cornerRadiusRatio ?? 0.22;
+  // The website favicon's rounding
+  const cornerRadiusRatio = options.cornerRadiusRatio ?? 0.15;
 
   if (!fs.existsSync(options.sourcePath)) {
     throw new Error(`Source logo not found: ${options.sourcePath}`);
@@ -107,6 +108,8 @@ export async function generateIconSet(options: GenerateIconOptions) {
         .resize(size, size, {
           fit: "contain",
           background,
+          // The default (lanczos3) leaves a dark halo around the bolt at 16 and 32 px
+          kernel: "mitchell",
         })
         .ensureAlpha()
         .composite([
