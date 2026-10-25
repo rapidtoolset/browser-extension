@@ -53,7 +53,7 @@ export default function ToolView(props: Props) {
 
   return (
     <div className="d-flex flex-column flex-grow-1 min-h-0">
-      <div className="d-flex align-items-center gap-1 px-2 py-1 border-bottom flex-shrink-0">
+      <div className="tool-bar d-flex align-items-center gap-1 px-2 py-1 border-bottom flex-shrink-0">
         <button
           type="button"
           className="btn-reset btn-bookmark p-2 rounded flex-shrink-0 d-inline-flex text-body-secondary"

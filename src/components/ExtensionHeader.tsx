@@ -26,8 +26,12 @@ export default function ExtensionHeader(props: ExtensionHeaderProps) {
   return (
     <header className="extension-header bg-body-tertiary shadow d-flex align-items-center gap-3 px-3">
       {/* The bolt is centred on both lines, a little shorter than they are (33 px from the name's
-          capitals to the byline's baseline in common system fonts) */}
-      <div className="d-flex align-items-center gap-2 min-w-0">
+          capitals to the byline's baseline in common system fonts). Same 0.75rem gap as the
+          website's header */}
+      <div
+        className="d-flex align-items-center min-w-0"
+        style={{ gap: "0.75rem" }}
+      >
         <span className="text-dark-emphasis d-flex">
           <BrandIcon size={30} />
         </span>

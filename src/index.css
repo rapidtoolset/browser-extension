@@ -164,6 +164,16 @@ body {
   line-height: 1;
 }
 
+/* Bar above a tool opened in the popup: a neutral gray (the text color over the background), a
+   shade apart from both the header above and the tool below */
+.tool-bar {
+  background-color: color-mix(
+    in srgb,
+    var(--bs-emphasis-color) 8%,
+    var(--bs-body-bg)
+  );
+}
+
 /* Form styles */
 .form-floating > label {
   color: rgba(var(--bs-body-color-rgb), 0.65);
