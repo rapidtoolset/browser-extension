@@ -71,7 +71,7 @@ export default function ToolCard(props: Props) {
           "btn-reset btn-bookmark p-2 rounded flex-shrink-0 d-inline-flex",
           { "text-body-tertiary": !bookmarked },
         )}
-        style={bookmarked ? { color: "var(--color-bookmark)" } : undefined}
+        style={bookmarked ? { color: "var(--bs-primary)" } : undefined}
         aria-label={bookmarked ? t("removeBookmark") : t("addBookmark")}
         onClick={() => onToggleBookmark(tool)}
       >

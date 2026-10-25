@@ -21,9 +21,14 @@ export default function ExtensionHeader(props: ExtensionHeaderProps) {
 
   return (
     <header className="extension-header bg-body-tertiary shadow d-flex align-items-center gap-3 px-3">
-      <div className="d-flex align-items-center gap-2 min-w-0">
-        <span className="text-dark-emphasis d-flex align-items-center">
-          <BrandIcon size={24} />
+      {/* The bolt spans both lines: it sits on the byline's baseline and is as tall as the
+          distance from there up to the top of the name's capitals (33 px in common system fonts) */}
+      <div
+        className="d-flex gap-2 min-w-0"
+        style={{ alignItems: "last baseline" }}
+      >
+        <span className="text-dark-emphasis d-flex">
+          <BrandIcon size={33} />
         </span>
         <div className="d-flex flex-column gap-1 min-w-0">
           {/* The English brand name stays "RAPIDTOOLSET" when uppercased,

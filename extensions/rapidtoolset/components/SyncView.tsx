@@ -9,7 +9,6 @@ import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
 import { formatDistanceToNow } from "date-fns";
 import EmptyState from "@/components/EmptyState";
 import ErrorAlert from "@/components/ErrorAlert";
-import { DEFAULT_FONT_WEIGHT } from "@/lib/constants";
 import { getDateFnsLocale, t } from "../lib/i18n";
 import type { RemoteUser } from "../lib/types";
 
@@ -43,8 +42,7 @@ export default function SyncView(props: Props) {
       <EmptyState icon={<CloudOutlinedIcon />} title={t("syncEmptyTitle")}>
         <button
           type="button"
-          className="btn btn-primary text-uppercase d-inline-flex align-items-center gap-2 mt-2"
-          style={{ fontWeight: DEFAULT_FONT_WEIGHT }}
+          className="btn btn-primary d-inline-flex align-items-center gap-2 mt-2"
           onClick={() => onConnect()}
           disabled={connecting}
         >
@@ -61,7 +59,7 @@ export default function SyncView(props: Props) {
       <div className="bg-body-tertiary rounded d-flex align-items-center gap-3 p-3">
         <span
           className="d-inline-flex align-items-center justify-content-center flex-shrink-0 rounded bg-body-secondary"
-          style={{ width: 42, height: 42, color: "var(--color-bookmark)" }}
+          style={{ width: 42, height: 42, color: "var(--bs-primary)" }}
           aria-hidden="true"
         >
           <CloudDoneIcon />
