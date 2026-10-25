@@ -1,7 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+} from "react";
 import classNames from "classnames";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { DEFAULT_FONT_WEIGHT } from "@/lib/constants";
+import BookmarkButton from "./BookmarkButton";
 import { t } from "../lib/i18n";
 import type { Tool } from "../lib/types";
 
@@ -9,10 +15,16 @@ interface Props {
   tool: Tool;
   bookmarked: boolean;
   onToggleBookmark: (tool: Tool) => void;
+  /** Opens the tool inside the popup. Without it, the tool's link opens the website in a new tab */
+  onOpen?: (tool: Tool) => void;
+}
+
+function hasModifierKey(event: MouseEvent): boolean {
+  return event.ctrlKey || event.metaKey || event.shiftKey || event.altKey;
 }
 
 export default function ToolCard(props: Props) {
-  const { tool, bookmarked, onToggleBookmark } = props;
+  const { tool, bookmarked, onToggleBookmark, onOpen } = props;
   const [expanded, setExpanded] = useState(false);
   const [clamped, setClamped] = useState(false);
   const descRef = useRef<HTMLParagraphElement>(null);
@@ -31,10 +43,17 @@ export default function ToolCard(props: Props) {
       <div className="min-w-0 flex-grow-1">
         {/* Balancing applies to the block around the (inline) link */}
         <div className="text-balance">
+          {/* With onOpen, a click opens the tool in the popup. The link stays a real one, so a middle
+              click or a click with a modifier key still does what it does on links (a new tab or window) */}
           <a
             href={tool.url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(event) => {
+              if (!onOpen || hasModifierKey(event)) return;
+              event.preventDefault();
+              onOpen(tool);
+            }}
             className="link-reset text-dark-emphasis text-uppercase"
             style={{
               fontWeight: DEFAULT_FONT_WEIGHT,
@@ -65,18 +84,10 @@ export default function ToolCard(props: Props) {
           </div>
         )}
       </div>
-      <button
-        type="button"
-        className={classNames(
-          "btn-reset btn-bookmark p-2 rounded flex-shrink-0 d-inline-flex",
-          { "text-body-tertiary": !bookmarked },
-        )}
-        style={bookmarked ? { color: "var(--bs-primary)" } : undefined}
-        aria-label={bookmarked ? t("removeBookmark") : t("addBookmark")}
-        onClick={() => onToggleBookmark(tool)}
-      >
-        <BookmarkIcon sx={{ fontSize: 24 }} />
-      </button>
+      <BookmarkButton
+        bookmarked={bookmarked}
+        onToggle={() => onToggleBookmark(tool)}
+      />
     </div>
   );
 }

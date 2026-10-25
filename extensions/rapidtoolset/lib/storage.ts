@@ -1,5 +1,5 @@
 import { browser } from "wxt/browser";
-import type { SearchTab, Tool } from "./types";
+import type { OpenToolsIn, SearchTab, Tool } from "./types";
 
 // NOTE: these key names intentionally keep the original "tool_hub_*" prefix
 // from before the extension was renamed to "RapidToolSet". Changing them
@@ -9,6 +9,9 @@ import type { SearchTab, Tool } from "./types";
 const BOOKMARKS_KEY = "tool_hub_bookmarks";
 const TAB_KEY = "tool_hub_tab";
 const QUERY_KEY = "tool_hub_query";
+const OPEN_TOOL_KEY = "tool_hub_open_tool";
+const OPEN_TOOLS_IN_KEY = "tool_hub_open_tools_in";
+const POPUP_WARNING_HIDDEN_KEY = "tool_hub_popup_warning_hidden";
 const AUTH_TOKEN_KEY = "tool_hub_auth_token";
 const LAST_SYNCED_KEY = "tool_hub_last_synced";
 
@@ -35,6 +38,43 @@ export async function loadQuery(): Promise<string> {
 /** Persist the search query. */
 export async function saveQuery(query: string): Promise<void> {
   await browser.storage.local.set({ [QUERY_KEY]: query });
+}
+
+/** Load the tool left open in the popup, if any. */
+export async function loadOpenTool(): Promise<Tool | null> {
+  const result = await browser.storage.local.get(OPEN_TOOL_KEY);
+  return (result[OPEN_TOOL_KEY] as Tool | undefined) ?? null;
+}
+
+/** Persist the tool open in the popup, or forget it (null) once it's closed. */
+export async function saveOpenTool(tool: Tool | null): Promise<void> {
+  if (tool) {
+    await browser.storage.local.set({ [OPEN_TOOL_KEY]: tool });
+  } else {
+    await browser.storage.local.remove(OPEN_TOOL_KEY);
+  }
+}
+
+/** Load where a click on a tool opens it (a new tab unless changed in the settings). */
+export async function loadOpenToolsIn(): Promise<OpenToolsIn> {
+  const result = await browser.storage.local.get(OPEN_TOOLS_IN_KEY);
+  return result[OPEN_TOOLS_IN_KEY] === "popup" ? "popup" : "tab";
+}
+
+/** Persist where a click on a tool opens it. */
+export async function saveOpenToolsIn(value: OpenToolsIn): Promise<void> {
+  await browser.storage.local.set({ [OPEN_TOOLS_IN_KEY]: value });
+}
+
+/** Whether the warning above tools opened in the popup was turned off ("Don't show again"). */
+export async function loadPopupWarningHidden(): Promise<boolean> {
+  const result = await browser.storage.local.get(POPUP_WARNING_HIDDEN_KEY);
+  return result[POPUP_WARNING_HIDDEN_KEY] === true;
+}
+
+/** Turn off the warning above tools opened in the popup for good. */
+export async function savePopupWarningHidden(): Promise<void> {
+  await browser.storage.local.set({ [POPUP_WARNING_HIDDEN_KEY]: true });
 }
 
 /** Load all bookmarked tools from storage. */

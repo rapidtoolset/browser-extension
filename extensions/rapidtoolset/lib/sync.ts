@@ -207,6 +207,20 @@ export function extractAlias(urlOrAlias: string): string {
   }
 }
 
+/**
+ * URL of the tool's embed page on RapidToolSet, which shows the tool alone (without the
+ * website's header and footer), for opening it inside the popup. The page pads the tool
+ * by `padding` pixels instead of its default.
+ */
+export function getEmbedUrl(
+  tool: Tool,
+  locale: string,
+  padding: number,
+): string {
+  const alias = tool.alias || extractAlias(tool.url);
+  return `${RAPIDTOOLSET_BASE_URL}/${locale}/embed/${alias}?padding=${padding}`;
+}
+
 /** Converts a remote bookmark entry (alias + localized name/description) into a local Tool. */
 export function toBookmarkTool(bookmark: RemoteBookmark, locale = "en"): Tool {
   return {

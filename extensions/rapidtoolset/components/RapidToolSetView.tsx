@@ -16,14 +16,20 @@ import Spinner from "@/components/Spinner";
 import { TabPanel, Tabs } from "@/components/Tabs";
 import { useScrollable } from "@/lib/useScrollable";
 import ToolCard from "./ToolCard";
+import ToolView from "./ToolView";
 import SyncView from "./SyncView";
 import { useRapidToolSet } from "../lib/useRapidToolSet";
 import { t } from "../lib/i18n";
-import type { SearchTab } from "../lib/types";
+import type { OpenToolsIn, SearchTab } from "../lib/types";
 
 const TABS_ID = "rapidtoolset-tabs";
 
-export default function RapidToolSetView() {
+interface Props {
+  /** Where a click on a tool opens it */
+  openToolsIn: OpenToolsIn;
+}
+
+export default function RapidToolSetView({ openToolsIn }: Props) {
   const {
     bookmarks,
     searchResults,
@@ -36,6 +42,11 @@ export default function RapidToolSetView() {
     loadingBookmarks,
     setQuery,
     setTab,
+    restored,
+    openTool,
+    setOpenTool,
+    popupWarningHidden,
+    hidePopupWarning,
     isBookmarked,
     toggleBookmark,
     connected,
@@ -59,6 +70,24 @@ export default function RapidToolSetView() {
       : tab === "bookmarks"
         ? loadingBookmarks
         : false;
+
+  // Unless the settings say the popup, the tool cards' links open the website in a new tab
+  const openInPopup = openToolsIn === "popup" ? setOpenTool : undefined;
+
+  if (!restored) return null;
+
+  if (openTool) {
+    return (
+      <ToolView
+        tool={openTool}
+        bookmarked={isBookmarked(openTool.url)}
+        onToggleBookmark={toggleBookmark}
+        onBack={() => setOpenTool(null)}
+        warn={!popupWarningHidden}
+        onHideWarning={hidePopupWarning}
+      />
+    );
+  }
 
   return (
     <div className="d-flex flex-column flex-grow-1 min-h-0 gap-3 p-3">
@@ -162,6 +191,7 @@ export default function RapidToolSetView() {
             tool={tool}
             bookmarked={isBookmarked(tool.url)}
             onToggleBookmark={toggleBookmark}
+            onOpen={openInPopup}
           />
         ))}
       </TabPanel>
@@ -202,6 +232,7 @@ export default function RapidToolSetView() {
               tool={tool}
               bookmarked={isBookmarked(tool.url)}
               onToggleBookmark={toggleBookmark}
+              onOpen={openInPopup}
             />
           ))}
       </TabPanel>

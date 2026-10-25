@@ -263,6 +263,11 @@ body {
   height: 2rem;
 }
 
+/* Arrows pointing to where the text starts (back) turn in right-to-left languages, as on the website */
+[dir="rtl"] .flip-rtl {
+  transform: scaleX(-1);
+}
+
 .min-h-0 {
   min-height: 0;
 }

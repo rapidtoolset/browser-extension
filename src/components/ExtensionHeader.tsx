@@ -1,6 +1,8 @@
 import { browser } from "wxt/browser";
 import BrandIcon from "@/components/BrandIcon";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
+import SettingsMenu, {
+  type SettingsMenuProps,
+} from "@/components/SettingsMenu";
 import { t } from "@/lib/i18n";
 
 const SITE = "rapidtoolset.com";
@@ -10,6 +12,8 @@ interface ExtensionHeaderProps {
   name?: string;
   /** Developer / company name shown in the header */
   developer?: string;
+  /** The extension's own settings, shown in the settings menu after the theme */
+  settings?: SettingsMenuProps["children"];
 }
 
 /** Popup header, styled like the website's navbar: brand on the left, controls on the right. */
@@ -21,14 +25,11 @@ export default function ExtensionHeader(props: ExtensionHeaderProps) {
 
   return (
     <header className="extension-header bg-body-tertiary shadow d-flex align-items-center gap-3 px-3">
-      {/* The bolt spans both lines: it sits on the byline's baseline and is as tall as the
-          distance from there up to the top of the name's capitals (33 px in common system fonts) */}
-      <div
-        className="d-flex gap-2 min-w-0"
-        style={{ alignItems: "last baseline" }}
-      >
+      {/* The bolt is centred on both lines, a little shorter than they are (33 px from the name's
+          capitals to the byline's baseline in common system fonts) */}
+      <div className="d-flex align-items-center gap-2 min-w-0">
         <span className="text-dark-emphasis d-flex">
-          <BrandIcon size={33} />
+          <BrandIcon size={30} />
         </span>
         <div className="d-flex flex-column gap-1 min-w-0">
           {/* The English brand name stays "RAPIDTOOLSET" when uppercased,
@@ -55,7 +56,7 @@ export default function ExtensionHeader(props: ExtensionHeaderProps) {
       </div>
 
       <div className="ms-auto">
-        <ThemeSwitcher />
+        <SettingsMenu>{props.settings}</SettingsMenu>
       </div>
     </header>
   );

@@ -8,11 +8,15 @@ import {
   loadAuthToken,
   loadBookmarks,
   loadLastSyncedAt,
+  loadOpenTool,
+  loadPopupWarningHidden,
   loadQuery,
   loadTab,
   removeBookmark,
   saveAuthToken,
   saveLastSyncedAt,
+  saveOpenTool,
+  savePopupWarningHidden,
   saveQuery,
   saveTab,
 } from "./storage";
@@ -59,6 +63,27 @@ export function useRapidToolSet() {
     _setTab(t);
     saveTab(t);
   }, []);
+
+  // The tool shown inside the popup instead of the tabs, kept for the next time the popup opens
+  const [openTool, _setOpenTool] = useState<Tool | null>(null);
+
+  const setOpenTool = useCallback((tool: Tool | null) => {
+    _setOpenTool(tool);
+    saveOpenTool(tool);
+  }, []);
+
+  // "Don't show again" on the warning above a tool open in the popup
+  const [popupWarningHidden, setPopupWarningHidden] = useState(false);
+
+  const hidePopupWarning = useCallback(() => {
+    setPopupWarningHidden(true);
+    savePopupWarningHidden();
+  }, []);
+
+  // Whether the tab, query and tool the popup was left with are back, so the view isn't drawn
+  // without them first (the tabs would flash before a tool left open replaces them, and the
+  // warning above a tool would push it down once it turned up)
+  const [restored, setRestored] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [loadingBookmarks, setLoadingBookmarks] = useState(true);
@@ -75,8 +100,18 @@ export function useRapidToolSet() {
   const abortController = useRef<AbortController | null>(null);
 
   useEffect(() => {
-    loadTab().then(_setTab);
-    loadQuery().then(_setQuery);
+    Promise.all([
+      loadTab(),
+      loadQuery(),
+      loadOpenTool(),
+      loadPopupWarningHidden(),
+    ]).then(([savedTab, savedQuery, savedTool, warningHidden]) => {
+      _setTab(savedTab);
+      _setQuery(savedQuery);
+      _setOpenTool(savedTool);
+      setPopupWarningHidden(warningHidden);
+      setRestored(true);
+    });
     loadLastSyncedAt().then(setLastSyncedAt);
 
     loadAuthToken().then(async (token) => {
@@ -263,6 +298,11 @@ export function useRapidToolSet() {
     loadingBookmarks,
     setQuery,
     setTab,
+    restored,
+    openTool,
+    setOpenTool,
+    popupWarningHidden,
+    hidePopupWarning,
     isBookmarked,
     toggleBookmark,
     connected: !!authToken,

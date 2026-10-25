@@ -15,18 +15,19 @@ interface HeaderDropdownProps {
   /** Minimum width of the dropdown menu */
   minWidth?: string;
   /**
-   * Menu items (`role="menuitem"` elements, the selected one with the
-   * `active` class). Pass a function to receive a `close()` callback.
+   * Menu items (`menuitem` or `menuitemradio` elements, the selected ones with
+   * the `active` class). Pass a function to receive a `close()` callback.
    */
   children: ReactNode | ((close: () => void) => ReactNode);
 }
 
-const MENU_ITEM_SELECTOR = '[role="menuitem"]';
+// menuitem, menuitemradio and menuitemcheckbox
+const MENU_ITEM_SELECTOR = '[role^="menuitem"]';
 
 /**
  * Header button opening a menu below it, styled like the website's
- * HeaderDropdown. Opening focuses the selected item; arrow keys, Home and End
- * move between items; Escape closes the menu and refocuses the button.
+ * HeaderDropdown. Opening focuses the first selected item; arrow keys, Home
+ * and End move between items; Escape closes the menu and refocuses the button.
  */
 export default function HeaderDropdown({
   triggerContent,
